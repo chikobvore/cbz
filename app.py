@@ -54,12 +54,12 @@ def dashboard():
             }
         dbh.db['Senders'].insert_one(record)
 
-        message = "Hello "+ senderName +" 🙋🏽‍♂ , \nThank you for contacting Mutare City Council,I'm Tau, i'm a virtual assistant,\nFor any emergency 👇 \n📞 Dial Number: +263202060823 \n\nPlease select one of the following options 👇 \n*1*.Waiting List Services 📝\n*2*.Account Services\n*3*.Book an inspection\n*4*.Payment Plan services\n*5*.Log a Query\n*6*.Make a payment\n*7*.Request a call from our customer care representatives\n*0*.Cancel"
+        message = "Hello "+ senderName +" 🙋🏽‍♂ , \nThank you for contacting Lads Africa,I'm Tererai, i'm a virtual assistant,\nFor any emergency 👇 \n📞 Dial Number: +263773068901 \n\nPlease select one of the following options 👇 \n*1*.Waiting List Services 📝\n*2*.Account Services\n*3*.Book an inspection\n*4*.Payment Plan services\n*5*.Log a Query\n*6*.Make a payment\n*7*.Request a call from our customer care representatives\n*0*.Cancel"
         payload = {
             "phone": sender,
-            "filename": 'https://www.mutarecity.co.zw/images/mutarelogo.png',
+            "filename": 'https://ladsafrica.co.zw/img/picccc.jpg',
             "caption": message,
-            "body": 'https://www.mutarecity.co.zw/images/mutarelogo.png'
+            "body": 'https://ladsafrica.co.zw/img/picccc.jpg'
         }
         
         response = requests.post("https://api.chat-api.com/instance305026/sendFile?token=rjfobyzhzlzwr4v8", data=payload)
@@ -228,6 +228,10 @@ def dashboard():
                     return account_services.addemail(sender,response)
                 elif state['Status'] == "2E":
                     return account_services.addphone(sender,response)
+                elif state['Status'] == "Register_fone":
+                    message = "*Account details successfully saved, please set a pin for your account*"
+                    api.reply_message(sender,message)
+                    return '', 200
                 else:
                     message = "*This feature is not yet working*"
                     api.reply_message(sender,message)

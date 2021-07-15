@@ -9,13 +9,24 @@ import sys
 
 def menu(sender,response):
 
-    state = dbh.db['Senders'].find_one({"Sender": sender})
-    sh.session_status(sender,session_type=response,status='0')
+    existance = dbh.db['registered_users'].count_documents({"Sender": sender})
 
-    message = "*Account services*\nPlease select one of the following option 👇\n*1*.Inquire balance.\n*2*.Mini-statement\n*3*.Verify account details\n*0*.Return to main menu\n"
+    if existance < 1:
 
-    api.reply_message(sender,message)
-    return '', 200
+        sh.session_status(sender,session_type=response,status='Register_fone')
+
+        message = "*Unregistered user*\nYour phone number is currently not verified,to continue please enter your account number or Exit to return to main menu"
+        api.reply_message(sender,message)
+        return '', 200
+    
+    else:
+        state = dbh.db['Senders'].find_one({"Sender": sender})
+        sh.session_status(sender,session_type=response,status='0')
+
+        message = "*Account services*\nPlease select one of the following option 👇\n*1*.Inquire balance.\n*2*.Mini-statement\n*3*.Verify account details\n*0*.Return to main menu\n"
+
+        api.reply_message(sender,message)
+        return '', 200
 
 def balance(sender,response):
 
