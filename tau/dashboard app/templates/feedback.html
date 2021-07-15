@@ -1,0 +1,30 @@
+{% extends 'index.html' %} {% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+
+            <div class="card-body ">
+
+                <table id="accounts " class="table table-striped ">
+                    <thead>
+                        <tr>
+                            <th> Sender</th>
+                            <th> Timestamp</th>
+                            <th> Feedback</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for feed in feedbacks %}
+                        <tr>
+                            <td>{{feed.Sender}}</td>
+                            <td>{{feed.Timestamp}}</td>
+                            <td>{{feed.feedback}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

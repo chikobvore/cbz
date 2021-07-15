@@ -1,0 +1,38 @@
+{% extends 'financedashboard.html' %} {% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+
+            <div class="card-body ">
+                <a class="btn btn-success" href="/accounts">Import from LADS</a>
+                <a class="btn btn-info" href="/accounts">Export to EXCEL</a>
+
+                <table id="accounts " class="table table-striped ">
+                    <thead>
+                        <tr>
+                            <th> Account no</th>
+                            <th> Account owner</th>
+                            <th> Phone </th>
+                            <th> Email </th>
+                            <th> Account balance </th>
+                            <th> Status </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for account in accounts %}
+                        <tr>
+                            <td>{{account.account_no}}</td>
+                            <td>{{account.account_name }}</td>
+                            <td>{{account.cell1}}</td>
+                            <td>{{account.email}}</td>
+                            <td>{{account.balance}}</td>
+                            <td>{{account.status}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
