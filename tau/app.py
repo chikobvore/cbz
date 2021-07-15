@@ -62,7 +62,7 @@ def dashboard():
             "body": 'https://www.mutarecity.co.zw/images/mutarelogo.png'
         }
         
-        response = requests.post("https://api.chat-api.com/instance265454/sendFile?token=7krlsiflsx994ms4", data=payload)
+        response = requests.post("https://api.chat-api.com/instance305026/sendFile?token=rjfobyzhzlzwr4v8", data=payload)
         print('....replied: '+ sender + '...........')
         return str(response.status_code)
 

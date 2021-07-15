@@ -7,5 +7,5 @@ def reply_message(sender,message):
         "body": message
         }
 
-  response = requests.post("https://api.chat-api.com/instance265454/sendMessage?token=7krlsiflsx994ms4", data=payload)
+  response = requests.post("https://api.chat-api.com/instance305026/sendMessage?token=rjfobyzhzlzwr4v8", data=payload)
   return str(response.status_code)
