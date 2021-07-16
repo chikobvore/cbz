@@ -42,7 +42,7 @@ def balance(sender,response):
                 api.reply_message(sender,message)
                 return main.feedback(sender)
             else:
-                message = "Dear "+ sender + ", You are not authorised to perform this operation on this account"
+                message = "Dear "+ sender + ", You are not authorised to perform this operation on this account.Please verify your account before trying again"
                 api.reply_message(sender,message)
                 return '', 200
 
