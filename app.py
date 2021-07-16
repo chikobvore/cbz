@@ -258,6 +258,7 @@ def dashboard():
                         "pin": response
                         })
                     message = "Details successfully saved"
+                    sh.session_status(sender,session_type="2",status='0')
                     api.reply_message(sender,message)
                     return account_services.menu(sender,2)
                 else:
