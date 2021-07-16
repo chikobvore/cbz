@@ -36,7 +36,7 @@ def balance(sender,response):
         if existance:
             account = existance
 
-            registered = dbh.db['registered_users'].count_documents({"Sender": sender,"account_no"})
+            registered = dbh.db['registered_users'].count_documents({"Sender": sender,"account_no": response})
             if registered > 0:
                 message = "Dear "+ account['account_name'] + ", Your account balance is zwl $" + str(account['balance'])+" ,Please ensure your pay your balances on time to avoid any inconviniences"
                 api.reply_message(sender,message)
