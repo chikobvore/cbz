@@ -36,9 +36,15 @@ def balance(sender,response):
         if existance:
             account = existance
 
-            message = "Dear "+ account['account_name'] + ", Your account balance is zwl $" + str(account['balance'])+" ,Please ensure your pay your balances on time to avoid any inconviniences"
-            api.reply_message(sender,message)
-            return main.feedback(sender)
+            registered = dbh.db['registered_users'].count_documents({"Sender": sender,"account_no"})
+            if registered > 0:
+                message = "Dear "+ account['account_name'] + ", Your account balance is zwl $" + str(account['balance'])+" ,Please ensure your pay your balances on time to avoid any inconviniences"
+                api.reply_message(sender,message)
+                return main.feedback(sender)
+            else:
+                message = "Dear "+ sender + ", You are not authorised to perform this operation on this account"
+                api.reply_message(sender,message)
+                return main.feedback(sender)
 
         else:
             #dbh.db['Senders'].find_one_and_delete({"Sender": sender})  
