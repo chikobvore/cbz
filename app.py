@@ -38,7 +38,7 @@ def dashboard():
     message_id = payload['messages'][0]['id']
     response = payload['messages'][0]['body']
     
-    if sender == '263771067779':
+    if sender == '263714502462':
         return '', 200
 
     existance = dbh.db['Senders'].count_documents({"Sender": sender}) 
@@ -57,9 +57,9 @@ def dashboard():
         message = "Hello "+ senderName +" 🙋🏽‍♂ , \nThank you for contacting Lads Africa,I'm Tererai, i'm a virtual assistant,\nFor any emergency 👇 \n📞 Dial Number: +263773068901 \n\nPlease select one of the following options 👇 \n*1*.Waiting List Services 📝\n*2*.Account Services\n*3*.Book an inspection\n*4*.Payment Plan services\n*5*.Log a Query\n*6*.Make a payment\n*7*.Request a call from our customer care representatives\n*0*.Cancel"
         payload = {
             "phone": sender,
-            "filename": 'https://ladsafrica.co.zw/img/picccc.jpg',
+            "filename": 'https://scontent.fjnb3-1.fna.fbcdn.net/v/t1.6435-9/119025364_111543880686327_5847130809061647048_n.jpg?_nc_cat=101&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=0Jn8KprkccEAX8f_6lb&tn=ifXgx__r1F7zz295&_nc_ht=scontent.fjnb3-1.fna&oh=485e650e63e2b7b749b81e4b28b09d97&oe=60F6733C',
             "caption": message,
-            "body": 'https://ladsafrica.co.zw/img/picccc.jpg'
+            "body": 'https://scontent.fjnb3-1.fna.fbcdn.net/v/t1.6435-9/119025364_111543880686327_5847130809061647048_n.jpg?_nc_cat=101&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=0Jn8KprkccEAX8f_6lb&tn=ifXgx__r1F7zz295&_nc_ht=scontent.fjnb3-1.fna&oh=485e650e63e2b7b749b81e4b28b09d97&oe=60F6733C'
         }
         
         response = requests.post("https://api.chat-api.com/instance305026/sendFile?token=rjfobyzhzlzwr4v8", data=payload)
