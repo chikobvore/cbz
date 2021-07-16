@@ -21,7 +21,7 @@ def menu(sender,response):
     
     else:
         state = dbh.db['Senders'].find_one({"Sender": sender})
-        sh.session_status(sender,session_type=response,status='0')
+        sh.session_status(sender,session_type="2",status='0')
 
         message = "*Account services*\nPlease select one of the following option 👇\n*1*.Inquire balance.\n*2*.Mini-statement\n*3*.Verify account details\n*0*.Return to main menu\n"
 
