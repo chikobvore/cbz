@@ -44,7 +44,7 @@ def balance(sender,response):
             else:
                 message = "Dear "+ sender + ", You are not authorised to perform this operation on this account"
                 api.reply_message(sender,message)
-                return main.feedback(sender)
+                return '', 200
 
         else:
             #dbh.db['Senders'].find_one_and_delete({"Sender": sender})  
