@@ -229,17 +229,25 @@ def dashboard():
                 elif state['Status'] == "2E":
                     return account_services.addphone(sender,response)
                 elif state['Status'] == "Register_fone":
-                    sh.session_status(sender,session_type=response,status='set_pin')
+                    sh.session_status(sender,session_type="2",status='set_pin')
+                    
+                    existance = dbh.db['account_balances'].count_documents({"account_no": response})
+                    
+                    if existance > 0:
+                        record = {
+                            "Sender": sender,
+                            "account_no": response,
+                            "pin": "----"
+                            }
+                        dbh.db['registered_users'].insert_one(record)
+                        message = "*Account details successfully saved, please set a pin for your account*"
+                        api.reply_message(sender,message)
+                        return '', 200
 
-                    record = {
-                        "Sender": sender,
-                        "account_no": response,
-                        "pin": "----"
-                        }
-                    dbh.db['registered_users'].insert_one(record)
-                    message = "*Account details successfully saved, please set a pin for your account*"
-                    api.reply_message(sender,message)
-                    return '', 200
+                    else:
+                        message = "Invalid account number,please verify your account number before trying again4"
+                        api.reply_message(sender,message)
+                        return '', 200
                 elif state['Status'] == "set_pin":
 
                     account = dbh.db['registered_users'].find_one({"Sender": sender})
