@@ -229,9 +229,29 @@ def dashboard():
                 elif state['Status'] == "2E":
                     return account_services.addphone(sender,response)
                 elif state['Status'] == "Register_fone":
+                    sh.session_status(sender,session_type=response,status='set_pin')
+
+                    record = {
+                        "Sender": sender,
+                        "account_no": response,
+                        "pin": "----"
+                        }
+                    dbh.db['registered_users'].insert_one(record)
                     message = "*Account details successfully saved, please set a pin for your account*"
                     api.reply_message(sender,message)
                     return '', 200
+                elif state['Status'] == "set_pin":
+
+                    account = dbh.db['registered_users'].find_one({"Sender": sender})
+                    dbh.db['registered_users'].update({"Sender": sender},
+                    {
+                        "Sender": sender,
+                        "account_no": account['account_no'],
+                        "pin": response
+                        })
+                    message = "Details successfully saved"
+                    api.reply_message(sender,message)
+                    return account_services.menu(sender,2)
                 else:
                     message = "*This feature is not yet working*"
                     api.reply_message(sender,message)
