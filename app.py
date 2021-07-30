@@ -62,7 +62,7 @@ def dashboard():
             "body": 'https://scontent.fjnb3-1.fna.fbcdn.net/v/t1.6435-9/118982437_111542584019790_4698392666874714197_n.png?_nc_cat=100&ccb=1-3&_nc_sid=174925&_nc_ohc=SJVd0nyKMHMAX9lIqfy&_nc_ht=scontent.fjnb3-1.fna&oh=38e87e3121ec802c19d4c63b0e3756e1&oe=60F558FC'
         }
         
-        response = requests.post("https://api.chat-api.com/instance305026/sendFile?token=rjfobyzhzlzwr4v8", data=payload)
+        response = requests.post("https://api.chat-api.com/instance313121/sendFile?token=rl2kp4l061iae12j", data=payload)
         print('....replied: '+ sender + '...........')
         return str(response.status_code)
 
