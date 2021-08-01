@@ -14,7 +14,7 @@ def send_attachment(sender,attachment_url,caption):
       payload = {
             "phone": sender,
             "filename": attachment_url,
-            "caption": message,
+            "caption": caption,
             "body": attachment_url
       }
       response = requests.post("https://api.chat-api.com/instance313121/sendFile?token=rl2kp4l061iae12j", data=payload)
