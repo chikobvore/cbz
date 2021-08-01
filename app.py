@@ -126,12 +126,20 @@ def dashboard():
                 return '', 200
 
             elif response == "8":
-
-                sh.session_status(sender,session_type=response,status='0')
-                message = "*Budget consultations*\nThank you for reaching us, we value your feedback and support.\nFor the purposes of quality evaluation please provide your personal details as follows\n*(Full Name,Gender,Age,Nationality)*\nFor example *John Doe,Male,27,Zimbabwean*"
-                api.reply_message(sender,message)
-                return '', 200
-
+                
+                existance = dbh.db['budget_reviewers'].count_documents({"Sender": sender}) 
+                #check if session exist
+                if existance < 1:
+                    sh.session_status(sender,session_type=response,status='0')
+                    message = "*Budget consultations*\nThank you for reaching us, we value your feedback and support.\nFor the purposes of quality evaluation please provide your personal details as follows\n*(Full Name,Gender,Age,Nationality)*\nFor example *John Doe,Male,27,Zimbabwean*"
+                    api.reply_message(sender,message)
+                    return '', 200
+                else:
+                    sh.session_status(sender,session_type='8',status='1B')
+                    message = "*Welcome Back*\nHow satisfied are you with our\n1*Performance Report*\n2*Tarrif Schedule*\n3*Proposed projects and funding sources*\n\nTo respond to this questions,please reply your message as follows\n(1 for performance report,rating out of 10 (1-very poor,5-moderate,10-excellent),Your comments)\n*For Example*\n1,9,well done\n\nThank you for reviewing our budget,if you are done juss type *Done* to save your views or repeat for more ratings"
+                    api.reply_message(sender,message)
+                    return '', 200
+            
             elif response == "0":
                 return main.menu(sender)
             else:
@@ -694,6 +702,7 @@ def dashboard():
                 return '', 200
 
         elif state['session_type'] == "8":
+
             if state['Status'] == "0":
                 return budget.addpersonaldetails(response,sender)
             elif state['Status'] == "1A":
