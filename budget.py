@@ -56,20 +56,17 @@ def addcategory(response,sender):
         api.reply_message(sender,message)
 
         
-        caption = "1.*Performance Report*,\nComments from council about performace report comes here\nHow satisfied are you with our performance report,to respond to this question,please reply your message as follows\n(1,rating out of 10 (1-very poor,5-moderate,10-excellent),Your comments)\n*For Example*\n1,8,You are performing very well"
-        attachment_url = 'https://chikobvore.github.io/dura_online_shop/images/11.jpg'
+        caption = "1.*Performance Report*,\nComments from council about performace report comes here\n\nHow satisfied are you with our performance report,to respond to this question,please reply your message as follows\n(1,rating out of 10 (1-very poor,5-moderate,10-excellent),Your comments)\n*For Example*\n1,8,You are performing very well"
+        attachment_url = 'https://chikobvore.github.io/dura_online_shop/images/Sample%20Tarrif%20Schedule.pdf'
         api.send_attachment(sender,attachment_url,caption)
 
-        caption = "2.*Tarrif Schedule*,\nComments from council about *tarrif schedule* comes here\nHow satisfied are you with our Tarrif Schedule,to respond to this question,please reply your message as follows\n(1,rating out of 10 (1-very poor,5-moderate,10-excellent),Your comments)\n*For Example*\n2,7,Reasonable tarrifs"
-        attachment_url = 'https://chikobvore.github.io/dura_online_shop/images/11.jpg'
+        caption = "2.*Tarrif Schedule*,\nComments from council about *tarrif schedule* comes here\n\nHow satisfied are you with our Tarrif Schedule,to respond to this question,please reply your message as follows\n(1,rating out of 10 (1-very poor,5-moderate,10-excellent),Your comments)\n*For Example*\n2,7,Reasonable tarrifs"
+        attachment_url = 'https://chikobvore.github.io/dura_online_shop/images/Sample%20performance%20report.pdf'
         api.send_attachment(sender,attachment_url,caption)
 
-        caption = "3.*Proposed projects and funding sources*,\nComments from council about *Proposed projects and funding sources* comes here\nHow satisfied are you with our proposed projects,to respond to this question,please reply your message as follows\n(1,rating out of 10 (1-very poor,5-moderate,10-excellent),Your comments)\n*For Example*\n1,9,well done"
-        attachment_url = 'https://chikobvore.github.io/dura_online_shop/images/11.jpg'
+        caption = "3.*Proposed projects and funding sources*,\nComments from council about *Proposed projects and funding sources* comes here\n\nHow satisfied are you with our proposed projects,to respond to this question,please reply your message as follows\n(1,rating out of 10 (1-very poor,5-moderate,10-excellent),Your comments)\n*For Example*\n1,9,well done"
+        attachment_url = 'https://chikobvore.github.io/dura_online_shop/images/project%20proposals.pdf'
         api.send_attachment(sender,attachment_url,caption)
-
-        message = "We value your feedback"
-        api.reply_message(sender,message)
 
         sh.session_status(sender,session_type='8',status='1B')
         return '', 200
