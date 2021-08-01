@@ -76,4 +76,6 @@ def addcategory(response,sender):
     except:
         pass
 
+    return '', 200
+
 
