@@ -81,7 +81,7 @@ def dashboard():
         if minutes > 10:
             sh.session_status(sender,'0','0')
             dbh.db['pending_payments'].find_one_and_delete({'Sender': sender})
-            message =  "*Chat history expired*\nHello *"+ senderName +"* 🙋🏽‍♂,\nPlease select one of the following options 👇\n*1*. Waiting List Services 📝.\n*2*.Account Services\n*3*.Book an inspection\n*4*.Payment Plan services\n*5*.Log a Query\n*6*.Make a payment\n*7*.Request a call from our customer care representatives\n*0*.Cancel"
+            message =  "*Previous session expired*\nHello *"+ senderName +"* 🙋🏽‍♂,\nPlease select one of the following options 👇\n*1*. Waiting List Services 📝.\n*2*.Account Services\n*3*.Book an inspection\n*4*.Payment Plan services\n*5*.Log a Query\n*6*.Make a payment\n*7*.Request a call from our customer care representatives*8*Budget Consultations\n*0*.Cancel"
             api.reply_message(sender,message)
             return '', 200
 
@@ -133,7 +133,7 @@ def dashboard():
                 return main.menu(sender)
             else:
                 #invalid response from user
-                message =  "*Previous session expired*\nHello *"+ senderName +"* 🙋🏽‍♂,\nPlease select one of the following options 👇\n*1*. Waiting List Services 📝.\n*2*.Account Services\n*3*.Book an inspection\n*4*.Payment Plan services\n*5*.Log a Query\n*6*.Make a payment\n*7*.Request a call from our customer care representatives\n*0*.Cancel"
+                message =  "*Previous session expired*\nHello *"+ senderName +"* 🙋🏽‍♂,\nPlease select one of the following options 👇\n*1*. Waiting List Services 📝.\n*2*.Account Services\n*3*.Book an inspection\n*4*.Payment Plan services\n*5*.Log a Query\n*6*.Make a payment\n*7*.Request a call from our customer care representatives\n*8*Budget Consultations\n*0*.Cancel"
                 api.reply_message(sender,message)
                 return '', 200
 
@@ -692,7 +692,7 @@ def dashboard():
 
         elif state['session_type'] == "8":
             if state['Status'] == "0":
-                return budget.addpersonaldetails(response)
+                return budget.addpersonaldetails(response,sender)
             elif state['Status'] == "1A":
                 return budget.addcategory(response,sender)
             elif state['Status'] == "1B":
