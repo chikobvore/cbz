@@ -41,6 +41,9 @@ def dashboard():
     if sender == '263714502462':
         return '', 200
 
+    if response == 'Done' or response == 'done':
+        return main.menu(sender)
+
     existance = dbh.db['Senders'].count_documents({"Sender": sender}) 
 
     #check if session exist
@@ -696,9 +699,7 @@ def dashboard():
             elif state['Status'] == "1A":
                 return budget.addcategory(response,sender)
             elif state['Status'] == "1B":
-                message = "We value your feedback"
-                api.reply_message(sender,message)
-                return '', 200
+                return budget.addcomment(response,sender)
             else:
                 pass
 

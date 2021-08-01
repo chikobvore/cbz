@@ -69,10 +69,38 @@ def addcategory(response,sender):
         api.send_attachment(sender,attachment_url,caption)
 
         sh.session_status(sender,session_type='8',status='1B')
+
+        message = "Thank you for reviewing our budget,if you are done juss type *Done* to save your views"
+        api.reply_message(sender,message)
         return '', 200
     except:
-        pass
+        
+        message = "Please provide the following as follows\n(Your area,Your category,your account number(optional))\n*For Example*\nDangamvura Area 13,Resident,12345678\nCBD,Shop License,12345678"
+        api.reply_message(sender,message)
+        return '', 200
 
     return '', 200
 
+def addcomment(response,sender):
 
+    try:
+        details = response.split(',')
+
+        record = {
+            "Sender": sender,
+            "Review": details[0],
+            "Objection": details[1],
+            "Comment": details[2],
+            }
+        dbh.db['budget_reviews'].insert_one(record)
+        
+        message = "*Details successfully saved*\nTo continue reviewing please reply as follows\n(1,rating out of 10 (1-very poor,5-moderate,10-excellent),Your comments)\n*For Example*\n1,9,well done"
+        api.reply_message(sender,message)
+        return '', 200
+
+    except:
+        message = "please reply your message as follows\n(1,rating out of 10 (1-very poor,5-moderate,10-excellent),Your comments)\n*For Example*\n1,9,well done"
+        api.reply_message(sender,message)
+        return '', 200
+
+        
