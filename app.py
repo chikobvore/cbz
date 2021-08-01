@@ -2,7 +2,7 @@ from datetime import date
 import pymongo
 from flask import Flask, redirect, render_template, request, session, url_for
 import datetime,requests
-import waiting_list,account_services,payments,main
+import waiting_list,account_services,payments,main,budget
 import sh,api
 import sys,os,random
 from paynow import Paynow
@@ -54,7 +54,7 @@ def dashboard():
             }
         dbh.db['Senders'].insert_one(record)
 
-        message = "Hello "+ senderName +" 🙋🏽‍♂ , \nThank you for contacting Lads Africa,I'm Tererai, i'm a virtual assistant,\nFor any emergency 👇 \n📞 Dial Number: +263773068901 \n\nPlease select one of the following options 👇 \n*1*.Waiting List Services 📝\n*2*.Account Services\n*3*.Book an inspection\n*4*.Payment Plan services\n*5*.Log a Query\n*6*.Make a payment\n*7*.Request a call from our customer care representatives\n*0*.Cancel"
+        message = "Hello "+ senderName +" 🙋🏽‍♂ , \nThank you for contacting Lads Africa,I'm Tau, i'm a virtual assistant,\nFor any emergency 👇 \n📞 Dial Number: +263773068901 \n\nPlease select one of the following options 👇 \n*1*.Waiting List Services 📝\n*2*.Account Services\n*3*.Book an inspection\n*4*.Payment Plan services\n*5*.Log a Query\n*6*.Make a payment\n*7*.Request a call from our customer care representatives\n*8*.Budget Consultations\n*0*.Cancel"
         payload = {
             "phone": sender,
             "filename": 'https://scontent.fjnb3-1.fna.fbcdn.net/v/t1.6435-9/118982437_111542584019790_4698392666874714197_n.png?_nc_cat=100&ccb=1-3&_nc_sid=174925&_nc_ohc=SJVd0nyKMHMAX9lIqfy&_nc_ht=scontent.fjnb3-1.fna&oh=38e87e3121ec802c19d4c63b0e3756e1&oe=60F558FC',
@@ -119,6 +119,13 @@ def dashboard():
                 sh.session_status(sender,session_type=response,status='0')
 
                 message = "Our customer services representatives are currently occupied, please leave your message an agent ll assist you in the nearest possible time"
+                api.reply_message(sender,message)
+                return '', 200
+
+            elif response == "8":
+
+                sh.session_status(sender,session_type=response,status='0')
+                message = "*Budget consultations*\nThank you for reaching us, we value your feedback and support.\nFor the purposes of quality evaluation please provide your personal details as follows\n*(Full Name,Gender,Age,Nationality)*\nFor example *John Doe,Male,27,Zimbabwean*"
                 api.reply_message(sender,message)
                 return '', 200
 
@@ -684,6 +691,18 @@ def dashboard():
                 return '', 200
 
         elif state['session_type'] == "8":
+            if state['Status'] == "0":
+                return budget.addpersonaldetails(response)
+            elif state['Status'] == "1A":
+                return budget.addcategory(response,sender)
+            elif state['Status'] == "1B":
+                message = "We value your feedback"
+                api.reply_message(sender,message)
+                return '', 200
+            else:
+                pass
+
+        elif state['session_type'] == "Feedback":
             record = {
                 "Sender": sender,
                 "Timestamp": datetime.datetime.now(),
