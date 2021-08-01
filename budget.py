@@ -64,13 +64,13 @@ def addcategory(response,sender):
         attachment_url = 'https://chikobvore.github.io/dura_online_shop/images/Sample%20performance%20report.pdf'
         api.send_attachment(sender,attachment_url,caption)
 
-        caption = "3.*Proposed projects and funding sources*,\nComments from council about *Proposed projects and funding sources* comes here\n\nHow satisfied are you with our proposed projects,to respond to this question,please reply your message as follows\n(1,rating out of 10 (1-very poor,5-moderate,10-excellent),Your comments)\n*For Example*\n1,9,well done"
+        caption = "3.*Proposed projects and funding sources*"
         attachment_url = 'https://chikobvore.github.io/dura_online_shop/images/project%20proposals.pdf'
         api.send_attachment(sender,attachment_url,caption)
 
         sh.session_status(sender,session_type='8',status='1B')
-
-        message = "Thank you for reviewing our budget,if you are done juss type *Done* to save your views"
+        
+        message = "How satisfied are you with our\n1*Performance Report*\n2*Tarrif Schedule*\n3*Proposed projects and funding sources*\n\nTo respond to this questions,please reply your message as follows\n(1 for performance report,rating out of 10 (1-very poor,5-moderate,10-excellent),Your comments)\n*For Example*\n1,9,well done\n\nThank you for reviewing our budget,if you are done juss type *Done* to save your views or repeat for more ratings"
         api.reply_message(sender,message)
         return '', 200
     except:
@@ -93,7 +93,7 @@ def addcomment(response,sender):
             "Comment": details[2],
             }
         dbh.db['budget_reviews'].insert_one(record)
-        
+
         message = "*Details successfully saved*\nTo continue reviewing please reply as follows\n(1,rating out of 10 (1-very poor,5-moderate,10-excellent),Your comments)\n*For Example*\n1,9,well done"
         api.reply_message(sender,message)
         return '', 200
