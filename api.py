@@ -7,7 +7,7 @@ def reply_message(sender,message):
         "body": message
         }
 
-  response = requests.post("https://api.chat-api.com/instance313121/sendMessage?token=rl2kp4l061iae12j", data=payload)
+  response = requests.post("https://api.chat-api.com/instance315523/sendMessage?token=j3sn7u4f0mv5plbf", data=payload)
   return str(response.status_code)
 
 def send_attachment(sender,attachment_url,caption):
@@ -17,5 +17,5 @@ def send_attachment(sender,attachment_url,caption):
             "caption": caption,
             "body": attachment_url
       }
-      response = requests.post("https://api.chat-api.com/instance313121/sendFile?token=rl2kp4l061iae12j", data=payload)
+      response = requests.post("https://api.chat-api.com/instance315523/sendFile?token=j3sn7u4f0mv5plbf", data=payload)
       return str(response.status_code)

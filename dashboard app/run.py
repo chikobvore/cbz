@@ -5,12 +5,16 @@ import pymongo
 from flask import Flask, redirect, render_template, request, session, url_for,jsonify
 from bson import json_util
 import json
+import ssl
 import mysql.connector
 import requests
 
 app = Flask(__name__)
-client = pymongo.MongoClient("mongodb+srv://ladsroot:ladsroot@lads.f97uh.mongodb.net/tau?retryWrites=true&w=majority")
+client = pymongo.MongoClient("mongodb+srv://ladsroot:ladsroot@lads.f97uh.mongodb.net/tau?retryWrites=true&w=majority", ssl_cert_reqs=ssl.CERT_NONE)
 db = client.tau
+
+# client = pymongo.MongoClient("mongodb+srv://ladsroot:ladsroot@lads.f97uh.mongodb.net/tau?retryWrites=true&w=majority")
+# db = client.tau
 
 
 @app.route('/') 
