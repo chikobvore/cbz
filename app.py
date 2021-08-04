@@ -26,9 +26,9 @@ def paynowresponse():
 def dashboard():
     
     if request.method == 'GET':
-        num_payments = db['payments'].count_documents({})
-        feeds = db['feedback'].count_documents({})
-        waitinglists = db['waiting_list'].count_documents({})
+        # num_payments = db['payments'].count_documents({})
+        # feeds = db['feedback'].count_documents({})
+        # waitinglists = db['waiting_list'].count_documents({})
         return "dashboard"
         #return render_template('index.html',num_p = num_payments,feeds = feeds,waitinglists = waitinglists)
 
