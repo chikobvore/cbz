@@ -222,6 +222,6 @@ def attachmentmessage(response,sender):
     sh.session_status(sender,session_type='8',status='1G')
     message = "Which one of the attached documents do you want to review/comment\n*1*.Performance Report\n*2*.Tarrif Schedule\n*3*.Proposed Projects"
     api.reply_message(sender,message)
-    return return '', 200
+    return '', 200
 
 
