@@ -216,7 +216,8 @@ def addratings(response,sender):
             api.reply_message(sender,message)
             return '', 200
         else:
-            message = "*I am sorry i didnt get that*\nHow do you rate this budget out of 10 (0-Very Bad,5-Better,10-Excellent Work)"
+            sh.session_status(sender,session_type='8',status='1K')
+            message = "*Your rating have been successfully saved!!*\nHow can we make this budget better"
             api.reply_message(sender,message)
             return '', 200
     except:
