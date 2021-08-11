@@ -717,8 +717,6 @@ def dashboard():
             elif state['Status'] == "1I":
                 return budget.objectBudget(response,sender)
             elif state['Status'] == "1J":
-                return budget.addobjection(response,sender)
-            elif state['Status'] == "1H":
                 return budget.addratings(response,sender)
             elif state['Status'] == "1K":
                 return budget.addrecommendations(response,sender)
