@@ -131,7 +131,7 @@ def dashboard():
                     sh.session_status(sender,session_type='8',status='1B')
                     message = "*Welcome Back* "+ sender
                     api.reply_message(sender,message)
-                    return budget.attachmentmessage(response,sender)
+                    return budget.attachmentmessage(sender)
             
             elif response == "0":
                 return main.menu(sender)
