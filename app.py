@@ -57,16 +57,10 @@ def dashboard():
             }
         dbh.db['Senders'].insert_one(record)
 
-        message = "Hello "+ senderName +" 🙋🏽‍♂ , \nThank you for contacting Lads Africa,I'm Tau, i'm a virtual assistant,\nFor any emergency 👇 \n📞 Dial Number: +263773068901 \n\nPlease select one of the following options 👇 \n*1*.Waiting List Services 📝\n*2*.Account Services\n*3*.Book an inspection\n*4*.Payment Plan services\n*5*.Log a Query\n*6*.Make a payment\n*7*.Request a call from our customer care representatives\n*8*.Budget Consultations\n*0*.Cancel"
-        payload = {
-            "phone": sender,
-            "filename": 'https://scontent.fjnb3-1.fna.fbcdn.net/v/t1.6435-9/118982437_111542584019790_4698392666874714197_n.png?_nc_cat=100&ccb=1-3&_nc_sid=174925&_nc_ohc=SJVd0nyKMHMAX9lIqfy&_nc_ht=scontent.fjnb3-1.fna&oh=38e87e3121ec802c19d4c63b0e3756e1&oe=60F558FC',
-            "caption": message,
-            "body": 'https://scontent.fjnb3-1.fna.fbcdn.net/v/t1.6435-9/118982437_111542584019790_4698392666874714197_n.png?_nc_cat=100&ccb=1-3&_nc_sid=174925&_nc_ohc=SJVd0nyKMHMAX9lIqfy&_nc_ht=scontent.fjnb3-1.fna&oh=38e87e3121ec802c19d4c63b0e3756e1&oe=60F558FC'
-        }
-        response = requests.post("https://api.chat-api.com/instance315523/sendFile?token=j3sn7u4f0mv5plbf", data=payload)
-        print('....replied: '+ sender + '...........')
-        return str(response.status_code)
+        caption = "Hello "+ senderName +" 🙋🏽‍♂ , \nThank you for contacting Lads Africa,I'm Tau, i'm a virtual assistant,\nFor any emergency 👇 \n📞 Dial Number: +263773068901 \n\nPlease select one of the following options 👇 \n*1*.Waiting List Services 📝\n*2*.Account Services\n*3*.Book an inspection\n*4*.Payment Plan services\n*5*.Log a Query\n*6*.Make a payment\n*7*.Request a call from our customer care representatives\n*8*.Budget Consultations\n*0*.Cancel"
+        attachment_url = 'https://chikobvore.github.io/Unlock-Technologies/img/logo.jpeg'
+        api.send_attachment(sender,attachment_url,caption)
+        return '', 200
 
     else:
         response = response

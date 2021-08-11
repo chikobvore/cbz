@@ -1,5 +1,8 @@
 import requests
 
+api_instance_url = 'https://api.chat-api.com/instance319118'
+api_token = 'k8hugsmq9pwj9a6e'
+
 #EMAIL: tau@ladsafrica.co.zw
 def reply_message(sender,message):
   payload = {
@@ -7,7 +10,7 @@ def reply_message(sender,message):
         "body": message
         }
 
-  response = requests.post("https://api.chat-api.com/instance315523/sendMessage?token=j3sn7u4f0mv5plbf", data=payload)
+  response = requests.post( api_instance_url+"/sendMessage?token="+api_token, data=payload)
   return str(response.status_code)
 
 def send_attachment(sender,attachment_url,caption):
@@ -17,5 +20,5 @@ def send_attachment(sender,attachment_url,caption):
             "caption": caption,
             "body": attachment_url
       }
-      response = requests.post("https://api.chat-api.com/instance315523/sendFile?token=j3sn7u4f0mv5plbf", data=payload)
+      response = requests.post(api_instance_url+"/sendFile?token="+api_token, data=payload)
       return str(response.status_code)
