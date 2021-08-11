@@ -186,7 +186,7 @@ def addcomment(response,sender):
         api.reply_message(sender,message)
         return '', 200
     else:
-        message = "I am sorry i didnt get that\nWhich one of the attached documents do you want to review/comment\n*1*.Performance Report\n*2*.Tarrif Schedule\n*3*.Proposed Projects"
+        message = "*I am sorry i didnt get that*\nWhich one of the attached documents do you want to review/comment\n*1*.Performance Report\n*2*.Tarrif Schedule\n*3*.Proposed Projects"
         api.reply_message(sender,message)
         return '', 200
 
@@ -197,30 +197,42 @@ def addobjection(response,sender):
         api.reply_message(sender,message)
         return '', 200
     elif response == 'N' or response == 'n':
-        message = "What is your overal take on the budget"
+        message = "*What is your overal take on the budget,please comment on the budget*"
         api.reply_message(sender,message)
         return '', 200
         
 def objectBudget(response,sender):
     sh.session_status(sender,session_type='8',status='1J')
-    message = "Details successfully have been successfully saved!!\nHow do you rate this budget"
+    message = "*Details successfully have been successfully saved!!*\nHow do you rate this budget out of 10 (0-Very Bad,5-Better,10-Excellent Work)"
     api.reply_message(sender,message)
     return '', 200
 
 def addratings(response,sender):
-    sh.session_status(sender,session_type='8',status='1K')
-    message = "Your rating have been successfully saved!!\nHow can we make this budget better"
-    api.reply_message(sender,message)
-    return '', 200
+    
+    try:
+        if type(response) == int:
+            sh.session_status(sender,session_type='8',status='1K')
+            message = "*Your rating have been successfully saved!!*\nHow can we make this budget better"
+            api.reply_message(sender,message)
+            return '', 200
+        else:
+            message = "*I am sorry i didnt get that*\nHow do you rate this budget out of 10 (0-Very Bad,5-Better,10-Excellent Work)"
+            api.reply_message(sender,message)
+            return '', 200
+    except:
+        message = "An error occured whilst trying to log your message,Please provide a valid input"
+        api.reply_message(sender,message)
+        return '', 200
+
 
 def addrecommendations(response,sender):
-    message = "Thank you for taking time to review our budget"
+    message = "*Thank you for taking time to review our budget* Your feedback is important to us"
     api.reply_message(sender,message)
-    return main.menu(sender)
+    return main.feedback(sender)
 
 def attachmentmessage(response,sender):
     sh.session_status(sender,session_type='8',status='1G')
-    message = "Which one of the attached documents do you want to review/comment\n*1*.Performance Report\n*2*.Tarrif Schedule\n*3*.Proposed Projects"
+    message = "*Which one of the attached documents do you want to review/comment*\n\n*1*.Performance Report\n*2*.Tarrif Schedule\n*3*.Proposed Projects"
     api.reply_message(sender,message)
     return '', 200
 
