@@ -13,7 +13,7 @@ def reply_message(sender,message):
 def send_attachment(sender,attachment_url,caption):
       payload = {
             "phone": sender,
-            "filename": attachment_url,
+            "filename": caption,
             "caption": caption,
             "body": attachment_url
       }

@@ -130,14 +130,14 @@ def dashboard():
                 #check if session exist
                 if existance < 1:
                     sh.session_status(sender,session_type=response,status='0')
-                    message = "*Budget consultations*\nThank you for reaching us, we value your feedback and support.\nFor the purposes of quality evaluation please provide your personal details as follows\n*(Full Name,Gender,Age,Nationality)*\nFor example *John Doe,Male,27,Zimbabwean*"
+                    message = "*Budget consultations*\nThank you for reaching us, we value your feedback and support.\nFor the purposes of quality evaluation please provide your full name"
                     api.reply_message(sender,message)
                     return '', 200
                 else:
                     sh.session_status(sender,session_type='8',status='1B')
-                    message = "*Welcome Back*\nHow satisfied are you with our\n1*Performance Report*\n2*Tarrif Schedule*\n3*Proposed projects and funding sources*\n\nTo respond to this questions,please reply your message as follows\n(1 for performance report,rating out of 10 (1-very poor,5-moderate,10-excellent),Your comments)\n*For Example*\n1,9,well done\n\nThank you for reviewing our budget,if you are done juss type *Done* to save your views or repeat for more ratings"
+                    message = "*Welcome Back* "+ sender
                     api.reply_message(sender,message)
-                    return '', 200
+                    return budget.attachmentmessage(response,sender)
             
             elif response == "0":
                 return main.menu(sender)
@@ -703,13 +703,35 @@ def dashboard():
         elif state['session_type'] == "8":
 
             if state['Status'] == "0":
-                return budget.addpersonaldetails(response,sender)
+                return budget.addfullname(response,sender)
             elif state['Status'] == "1A":
-                return budget.addcategory(response,sender)
+                return budget.addgender(response,sender)
             elif state['Status'] == "1B":
+                return budget.addage(response,sender)
+            elif state['Status'] == "1C":
+                return budget.addnation(response,sender)
+            elif state['Status'] == "1D":
+                return budget.addcategory(response,sender)
+            elif state['Status'] == "1E":
+                return budget.addaccount(response,sender)
+            elif state['Status'] == "1F":
+                return budget.senddocuments(response,sender)
+            elif state['Status'] == "1G":
                 return budget.addcomment(response,sender)
+            elif state['Status'] == "1H":
+                return budget.addobjection(response,sender)
+            elif state['Status'] == "1I":
+                return budget.objectBudget(response,sender)
+            elif state['Status'] == "1J":
+                return budget.addobjection(response,sender)
+            elif state['Status'] == "1H":
+                return budget.addratings(response,sender)
+            elif state['Status'] == "1K":
+                return budget.addrecommendations(response,sender)
             else:
-                pass
+                message = "*im sorry i didnt get that*"
+                api.reply_message(sender,message)
+                return '', 200
 
         elif state['session_type'] == "Feedback":
             record = {
@@ -719,6 +741,7 @@ def dashboard():
                 }
             dbh.db['feedback'].insert_one(record)
             return main.endchat(sender)
+
         else:
             message = "*im sorry i didnt get that*"
             api.reply_message(sender,message)
