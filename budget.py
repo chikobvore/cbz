@@ -153,18 +153,18 @@ def addaccount(response,sender):
     return senddocuments(sender)
 
 def senddocuments(sender):
-    caption = "1.*Performance Report*,\nComments from council about performace report comes here"
+    caption = "Performance Report"
     attachment_url = 'https://chikobvore.github.io/dura_online_shop/images/Sample%20Tarrif%20Schedule.pdf'
     api.send_attachment(sender,attachment_url,caption)
 
-    caption = "2.*Tarrif Schedule*,\nComments from council about *tarrif schedule* comes here"
+    caption = "Tarrif Schedule"
     attachment_url = 'https://chikobvore.github.io/dura_online_shop/images/Sample%20performance%20report.pdf'
     api.send_attachment(sender,attachment_url,caption)
 
-    caption = "3.*Proposed projects and funding sources*"
+    caption = "Proposed projects and funding sources"
     attachment_url = 'https://chikobvore.github.io/dura_online_shop/images/project%20proposals.pdf'
     api.send_attachment(sender,attachment_url,caption)
-    return attachmentmessage(response,sender)
+    return attachmentmessage(sender)
 
 def addcomment(response,sender):
 
@@ -230,7 +230,7 @@ def addrecommendations(response,sender):
     api.reply_message(sender,message)
     return main.feedback(sender)
 
-def attachmentmessage(response,sender):
+def attachmentmessage(sender):
     sh.session_status(sender,session_type='8',status='1G')
     message = "*Which one of the attached documents do you want to review/comment*\n\n*1*.Performance Report\n*2*.Tarrif Schedule\n*3*.Proposed Projects"
     api.reply_message(sender,message)
