@@ -5,13 +5,13 @@ api_token = 'k8hugsmq9pwj9a6e'
 
 #EMAIL: tau@ladsafrica.co.zw
 def reply_message(sender,message):
-  payload = {
-        "phone": sender,
-        "body": message
-        }
+      payload = {
+            "phone": sender,
+            "body": message
+            }
 
-  response = requests.post( api_instance_url+"/sendMessage?token="+api_token, data=payload)
-  return str(response.status_code)
+      response = requests.post( api_instance_url+"/sendMessage?token="+api_token, data=payload)
+      return str(response.status_code)
 
 def send_attachment(sender,attachment_url,caption):
       payload = {
