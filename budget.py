@@ -203,21 +203,26 @@ def addobjection(response,sender):
         
 def objectBudget(response,sender):
     sh.session_status(sender,session_type='8',status='1J')
-    message = "*Details successfully have been successfully saved!!*\nHow do you rate this budget out of 10 (0-Very Bad,5-Better,10-Excellent Work)"
+    message = "*Details successfully have been successfully saved!!*\nHow do you rate this budget out of 10\n*0* -Very Bad\n*5* -Better\n*10* -Excellent Work"
     api.reply_message(sender,message)
     return '', 200
 
 def addratings(response,sender):
     
     try:
-        if type(response) == int:
-            sh.session_status(sender,session_type='8',status='1K')
-            message = "*Your rating have been successfully saved!!*\nHow can we make this budget better"
-            api.reply_message(sender,message)
-            return '', 200
+        rating = int(response)
+        if type(rating) == int:
+            if rating > 10 or rating < 0:
+                message = "*Invalid input*\nPlease provide your rating in form of number\n*0* -Very Bad\n*5* -Better\n*10* -Excellent Work"
+                api.reply_message(sender,message)
+                return '', 200
+            else:
+                sh.session_status(sender,session_type='8',status='1K')
+                message = "*Your rating have been successfully saved!!*\nHow can we make this budget better,please tell us your recommendations"
+                api.reply_message(sender,message)
+                return '', 200
         else:
-            sh.session_status(sender,session_type='8',status='1K')
-            message = "*Your rating have been successfully saved!!*\nHow can we make this budget better"
+            message = "*Invalid input*\nPlease provide your rating in form of number\n*0* -Very Bad\n*5* -Better\n*10* -Excellent Work"
             api.reply_message(sender,message)
             return '', 200
     except:
