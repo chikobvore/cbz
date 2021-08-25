@@ -73,7 +73,7 @@ def addage(response,sender):
     dbh.db['budget_reviewers'].update({"Sender": sender},{
         "Sender": sender,
         "Full_name": details['Full_name'],
-        "Gender": 'Female',
+        "Gender": details['Gender'],
         "Age": response,
         "Nationality": 'NULL'
     })
@@ -120,6 +120,7 @@ def addcategory(response,sender):
             "Full_name": details['Full_name'],
             "Gender": details['Gender'],
             "Age": details['Gender'],
+            "Nationality": details['Nationality'],
             "Catergory": response
         })
         sh.session_status(sender,session_type='8',status='1E')
@@ -145,6 +146,7 @@ def addaccount(response,sender):
         "Gender": details['Gender'],
         "Age": details['Gender'],
         "Catergory": details['Catergory'],
+        "Nationality": details['Nationality'],
         "Account_no": response
     })
     sh.session_status(sender,session_type='8',status='1F')
@@ -169,18 +171,56 @@ def senddocuments(sender):
 def addcomment(response,sender):
 
     if response == '1':
+        budget_type = "Performance Report"
+        record = {
+            "Sender": sender,
+            "Budget_type": budget_type,
+            "Objection": 'NULL',
+            "Comment": 'NULL',
+            "Rating": 'NULL',
+            "Recommendations": 'NULL',
+            "Status": "PENDING"
+            }
+        dbh.db['pending_budget_reviews'].insert_one(record)
+
         sh.session_status(sender,session_type='8',status='1H')
         message = "*Performance Report*\nDo you have any objection regarding our performance report\n*Y*.Yes\n*N*.No\n\nPlease respond with one of the above options"
         api.reply_message(sender,message)
         return '', 200
 
     elif response == '2':
+
+        budget_type = "Tarrif Schedule"
+        record = {
+            "Sender": sender,
+            "Budget_type": budget_type,
+            "Objection": 'NULL',
+            "Comment": 'NULL',
+            "Rating": 'NULL',
+            "Recommendations": 'NULL',
+            "Status": "PENDING"
+            }
+        dbh.db['pending_budget_reviews'].insert_one(record)
+
         sh.session_status(sender,session_type='8',status='1H')
         message = "*Tarrif Schedule*\nDo you have any objection regarding our tarrif schedule\n*Y*.Yes\n*N*.No\n\nPlease respond with one of the above options"
         api.reply_message(sender,message)
         return '', 200
 
     elif response == '3':
+
+        budget_type = "Proposed Projects"
+        record = {
+            "Sender": sender,
+            "Budget_type": budget_type,
+            "Objection": 'NULL',
+            "Comment": 'NULL',
+            "Rating": 'NULL',
+            "Recommendations": 'NULL',
+            "Status": "PENDING"
+            }
+        dbh.db['pending_budget_reviews'].insert_one(record)
+
         sh.session_status(sender,session_type='8',status='1H')
         message = "*Proposed projects and funding*\nDo you have any objection regarding our proposed projects and fundings\n*Y*.Yes\n*N*.No\n\nPlease respond with one of the above options"
         api.reply_message(sender,message)
@@ -193,16 +233,49 @@ def addcomment(response,sender):
 def addobjection(response,sender):
     sh.session_status(sender,session_type='8',status='1I')
     if response == 'Y' or response == 'y':
+        details = dbh.db['pending_budget_reviews'].find_one({"Sender": sender})
+        dbh.db['pending_budget_reviews'].update({"Sender": sender},{
+            "Sender": sender,
+            "Budget_type": details['Budget_type'],
+            "Objection": 'YES',
+            "Comment": 'NULL',
+            "Rating": 'NULL',
+            "Recommendations": 'NULL',
+            "Status": "PENDING"
+        })
+
         message = "*Please specify your objections*"
         api.reply_message(sender,message)
         return '', 200
     elif response == 'N' or response == 'n':
+        
+        details = dbh.db['pending_budget_reviews'].find_one({"Sender": sender})
+        dbh.db['pending_budget_reviews'].update({"Sender": sender},{
+            "Sender": sender,
+            "Budget_type": details['Budget_type'],
+            "Objection": 'NO',
+            "Comment": 'NULL',
+            "Rating": 'NULL',
+            "Recommendations": 'NULL',
+            "Status": "PENDING"
+        })
         message = "*What is your overal take on the budget,please comment on the budget*"
         api.reply_message(sender,message)
         return '', 200
         
 def objectBudget(response,sender):
     sh.session_status(sender,session_type='8',status='1J')
+
+    details = dbh.db['pending_budget_reviews'].find_one({"Sender": sender})
+    dbh.db['pending_budget_reviews'].update({"Sender": sender},{
+        "Sender": sender,
+        "Budget_type": details['Budget_type'],
+        "Objection": details['Objection'],
+        "Comment": response,
+        "Rating": 'NULL',
+        "Recommendations": 'NULL',
+        "Status": "PENDING"
+    })
     message = "*Details successfully have been successfully saved!!*\nHow do you rate this budget out of 10\n*0* -Very Bad\n*5* -Better\n*10* -Excellent Work"
     api.reply_message(sender,message)
     return '', 200
@@ -217,6 +290,17 @@ def addratings(response,sender):
                 api.reply_message(sender,message)
                 return '', 200
             else:
+
+                details = dbh.db['pending_budget_reviews'].find_one({"Sender": sender})
+                dbh.db['budget_reviewers'].update({"Sender": sender},{
+                    "Sender": sender,
+                    "Budget_type": details['Budget_type'],
+                    "Objection": details['Objection'],
+                    "Comment": details['Comment'],
+                    "Rating": rating,
+                    "Recommendations": 'NULL',
+                    "Status": "PENDING"
+                })
                 sh.session_status(sender,session_type='8',status='1K')
                 message = "*Your rating have been successfully saved!!*\nHow can we make this budget better,please tell us your recommendations"
                 api.reply_message(sender,message)
@@ -232,6 +316,32 @@ def addratings(response,sender):
 
 
 def addrecommendations(response,sender):
+
+    details = dbh.db['pending_budget_reviews'].find_one({"Sender": sender})
+    dbh.db['budget_reviewers'].update({"Sender": sender},{
+        "Sender": sender,
+        "Budget_type": details['Budget_type'],
+        "Objection": details['Objection'],
+        "Comment": details['Comment'],
+        "Rating": details['Rating'],
+        "Recommendations": response,
+        "Status": "PENDING"
+    })
+
+    details = dbh.db['pending_budget_reviews'].find_one({"Sender": sender})
+    
+    record = {
+            "Sender": sender,
+            "Budget_type": details['Budget_type'],
+            "Objection": details['Objection'],
+            "Comment": details['Comment'],
+            "Rating": details['Rating'],
+            "Recommendations": details['Recommendations'],
+            "Status": details['Status'],
+            }
+    dbh.db['budget_reviews'].insert_one(record)
+    dbh.db['pending_budget_reviews'].find_one_and_delete({'Sender': sender})
+
     message = "*Thank you for taking time to review our budget* Your feedback is important to us"
     api.reply_message(sender,message)
     return main.feedback(sender)
