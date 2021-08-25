@@ -292,7 +292,7 @@ def addratings(response,sender):
             else:
 
                 details = dbh.db['pending_budget_reviews'].find_one({"Sender": sender})
-                dbh.db['budget_reviewers'].update({"Sender": sender},{
+                dbh.db['pending_budget_reviews'].update({"Sender": sender},{
                     "Sender": sender,
                     "Budget_type": details['Budget_type'],
                     "Objection": details['Objection'],
@@ -318,7 +318,7 @@ def addratings(response,sender):
 def addrecommendations(response,sender):
 
     details = dbh.db['pending_budget_reviews'].find_one({"Sender": sender})
-    dbh.db['budget_reviewers'].update({"Sender": sender},{
+    dbh.db['pending_budget_reviews'].update({"Sender": sender},{
         "Sender": sender,
         "Budget_type": details['Budget_type'],
         "Objection": details['Objection'],
