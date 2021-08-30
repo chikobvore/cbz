@@ -1,0 +1,99 @@
+{% extends 'index.htm' %} {% block content %}
+
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+        <!-- Main-body start -->
+        <div class="main-body">
+            <div class="page-wrapper">
+                <!-- Page-header start -->
+                <div class="page-header">
+                    <div class="row align-items-end">
+                        <div class="col-lg-8">
+                            <div class="page-header-title">
+                                <div class="d-inline">
+                                    <h4>Performance Report</h4>
+                                    <span>Statistics</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="page-header-breadcrumb">
+                                <ul class="breadcrumb-title">
+                                    <li class="breadcrumb-item">
+                                        <a href="/performance-report/statistics"> <i class="feather icon-home"></i> </a>
+                                    </li>
+                                    <li class="breadcrumb-item">
+                                        <a href="#!">Performance Report/Statitics</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Page-header end -->
+                <!-- Page-body start -->
+                <div class="page-body">
+                    <div class="row">
+                        <!-- statustic with progressbar  start -->
+                        <!-- statustic with progressbar  end -->
+
+                        <!-- customar project  start -->
+                        <!-- customar project  end -->
+
+                        <!-- user start -->
+
+                        <!-- user card  start -->
+                        <div class="col-md-6 col-xl-3">
+                            <div class="card user-widget-card bg-c-blue">
+                                <div class="card-block">
+                                    <i class="feather icon-user bg-simple-c-blue card1-icon"></i>
+                                    <h4>{{ performance_review }}</h4>
+                                    <p>Total Reviews</p>
+                                    <a href="#!" class="more-info">More Info</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xl-3">
+                            <div class="card user-widget-card bg-c-pink">
+                                <div class="card-block">
+                                    <i class="feather icon-home bg-simple-c-pink card1-icon"></i>
+                                    <h4>{{ objections }}</h4>
+                                    <p>Objections</p>
+                                    <a href="#!" class="more-info">More Info</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xl-3">
+                            <div class="card user-widget-card bg-c-green">
+                                <div class="card-block">
+                                    <i class="feather icon-alert-triangle bg-simple-c-green card1-icon"></i>
+                                    <h4>{{ performance_avgrating }}</h4>
+                                    <p>Average Rating</p>
+                                    <a href="#!" class="more-info">More Info</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xl-3">
+                            <div class="card user-widget-card bg-c-yellow">
+                                <div class="card-block">
+                                    <i class="feather icon-twitter bg-simple-c-yellow card1-icon"></i>
+                                    <h4>{{ performance_review }}</h4>
+                                    <p>Recommendations</p>
+                                    <a href="#!" class="more-info">More Info</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- user card  end -->
+                        <!-- order  start -->
+                        <!-- order  end -->
+                    </div>
+                </div>
+                <!-- Page-body end -->
+
+
+            </div>
+            <div id="styleSelector"> </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -144,7 +144,7 @@ def dashboard():
 
         elif state['session_type'] == "1":
 
-            if response == "1":
+            f response == "1":
 
                 sh.session_status(sender,state['session_type'],'terms')
                 message = "*Terms and Conditions* \nplease read our terms and conditions carefully before proceeding\n*1*.The applicant undertakes to comply with council's terms of offer of stand.Failure to do so will result in the applicant being disqualified.\n*2*.Applicant should renew his application during the month of january every year.Failure to do so will result in applicant being removed from the waiting list.\n\n*Yes*.I have read, understood and accepted the terms and conditions of joining the waiting list.\n*No*.I dont agree with the stated terms and conditions of joing waiting list."

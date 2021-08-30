@@ -88,7 +88,7 @@ def addnation(response,sender):
         "Sender": sender,
         "Full_name": details['Full_name'],
         "Gender": details['Gender'],
-        "Age": details['Gender'],
+        "Age": details['Age'],
         "Nationality": response
     })
     sh.session_status(sender,session_type='8',status='1D')
@@ -329,15 +329,18 @@ def addrecommendations(response,sender):
     })
 
     details = dbh.db['pending_budget_reviews'].find_one({"Sender": sender})
+    sender_details = dbh.db['budget_reviewers'].find_one({"Sender": sender})
     
     record = {
             "Sender": sender,
+            "Sender_catergory": sender_details['Catergory'],
+            "Sender_gender": sender_details['Gender'],
             "Budget_type": details['Budget_type'],
             "Objection": details['Objection'],
             "Comment": details['Comment'],
             "Rating": details['Rating'],
             "Recommendations": details['Recommendations'],
-            "Status": details['Status'],
+            "Timestamp": datetime.datetime.now(),
             }
     dbh.db['budget_reviews'].insert_one(record)
     dbh.db['pending_budget_reviews'].find_one_and_delete({'Sender': sender})
