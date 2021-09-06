@@ -350,9 +350,50 @@ def addrecommendations(response,sender):
     return main.feedback(sender)
 
 def attachmentmessage(sender):
+
     sh.session_status(sender,session_type='8',status='1G')
     message = "*Which one of the attached documents do you want to review/comment*\n\n*1*.Performance Report\n*2*.Tarrif Schedule\n*3*.Proposed Projects"
     api.reply_message(sender,message)
     return '', 200
+
+def welcomeback(response,sender):
+
+    if response == '1':
+        return resend_performance_report(sender)
+    elif response == '2':
+        return resend_tarrif_schedule(sender)
+    elif response == '3':
+        resend_proposed_projects_report(sender)
+    elif response == '4':
+        return attachmentmessage(sender)
+    elif response == '0':
+        return senddocuments(sender)
+    else:
+        message = "I am sorry, i didnt get that"
+        api.reply_message(sender,message)
+        return '', 200
+
+def resend_performance_report(sender):
+    
+    caption = "Performance Report"
+    attachment_url = 'https://chikobvore.github.io/dura_online_shop/images/Sample%20Tarrif%20Schedule.pdf'
+    api.send_attachment(sender,attachment_url,caption)
+
+    return addcomment('1',sender)
+
+def resend_tarrif_schedule(sender):
+    
+    caption = "Tarrif Schedule"
+    attachment_url = 'https://chikobvore.github.io/dura_online_shop/images/Sample%20performance%20report.pdf'
+    api.send_attachment(sender,attachment_url,caption)
+    return addcomment('2',sender)
+
+def resend_proposed_projects_report(sender):
+
+    caption = "Proposed projects and funding sources"
+    attachment_url = 'https://chikobvore.github.io/dura_online_shop/images/project%20proposals.pdf'
+    api.send_attachment(sender,attachment_url,caption)
+    return addcomment('3',sender)
+
 
 

@@ -38,7 +38,7 @@ def dashboard():
     message_id = payload['messages'][0]['id']
     response = payload['messages'][0]['body']
     
-    if sender == '263716897966':
+    if sender == '263771067779':
         return '', 200
 
     if response == 'Done' or response == 'done':
@@ -57,8 +57,8 @@ def dashboard():
             }
         dbh.db['Senders'].insert_one(record)
 
-        caption = "Hello "+ senderName +" 🙋🏽‍♂ , \nThank you for contacting Lads Africa,I'm Tau, i'm a virtual assistant,\nFor any emergency 👇 \n📞 Dial Number: +263773068901 \n\nPlease select one of the following options 👇 \n*1*.Waiting List Services 📝\n*2*.Account Services\n*3*.Book an inspection\n*4*.Payment Plan services\n*5*.Log a Query\n*6*.Make a payment\n*7*.Request a call from our customer care representatives\n*8*.Budget Consultations\n*0*.Cancel"
-        attachment_url = 'https://chikobvore.github.io/Unlock-Technologies/img/logo.jpeg'
+        caption = "Hello "+ senderName +" 🙋🏽‍♂ , \nThank you for contacting Mutare City Council,I'm Tau, i'm a virtual assistant,\nFor any emergency 👇 \n📞 Dial Number: +263202060823 \n\nPlease select one of the following options 👇 \n*1*.Waiting List Services 📝\n*2*.Account Services\n*3*.Book an inspection\n*4*.Payment Plan services\n*5*.Log a Query\n*6*.Make a payment\n*7*.Request a call from our customer care representatives\n*8*.Budget Consultations\n*0*.Cancel"
+        attachment_url = 'https://www.mutarecity.co.zw/images/mutarelogo.png'
         api.send_attachment(sender,attachment_url,caption)
         return '', 200
 
@@ -74,13 +74,20 @@ def dashboard():
         total_seconds = time_delta.total_seconds()
 
         minutes = total_seconds/60
-        if minutes > 10:
+        if minutes > 10 and minutes < 60:
             sh.session_status(sender,'0','0')
             dbh.db['pending_payments'].find_one_and_delete({'Sender': sender})
             dbh.db['pending_budget_reviews'].find_one_and_delete({'Sender': sender})
             message =  "*Previous session expired*\nHello *"+ senderName +"* 🙋🏽‍♂,\nPlease select one of the following options 👇\n*1*. Waiting List Services 📝.\n*2*.Account Services\n*3*.Book an inspection\n*4*.Payment Plan services\n*5*.Log a Query\n*6*.Make a payment\n*7*.Request a call from our customer care representatives\n*8*.Budget Consultations\n*0*.Cancel"
             api.reply_message(sender,message)
             return '', 200
+        
+        elif minutes > 60:
+            return '', 200
+        else:
+            pass
+        
+
 
 
         if state['session_type'] == "0":
@@ -129,10 +136,11 @@ def dashboard():
                     api.reply_message(sender,message)
                     return '', 200
                 else:
-                    sh.session_status(sender,session_type='8',status='1B')
-                    message = "*Welcome Back* "+ sender
+                    sh.session_status(sender,session_type='8',status='1L')
+                    message = "*Welcome Back* "+ sender +"\nPlease select one of the following options\n*1*.Resend Performance Report\n*2*.Resend Tarrif Schedule\n*3*.Resend Proposed Projects Report\n*4*.Continue reviewing\n*0*.Resend all attachments"
                     api.reply_message(sender,message)
-                    return budget.attachmentmessage(sender)
+                    return '', 200
+    
             
             elif response == "0":
                 return main.menu(sender)
@@ -721,6 +729,8 @@ def dashboard():
                 return budget.addratings(response,sender)
             elif state['Status'] == "1K":
                 return budget.addrecommendations(response,sender)
+            elif state['Status'] == "1L":
+                return budget.welcomeback(response,sender)
             else:
                 message = "*im sorry i didnt get that*"
                 api.reply_message(sender,message)
