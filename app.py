@@ -20,7 +20,7 @@ def paynowresponse():
     return '',200
 
 @app.route('/api',methods=["post"])
-def menu():
+def chatmenu():
 
     payload = request.get_json()
     sender = payload['messages'][0]['author'].split('@')[0]
