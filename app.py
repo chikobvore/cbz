@@ -119,7 +119,7 @@ def chatmenu():
                     return '', 200
                 else:
                     sh.session_status(sender,session_type='8',status='1L')
-                    message = "*Welcome Back* "+ sender +"\nPlease select one of the following options\n*1*.Resend Performance Report\n*2*.Resend Tarrif Schedule\n*3*.Resend Proposed Projects Report\n*4*.Continue reviewing\n*0*.Resend all attachments"
+                    message = "*Welcome Back* "+ sender +"\nPlease select one of the following options\n*1*.Resend Performance Report\n*2*.Resend Proposed budget\n*3*.Continue reviewing\n*0*.Resend all attachments"
                     api.reply_message(sender,message)
                     return '', 200
     
@@ -767,7 +767,7 @@ def dashboard():
             projects_avgrating =  round(a['avgRating'])
         else:
             print('unidentified')
-    comments = dbh.db['budget_reviews'].find().limit(100)
+    comments = dbh.db['budget_reviews'].find().sort(reverse=False).limit(100)
     #return "Total"+ str(total_reviews) +"<br>" + "Performance"+ str(performance_review) + "<br>" + "Tarrif" + str(tarrif_review) + "<br>"+ "Projects" + str(projects_review)
     return render_template('index.htm',total_reviews = total_reviews,
     performance_review = performance_review,tarrif_review = tarrif_review,

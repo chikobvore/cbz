@@ -155,16 +155,16 @@ def addaccount(response,sender):
     return senddocuments(sender)
 
 def senddocuments(sender):
-    caption = "Performance Report"
-    attachment_url = 'https://chikobvore.github.io/dura_online_shop/images/Sample%20Tarrif%20Schedule.pdf'
+    caption = "PERFORMANCE REPORT"
+    attachment_url = 'https://chikobvore.github.io/Unlock-Technologies/lib/BUDGET%20PERFORMANCE%20REVIEW%202021.pdf'
     api.send_attachment(sender,attachment_url,caption)
 
-    caption = "Tarrif Schedule"
-    attachment_url = 'https://chikobvore.github.io/dura_online_shop/images/Sample%20performance%20report.pdf'
-    api.send_attachment(sender,attachment_url,caption)
+    # caption = "Tarrif Schedule"
+    # attachment_url = 'https://chikobvore.github.io/dura_online_shop/images/Sample%20performance%20report.pdf'
+    # api.send_attachment(sender,attachment_url,caption)
 
-    caption = "Proposed projects and funding sources"
-    attachment_url = 'https://chikobvore.github.io/dura_online_shop/images/project%20proposals.pdf'
+    caption = "SUPPLIMENTARY BUDGET AND PROPOSED 2022 BUDGET"
+    attachment_url = 'https://chikobvore.github.io/Unlock-Technologies/lib/SUPPLEMENTARY%20BUDGET%20AND%202022%20BUDGET%20PROPOSAL.pdf'
     api.send_attachment(sender,attachment_url,caption)
     return attachmentmessage(sender)
 
@@ -184,7 +184,7 @@ def addcomment(response,sender):
         dbh.db['pending_budget_reviews'].insert_one(record)
 
         sh.session_status(sender,session_type='8',status='1H')
-        message = "*Performance Report*\nDo you have any objection regarding our performance report\n*Y*.Yes\n*N*.No\n\nPlease respond with one of the above options"
+        message = "*PERFORMANCE REPORT*\nDo you have any objection regarding our performance report\n*Y*.Yes\n*N*.No\n\nPlease respond with one of the above options"
         api.reply_message(sender,message)
         return '', 200
 
@@ -203,30 +203,30 @@ def addcomment(response,sender):
         dbh.db['pending_budget_reviews'].insert_one(record)
 
         sh.session_status(sender,session_type='8',status='1H')
-        message = "*Tarrif Schedule*\nDo you have any objection regarding our tarrif schedule\n*Y*.Yes\n*N*.No\n\nPlease respond with one of the above options"
+        message = "*PROPOSED 2022 BUDGET*\nDo you have any objection regarding our proposed budget\n*Y*.Yes\n*N*.No\n\nPlease respond with one of the above options"
         api.reply_message(sender,message)
         return '', 200
 
-    elif response == '3':
+    # elif response == '3':
 
-        budget_type = "Proposed Projects"
-        record = {
-            "Sender": sender,
-            "Budget_type": budget_type,
-            "Objection": 'NULL',
-            "Comment": 'NULL',
-            "Rating": 'NULL',
-            "Recommendations": 'NULL',
-            "Status": "PENDING"
-            }
-        dbh.db['pending_budget_reviews'].insert_one(record)
+    #     budget_type = "Proposed Projects"
+    #     record = {
+    #         "Sender": sender,
+    #         "Budget_type": budget_type,
+    #         "Objection": 'NULL',
+    #         "Comment": 'NULL',
+    #         "Rating": 'NULL',
+    #         "Recommendations": 'NULL',
+    #         "Status": "PENDING"
+    #         }
+    #     dbh.db['pending_budget_reviews'].insert_one(record)
 
-        sh.session_status(sender,session_type='8',status='1H')
-        message = "*Proposed projects and funding*\nDo you have any objection regarding our proposed projects and fundings\n*Y*.Yes\n*N*.No\n\nPlease respond with one of the above options"
-        api.reply_message(sender,message)
-        return '', 200
+    #     sh.session_status(sender,session_type='8',status='1H')
+    #     message = "*Proposed projects and funding*\nDo you have any objection regarding our proposed projects and fundings\n*Y*.Yes\n*N*.No\n\nPlease respond with one of the above options"
+    #     api.reply_message(sender,message)
+    #     return '', 200
     else:
-        message = "*I am sorry i didnt get that*\nWhich one of the attached documents do you want to review/comment\n*1*.Performance Report\n*2*.Tarrif Schedule\n*3*.Proposed Projects"
+        message = "*I am sorry i didnt get that*\nWhich one of the attached documents do you want to review/comment\n*1*.Performance Report\n*2*.Proposed 2022 budget"
         api.reply_message(sender,message)
         return '', 200
 
@@ -358,7 +358,7 @@ def addrecommendations(response,sender):
 def attachmentmessage(sender):
 
     sh.session_status(sender,session_type='8',status='1G')
-    message = "*Which one of the attached documents do you want to review/comment*\n\n*1*.Performance Report\n*2*.Tarrif Schedule\n*3*.Proposed Projects"
+    message = "*Which one of the attached documents do you want to review/comment*\n\n*1*.PERFORMANCE REPORT\n*2*.PROPOSED 2022 BUDGET"
     api.reply_message(sender,message)
     return '', 200
 
@@ -367,11 +367,9 @@ def welcomeback(response,sender):
     if response == '1':
         return resend_performance_report(sender)
     elif response == '2':
-        return resend_tarrif_schedule(sender)
-    elif response == '3':
         resend_proposed_projects_report(sender)
-    elif response == '4':
-        return attachmentmessage(sender)
+    elif response == '3':
+        return attachmentmessage(sender)  
     elif response == '0':
         return senddocuments(sender)
     else:
@@ -381,23 +379,22 @@ def welcomeback(response,sender):
 
 def resend_performance_report(sender):
     
-    caption = "Performance Report"
-    attachment_url = 'https://chikobvore.github.io/dura_online_shop/images/Sample%20Tarrif%20Schedule.pdf'
+    caption = "PERFORMANCE REPORT"
+    attachment_url = 'https://chikobvore.github.io/Unlock-Technologies/lib/BUDGET%20PERFORMANCE%20REVIEW%202021.pdf'
     api.send_attachment(sender,attachment_url,caption)
-
     return addcomment('1',sender)
 
 def resend_tarrif_schedule(sender):
     
-    caption = "Tarrif Schedule"
-    attachment_url = 'https://chikobvore.github.io/dura_online_shop/images/Sample%20performance%20report.pdf'
+    caption = "SUPPLIMENTARY BUDGET AND PROPOSED 2022 BUDGET"
+    attachment_url = 'https://chikobvore.github.io/Unlock-Technologies/lib/SUPPLEMENTARY%20BUDGET%20AND%202022%20BUDGET%20PROPOSAL.pdf'
     api.send_attachment(sender,attachment_url,caption)
     return addcomment('2',sender)
 
 def resend_proposed_projects_report(sender):
 
-    caption = "Proposed projects and funding sources"
-    attachment_url = 'https://chikobvore.github.io/dura_online_shop/images/project%20proposals.pdf'
+    caption = "SUPPLIMENTARY BUDGET AND PROPOSED 2022 BUDGET"
+    attachment_url = 'https://chikobvore.github.io/Unlock-Technologies/lib/SUPPLEMENTARY%20BUDGET%20AND%202022%20BUDGET%20PROPOSAL.pdf'
     api.send_attachment(sender,attachment_url,caption)
     return addcomment('3',sender)
 
