@@ -5,8 +5,8 @@ import requests
 # api_token = 'z5juamogjbjj9yih'
 
 #development
-api_instance_url = 'https://api.chat-api.com/instance351156'
-api_token = '0ci1km9zr81jbnel'
+api_instance_url = 'https://api.chat-api.com/instance328004'
+api_token = 'mowtyy2nyvoa884u'
 
 #EMAIL: chigumbubyron@gmail.com
 def reply_message(sender,message):
