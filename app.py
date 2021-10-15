@@ -31,8 +31,8 @@ def chatmenu():
     if sender == '263771067779':
         return '', 200
 
-    if sender == '263716897966':
-        return '', 200
+    # if sender == '263716897966':
+    #     return '', 200
 
     if response == 'Done' or response == 'done':
         return main.menu(sender)
