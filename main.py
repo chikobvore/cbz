@@ -13,13 +13,13 @@ def menu(sender):
 
 def feedback(sender):
     sh.session_status(sender,session_type='Feedback',status='0')  
-    message = "Thank you for using Tererai We’d love to hear what you think of our service. Your feedback will help us determine what features to add and how we can make the product better for you."
+    message = "Thank you for using Tau We’d love to hear what you think of our service. Your feedback will help us determine what features to add and how we can make the product better for you."
     api.reply_message(sender,message)
     return '', 200
 
 def endchat(sender):
     sh.session_status(sender,session_type='0',status='0')  
-    message = "Your feedback is important to us.thank you very much for the valuable feedback.We have forwarded your message to our engineers.\nHave a good day\nRegards Lads Africa"
+    message = "Your feedback is important to us.thank you very much for the valuable feedback.We have forwarded your message to our engineers.\nHave a good day\nRegards Mutare City Council"
     api.reply_message(sender,message)
     return '', 200
 
