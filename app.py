@@ -739,7 +739,8 @@ def dashboard():
     performance_review = dbh.db['budget_reviews'].count_documents({"Budget_type" :"Performance Report"})
     tarrif_review = dbh.db['budget_reviews'].count_documents({"Budget_type" :"Tarrif Schedule"})
     projects_review = dbh.db['budget_reviews'].count_documents({"Budget_type" :"Proposed Projects"})
-
+    
+    objections = dbh.db['budget_reviews'].count_documents({"Budget_type" :"Performance Report","Objection" :"YES"})
 
     avg = dbh.db['budget_reviews'].aggregate(
         [
@@ -759,11 +760,11 @@ def dashboard():
     for a in avg:
 
         if a['_id'] == 'Performance Report':
-            performance_avgrating = a['avgRating']
+            performance_avgrating = round(a['avgRating'])
         elif a['_id'] == 'Tarrif Schedule':
-            tarrif_avgrating =  a['avgRating']
+            tarrif_avgrating =  round(a['avgRating'])
         elif a['_id'] == 'Proposed Projects':
-            projects_avgrating =  a['avgRating']
+            projects_avgrating =  round(a['avgRating'])
         else:
             print('unidentified')
     comments = dbh.db['budget_reviews'].find().limit(100)

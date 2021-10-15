@@ -13,7 +13,7 @@ def menu(sender):
 
 def feedback(sender):
     sh.session_status(sender,session_type='Feedback',status='0')  
-    message = "Thank you for using Tau We’d love to hear what you think of our service. Your feedback will help us determine what features to add and how we can make the product better for you."
+    message = "Thank you for using Mutare City Chatbot. We’d love to hear what you think of our service. Your feedback will help us determine what features to add and how we can make the product better for you."
     api.reply_message(sender,message)
     return '', 200
 
