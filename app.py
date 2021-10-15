@@ -19,18 +19,8 @@ def paynowresponse():
     print(request.get_json())
     return '',200
 
-
-
-
-@app.route('/',methods=["get","post"])
-def dashboard():
-
-    if request.method == 'GET':
-        # num_payments = db['payments'].count_documents({})
-        # feeds = db['feedback'].count_documents({})
-        # waitinglists = db['waiting_list'].count_documents({})
-        return "dashboard"
-        #return render_template('index.html',num_p = num_payments,feeds = feeds,waitinglists = waitinglists)
+@app.route('/api',methods=["post"])
+def menu():
 
     payload = request.get_json()
     sender = payload['messages'][0]['author'].split('@')[0]
@@ -749,6 +739,158 @@ def dashboard():
             message = "*im sorry i didnt get that*"
             api.reply_message(sender,message)
             return '', 200
+
+
+@app.route('/',methods=["get"])
+def dashboard():
+    total_reviews = dbh.db['budget_reviewers'].count_documents({})
+    performance_review = dbh.db['budget_reviews'].count_documents({"Budget_type" :"Performance Report"})
+    tarrif_review = dbh.db['budget_reviews'].count_documents({"Budget_type" :"Tarrif Schedule"})
+    projects_review = dbh.db['budget_reviews'].count_documents({"Budget_type" :"Proposed Projects"})
+
+
+    avg = dbh.db['budget_reviews'].aggregate(
+        [
+            {
+                "$group":
+                {
+                    "_id": "$Budget_type",
+                    "avgRating": { "$avg": "$Rating" }
+                }
+            }
+        ]
+    )
+
+    performance_avgrating = 0
+    tarrif_avgrating = 0
+    projects_avgrating =0
+    for a in avg:
+
+        if a['_id'] == 'Performance Report':
+            performance_avgrating = a['avgRating']
+        elif a['_id'] == 'Tarrif Schedule':
+            tarrif_avgrating =  a['avgRating']
+        elif a['_id'] == 'Proposed Projects':
+            projects_avgrating =  a['avgRating']
+        else:
+            print('unidentified')
+    comments = dbh.db['budget_reviews'].find().limit(100)
+    #return "Total"+ str(total_reviews) +"<br>" + "Performance"+ str(performance_review) + "<br>" + "Tarrif" + str(tarrif_review) + "<br>"+ "Projects" + str(projects_review)
+    return render_template('index.htm',total_reviews = total_reviews,
+    performance_review = performance_review,tarrif_review = tarrif_review,
+    projects_review = projects_review,comments = comments,performance_avgrating = performance_avgrating,
+    tarrif_avgrating = tarrif_avgrating,projects_avgrating = projects_avgrating)
+    
+
+@app.route('/performance-report/statistics',methods=["get"]) 
+def performance_stats():
+    performance_review = dbh.db['budget_reviews'].count_documents({"Budget_type" :"Performance Report"})
+    objections = dbh.db['budget_reviews'].count_documents({"Budget_type" :"Performance Report","Objection" :"YES"})
+    
+    avg = dbh.db['budget_reviews'].aggregate(
+        [
+            {
+                "$group":
+                {
+                    "_id": "$Budget_type",
+                    "avgRating": { "$avg": "$Rating" }
+                }
+            }
+        ]
+    )
+    performance_avgrating = 0
+    for a in avg:
+
+        if a['_id'] == 'Performance Report':
+            performance_avgrating = a['avgRating']
+        else:
+            pass
+    return render_template('performance_stats.htm',performance_avgrating = performance_avgrating,performance_review = performance_review,
+    objections = objections)
+
+@app.route('/performance-report/comments',methods=["get"])
+def performance_comments():
+    comments = dbh.db['budget_reviews'].find({"Budget_type" :"Performance Report"}).limit(100)
+    return render_template('performance_comments.htm',comments = comments)
+
+@app.route('/performance-report/recommendations')
+def performance_recommendations():
+    comments = dbh.db['budget_reviews'].find({"Budget_type" :"Performance Report"}).limit(100)
+    return render_template('performance_recommendations.htm',comments = comments) 
+    
+
+@app.route('/tarrif-schedule/statistics',methods=["get"]) 
+def tarrif_stats():
+    performance_review = dbh.db['budget_reviews'].count_documents({"Budget_type" :"Tarrif Schedule"})
+    objections = dbh.db['budget_reviews'].count_documents({"Budget_type" :"Tarrif Schedule","Objection" :"YES"})
+    
+    avg = dbh.db['budget_reviews'].aggregate(
+        [
+            {
+                "$group":
+                {
+                    "_id": "$Budget_type",
+                    "avgRating": { "$avg": "$Rating" }
+                }
+            }
+        ]
+    )
+    performance_avgrating = 0
+    for a in avg:
+
+        if a['_id'] == 'Tarrif Schedule':
+            performance_avgrating = a['avgRating']
+        else:
+            pass
+    return render_template('tarrif_stats.htm',performance_avgrating = performance_avgrating,performance_review = performance_review,
+    objections = objections)
+
+@app.route('/tarrif-schedule/comments',methods=["get"])
+def tarrif_comments():
+    comments = dbh.db['budget_reviews'].find({"Budget_type" :"Tarrif Schedule"}).limit(100)
+    return render_template('tarrif_comments.htm',comments = comments)
+
+@app.route('/tarrif-schedule/recommendations')
+def tarrif_recommendations():
+    comments = dbh.db['budget_reviews'].find({"Budget_type" :"Tarrif Schedule"}).limit(100)
+    return render_template('tarrif_recommendation.htm',comments = comments) 
+
+
+@app.route('/proposed-projects/statistics',methods=["get"]) 
+def projects_stats():
+    performance_review = dbh.db['budget_reviews'].count_documents({"Budget_type" :"Proposed Projects"})
+    objections = dbh.db['budget_reviews'].count_documents({"Budget_type" :"Proposed Projects","Objection" :"YES"})
+    
+    avg = dbh.db['budget_reviews'].aggregate(
+        [
+            {
+                "$group":
+                {
+                    "_id": "$Budget_type",
+                    "avgRating": { "$avg": "$Rating" }
+                }
+            }
+        ]
+    )
+    performance_avgrating = 0
+    for a in avg:
+
+        if a['_id'] == 'Proposed Projects':
+            performance_avgrating = a['avgRating']
+        else:
+            pass
+    return render_template('projects_stats.htm',performance_avgrating = performance_avgrating,performance_review = performance_review,
+    objections = objections)
+
+@app.route('/proposed-projects/comments',methods=["get"])
+def projects_comments():
+    comments = dbh.db['budget_reviews'].find({"Budget_type" :"Proposed Projects"}).limit(100)
+    return render_template('projects_comments.htm',comments = comments)
+
+@app.route('/proposed-projects/recommendations',methods=["get"])
+def projects_recommendations():
+    comments = dbh.db['budget_reviews'].find({"Budget_type" :"Proposed Projects"}).limit(100)
+    return render_template('projects_recommendations.htm',comments = comments) 
 
         
 if __name__ == '__main__':
