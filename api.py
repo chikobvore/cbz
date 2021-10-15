@@ -5,7 +5,7 @@ api_token = 'z5juamogjbjj9yih'
 
 #EMAIL: chigumbubyron@gmail.com
 def reply_message(sender,message):
-      sender = '263775531297'
+
       payload = {
             "phone": sender,
             "body": message
@@ -15,7 +15,7 @@ def reply_message(sender,message):
       return str(response.status_code)
 
 def send_attachment(sender,attachment_url,caption):
-      sender = '263775531297'
+      
       payload = {
             "phone": sender,
             "filename": caption,

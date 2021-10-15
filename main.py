@@ -7,7 +7,7 @@ import datetime
 
 def menu(sender):
     sh.session_status(sender,session_type='0',status='0')  
-    message = "Please select one of the following options 👇\n*1*.Waiting List Services 📝\n*2*.Account Services\n*3*.Book an inspection \n*4*.Payment Plan services\n*5*.Log a Query\n*6*.Make a payment\n*7*.Request a call from our customer care representatives\n*8*Budget Consultation\n*0*.Cancel"
+    message = "Please select one of the following options 👇\n*1*.Waiting List Services 📝\n*2*.Account Services\n*3*.Book an inspection \n*4*.Payment Plan services\n*5*.Log a Query\n*6*.Make a payment\n*7*.Request a call from our customer care representatives\n*8*.Budget Consultation\n*0*.Cancel"
     api.reply_message(sender,message)
     return '', 200
 
