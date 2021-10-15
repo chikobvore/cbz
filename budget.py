@@ -262,6 +262,12 @@ def addobjection(response,sender):
         message = "*What is your overal take on the budget,please comment on the budget*"
         api.reply_message(sender,message)
         return '', 200
+
+    else:
+        message = "*im sorry i didnt get that*Please respond with a *Y* for Yes or *N* for No"
+        api.reply_message(sender,message)
+        return '', 200
+
         
 def objectBudget(response,sender):
     sh.session_status(sender,session_type='8',status='1J')
