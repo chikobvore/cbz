@@ -31,6 +31,9 @@ def chatmenu():
     if sender == '263771067779':
         return '', 200
 
+    if sender == '263716897966':
+        return '', 200
+
     if response == 'Done' or response == 'done':
         return main.menu(sender)
 
@@ -767,7 +770,7 @@ def dashboard():
             projects_avgrating =  round(a['avgRating'])
         else:
             print('unidentified')
-    comments = dbh.db['budget_reviews'].find().sort(reverse=False).limit(100)
+    comments = dbh.db['budget_reviews'].find().limit(100)
     #return "Total"+ str(total_reviews) +"<br>" + "Performance"+ str(performance_review) + "<br>" + "Tarrif" + str(tarrif_review) + "<br>"+ "Projects" + str(projects_review)
     return render_template('index.htm',total_reviews = total_reviews,
     performance_review = performance_review,tarrif_review = tarrif_review,
