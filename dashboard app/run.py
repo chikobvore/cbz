@@ -6,7 +6,6 @@ from flask import Flask, redirect, render_template, request, session, url_for,js
 from bson import json_util
 import json
 import ssl
-import mysql.connector
 import requests
 
 app = Flask(__name__)

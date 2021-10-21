@@ -381,7 +381,8 @@ def chatmenu():
                             }
                         dbh.db['Queries'].insert_one(record)
                         sh.session_status(sender,session_type=state['session_type'],status = 'log')
-                        message = '*Logging Query*\nMy apologies for the bad experience with,Please briefly explain your query.'
+                        
+                        message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
                         api.reply_message(sender,message)
                         return '', 200
 
@@ -395,7 +396,8 @@ def chatmenu():
                         dbh.db['Queries'].insert_one(record)
                         sh.session_status(sender,session_type=state['session_type'],status = 'log')
 
-                        message = '*Logging Query*\nMy apologies for the bad experience with,Please briefly explain your query.'
+                        
+                        message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
                         api.reply_message(sender,message)
                         return '', 200
 
@@ -409,7 +411,8 @@ def chatmenu():
                         dbh.db['Queries'].insert_one(record)
                         sh.session_status(sender,session_type=state['session_type'],status = 'log')
 
-                        message = '*Logging Query*\nMy apologies for the bad experience with,Please briefly explain your query.'
+                        
+                        message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
                         api.reply_message(sender,message)
                         return '', 200
 
@@ -429,7 +432,7 @@ def chatmenu():
                         dbh.db['Queries'].insert_one(record)
                         sh.session_status(sender,session_type=state['session_type'],status = 'log')
 
-                        message = '*Logging Query*\nMy apologies for the bad experience with,Please briefly explain your query.'
+                        message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
                         api.reply_message(sender,message)
                         return '', 200
 
@@ -443,7 +446,8 @@ def chatmenu():
                         dbh.db['Queries'].insert_one(record)
                         sh.session_status(sender,session_type=state['session_type'],status = 'log')
 
-                        message = '*Logging Query*\nMy apologies for the bad experience with,Please briefly explain your query.'
+                        
+                        message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
                         api.reply_message(sender,message)
                         return '', 200
 
@@ -457,7 +461,8 @@ def chatmenu():
                         dbh.db['Queries'].insert_one(record)
                         sh.session_status(sender,session_type=state['session_type'],status = 'log')
 
-                        message = '*Logging Query*\nMy apologies for the bad experience with,Please briefly explain your query.'
+                        
+                        message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
                         api.reply_message(sender,message)
                         return '', 200
 
@@ -477,7 +482,8 @@ def chatmenu():
                             }
                         dbh.db['Queries'].insert_one(record)
                         sh.session_status(sender,session_type=state['session_type'],status = 'log')
-                        message = '*Logging Query*\nMy apologies for the bad experience with,Please briefly explain your query.'
+                        
+                        message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
                         api.reply_message(sender,message)
                         return '', 200
 
@@ -490,7 +496,8 @@ def chatmenu():
                             }
                         dbh.db['Queries'].insert_one(record)
                         sh.session_status(sender,session_type=state['session_type'],status = 'log')
-                        message = '*Logging Query*\nMy apologies for the bad experience with,Please briefly explain your query.'
+                        
+                        message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
                         api.reply_message(sender,message)
                         return '', 200
 
@@ -503,7 +510,8 @@ def chatmenu():
                             }
                         dbh.db['Queries'].insert_one(record)
                         sh.session_status(sender,session_type=state['session_type'],status = 'log')
-                        message = '*Logging Query*\nMy apologies for the bad experience with,Please briefly explain your query.'
+                        
+                        message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
                         api.reply_message(sender,message)
                         return '', 200
 
@@ -523,20 +531,8 @@ def chatmenu():
                             }
                         dbh.db['Queries'].insert_one(record)
                         sh.session_status(sender,session_type=state['session_type'],status = 'log')
-                        message = '*Logging Query*\nMy apologies for the bad experience with,Please briefly explain your query.'
-                        api.reply_message(sender,message)
-                        return '', 200
-
-                    
-                        record = {
-                            "Sender": sender,
-                            "Query_catergory": "Road related",
-                            "Query_type": "Road network",
-                            "Query": " "
-                            }
-                        dbh.db['Queries'].insert_one(record)
-                        sh.session_status(sender,session_type=state['session_type'],status = 'log')
-                        message = '*Logging Query*\nMy apologies for the bad experience with,Please briefly explain your query.'
+                        
+                        message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
                         api.reply_message(sender,message)
                         return '', 200
 
@@ -549,7 +545,8 @@ def chatmenu():
                             }
                         dbh.db['Queries'].insert_one(record)
                         sh.session_status(sender,session_type=state['session_type'],status = 'log')
-                        message = '*Logging Query*\nMy apologies for the bad experience with,Please briefly explain your query.'
+                        
+                        message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
                         api.reply_message(sender,message)
                         return '', 200
 
@@ -562,7 +559,8 @@ def chatmenu():
                             }
                         dbh.db['Queries'].insert_one(record)
                         sh.session_status(sender,session_type=state['session_type'],status = 'log')
-                        message = '*Logging Query*\nMy apologies for the bad experience with,Please briefly explain your query.'
+                        
+                        message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
                         api.reply_message(sender,message)
                         return '', 200
 
@@ -583,7 +581,8 @@ def chatmenu():
                         dbh.db['Queries'].insert_one(record)
                         sh.session_status(sender,session_type=state['session_type'],status = 'log')
 
-                        message = '*Logging Query*\nMy apologies for the bad experience with,Please briefly explain your query.'
+                        
+                        message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
                         api.reply_message(sender,message)
                         return '', 200
 
@@ -596,7 +595,8 @@ def chatmenu():
                             }
                         dbh.db['Queries'].insert_one(record)
                         sh.session_status(sender,session_type=state['session_type'],status = 'log')
-                        message = '*Logging Query*\nMy apologies for the bad experience with,Please briefly explain your query.'
+                        
+                        message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
                         api.reply_message(sender,message)
                         return '', 200
 
@@ -610,7 +610,8 @@ def chatmenu():
                         dbh.db['Queries'].insert_one(record)
                         sh.session_status(sender,session_type=state['session_type'],status = 'log')
 
-                        message = '*Logging Query*\nMy apologies for the bad experience with,Please briefly explain your query.'
+                        
+                        message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
                         api.reply_message(sender,message)
                         return '', 200
 
@@ -631,7 +632,8 @@ def chatmenu():
                         dbh.db['Queries'].insert_one(record)
                         sh.session_status(sender,session_type=state['session_type'],status ='log')
 
-                        message = '*Logging Query*\nMy apologies for the bad experience with,Please briefly explain your query.'
+                        
+                        message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
                         api.reply_message(sender,message)
                         return '', 200
 
@@ -651,6 +653,18 @@ def chatmenu():
                             "Query_type": query['Query_type'],
                             "Query": response
                         })
+                        
+                        query = dbh.db['Queries'].find_one({"Sender": sender})
+                        record = {
+                              "Sender": sender,
+                            "reference": query_id,
+                            "Query_catergory": query['Query_catergory'],
+                            "Query_type": query['Query_type'],
+                            "Query": query['Query']
+                            }
+                        dbh.db['CustomerQueries'].insert_one(record)
+
+
                         message = 'Your query have been successfully logged,Your query id is '+str(query_id)+'. You can use your id to check the status of your query'
                         api.reply_message(sender,message)
                         return main.menu(sender)
