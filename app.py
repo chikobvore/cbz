@@ -874,8 +874,11 @@ def chatmenu():
                         query_id = random.randint(1000,9999)
 
                         dbh.db['Queries'].update({"Sender": sender},{
-                            "Sender": sender,
+                            
+                            "Sender": query['Sender'],
+                            "Complainant": query['Complainant'],
                             "reference": query_id,
+                            "Address": query['Address'],
                             "Query_catergory": query['Query_catergory'],
                             "Query_type": query['Query_type'],
                             "Query": response
@@ -887,6 +890,7 @@ def chatmenu():
                         record = {
                             "Sender": query['Sender'],
                             "Complainant": query['Complainant'],
+                            "reference": query_id,
                             "Address": query['Address'],
                             "Query_catergory": query['Query_catergory'],
                             "Query_type": query['Query_type'],
