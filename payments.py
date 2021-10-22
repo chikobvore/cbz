@@ -407,14 +407,14 @@ def makepayment(sender,response):
             "Sender": sender,
             "account": details['account'],
             "reference_no": details['reference_no'],
-            "paynow_ref": diction['paynowreference'],
+            "paynow_ref": '--',
             "pay_number": details['pay_number'],
             "email": details['email'],
             "amount": details['amount'],
             "Purpose": details['Purpose'],
             "Service_code": details['Service code'],
             "Status": "FAILED",
-            "Date_paid": mydate[0]
+            "Date_paid": datetime.datetime.now()
             }
         dbh.db['payments'].insert_one(record)
         dbh.db['pending_payments'].find_one_and_delete({'Sender': sender})
