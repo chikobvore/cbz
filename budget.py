@@ -155,17 +155,29 @@ def addaccount(response,sender):
     return senddocuments(sender)
 
 def senddocuments(sender):
-    caption = "PERFORMANCE REPORT"
-    attachment_url = 'https://chikobvore.github.io/Unlock-Technologies/lib/BUDGET%20PERFORMANCE%20REVIEW%202021.pdf'
+
+    caption = "Performance Report"
+    attachment_url = 'https://chikobvore.github.io/dura_online_shop/images/Sample%20Tarrif%20Schedule.pdf'
     api.send_attachment(sender,attachment_url,caption)
+
+    caption = "Tarrif Schedule"
+    attachment_url = 'https://chikobvore.github.io/dura_online_shop/images/Sample%20performance%20report.pdf'
+    api.send_attachment(sender,attachment_url,caption)
+
+    caption = "Proposed projects and funding sources"
+    attachment_url = 'https://chikobvore.github.io/dura_online_shop/images/project%20proposals.pdf'
+    api.send_attachment(sender,attachment_url,caption)
+    # caption = "PERFORMANCE REPORT"
+    # attachment_url = 'https://chikobvore.github.io/Unlock-Technologies/lib/BUDGET%20PERFORMANCE%20REVIEW%202021.pdf'
+    # api.send_attachment(sender,attachment_url,caption)
 
     # caption = "Tarrif Schedule"
     # attachment_url = 'https://chikobvore.github.io/dura_online_shop/images/Sample%20performance%20report.pdf'
     # api.send_attachment(sender,attachment_url,caption)
 
-    caption = "SUPPLIMENTARY BUDGET AND PROPOSED 2022 BUDGET"
-    attachment_url = 'https://chikobvore.github.io/Unlock-Technologies/lib/SUPPLEMENTARY%20BUDGET%20AND%202022%20BUDGET%20PROPOSAL.pdf'
-    api.send_attachment(sender,attachment_url,caption)
+    # caption = "SUPPLIMENTARY BUDGET AND PROPOSED 2022 BUDGET"
+    # attachment_url = 'https://chikobvore.github.io/Unlock-Technologies/lib/SUPPLEMENTARY%20BUDGET%20AND%202022%20BUDGET%20PROPOSAL.pdf'
+    # api.send_attachment(sender,attachment_url,caption)
     return attachmentmessage(sender)
 
 def addcomment(response,sender):
