@@ -555,7 +555,7 @@ def complete(sender,response,state):
         return main.menu(sender)
 
 def paylist(sender,response,state):
-    sh.session_status(sender,session_type=state['session_type'],status='PaymentAccount')
+    
 
     if response == '1':
         paymentmethod = 'Ecocash'
@@ -581,6 +581,7 @@ def paylist(sender,response,state):
         "Date_paid": datetime.datetime.now()
     }
     dbh.db['pending_payments'].insert_one(record)
+    sh.session_status(sender,session_type=state['session_type'],status='PaymentAccount')
 
     message = "*Please provide your mobile number*"
     api.reply_message(sender,message)
@@ -588,7 +589,7 @@ def paylist(sender,response,state):
 
 def addnumber(sender,state):
     state = dbh.db['Senders'].find_one({"Sender": sender})
-    sh.session_status(sender,state['session_type'],status='confirmdetails')
+    
     details = dbh.db['pending_payments'].find_one({"Sender": sender})
 
     dbh.db['pending_payments'].update({"Sender": sender},
@@ -604,6 +605,7 @@ def addnumber(sender,state):
                 "Date_paid": datetime.datetime.now()
             })
 
+    sh.session_status(sender,state['session_type'],status='confirmdetails')
     return confirmdetails(sender,state)
 
 def confirmdetails(sender,state):

@@ -201,9 +201,7 @@ def chatmenu():
                 elif state['Status'] == "PaymentMethod":
                     return waiting_list.paylist(sender,response,state)
                 elif state['Status'] == "PaymentAccount":
-                    return waiting_list.paylist(sender,response,state)   
-                elif state['Status'] == "confirmdetails":
-                    return waiting_list.addnumber(sender,response)      
+                    return waiting_list.addnumber(sender,response,state)       
                 elif state['Status'] == "completepayment":
                     return waiting_list.completetransaction(sender,response)    
                 else:
