@@ -587,7 +587,7 @@ def paylist(sender,response,state):
     api.reply_message(sender,message)
     return '', 200
 
-def addnumber(sender,state):
+def addnumber(sender,response):
     state = dbh.db['Senders'].find_one({"Sender": sender})
     
     details = dbh.db['pending_payments'].find_one({"Sender": sender})
