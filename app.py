@@ -54,7 +54,7 @@ def chatmenu():
             }
         dbh.db['Senders'].insert_one(record)
         # -*- coding: utf-8 -*-
-        caption = "Hello "+ senderName +" 🙋🏽‍♂ , \nThank you for contacting Mutare City Council,I'm Tau, i'm a virtual assistant,\nFor any emergency 👇 \n📞 Dial Number: +263202060823 \n\nPlease select one of the following options 👇\n\n"+ str('1️⃣') +" Waiting List Services\n\n"+ str('2️⃣') +" Account Services\n\n"+ str('3️⃣') +" Book an inspection\n\n" + str('4️⃣') +" Payment Plan services\n\n"+ str('5️⃣') +" Log a Query\n\n" + str('6️⃣')+ " Make a payment\n\n"+ str('7️⃣')+ " Request a call from our customer care representatives\n\n"+ str('8️⃣')+" Budget Consultations\n\n"+str('9️⃣')+" Compliment our good works\n\n"+ str('0️⃣')+" Cancel"
+        caption = "Hello "+ senderName +" 🙋🏽‍♂ , \nThank you for contacting Mutare City Council,I'm Tau, i'm a virtual assistant,\nFor any emergency 👇 \n📞 Dial Number: +263202060823 \n\nPlease select one of the following options 👇\n\n"+ str('1️⃣') +" Waiting List Services\n\n"+ str('2️⃣') +" Account Services\n\n"+ str('3️⃣') +" Book an inspection\n\n" + str('4️⃣') +" Payment Plan services\n\n"+ str('5️⃣') +" Log a Query\n\n" + str('6️⃣')+ " Make a payment\n\n"+ str('7️⃣')+ " Request a call from our customer care representatives\n\n"+ str('8️⃣')+" Budget Consultations\n\n"+str('9️⃣')+" Compliment our good works\n\n"+ str('0️⃣')+" Cancel \n*please select the corresponding numer for the type of service you wish to access*"
         attachment_url = 'https://www.mutarecity.co.zw/images/mutarelogo.png'
         api.send_attachment(sender,attachment_url,caption)
         return '', 200
@@ -341,10 +341,10 @@ def chatmenu():
             if state['Status'] == "0":
                 return queries.addname(sender,response)
 
-            elif state['session_type'] == 'A':
+            elif state['Status'] == 'A':
                 return queries.addaddress(sender,response)
 
-            elif state['session_type'] == 'B':
+            elif state['Status'] == 'B':
 
                 if response == '1':
                     sh.session_status(sender,session_type='C',status=response)
