@@ -554,7 +554,7 @@ def complete(sender,response,state):
         dbh.db['waiting_list_specifics'].find_one_and_delete({"contact": sender})
         return main.menu(sender)
 
-def paylist(sender,state):
+def paylist(sender,response,state):
     sh.session_status(sender,session_type=state['session_type'],status='PaymentAccount')
 
     if response == '1':
@@ -604,9 +604,7 @@ def addnumber(sender,state):
                 "Date_paid": datetime.datetime.now()
             })
 
-    message =  "*Make Payment*\nPlease provide your email address"
-    api.reply_message(sender,message)
-    return '', 200
+    return confirmdetails(sender,state)
 
 def confirmdetails(sender,state):
 
@@ -629,13 +627,13 @@ def confirmdetails(sender,state):
                     "Date_paid": datetime.datetime.now()
                 })
     details = dbh.db['pending_payments'].find_one({"Sender": sender})
-    sh.session_status(sender,session_type=state['session_type'],status='6F')
+    sh.session_status(sender,session_type=state['session_type'],status='completepayment')
             
     message = "*Confirm Payment*\n\nPlease confirm details below\n*Applicant*: "+ Applicant['full_name'] +"\n*Reference*: "+ str(Applicant['waiting_list_no'])+"\n*Phone No*: "+ str(details['pay_number']) + "\n*Email*: "+  details['email'] + "\n*Amount*: "+  details['amount']+  "\n\nPress 1 to continue or 0 to cancel"
     api.reply_message(sender,message)
     return '', 200
 
-def completetransaction(sender):
+def completetransaction(sender,response):
     return payments.makepayment(sender,response)
 
 def preview(sender):
