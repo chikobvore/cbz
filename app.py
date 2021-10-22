@@ -360,7 +360,7 @@ def chatmenu():
 
                 if response == '1':
 
-                    sh.session_status(sender,session_type='C',status=response)
+                    sh.session_status(sender,session_type='5',status='1A')
                     message =  "*Water related queries*\nPlease select one of the following options 👇\n*1*.Water Quality.\n*2*.Water Burst\n*3*.Water Shortage\n*4*.Water Connection\n*5*.Other \n*0*.Return back"
                     api.reply_message(sender,message)
                     return '', 200
@@ -368,40 +368,40 @@ def chatmenu():
                 elif response == '2':
                     #sewer queries
 
-                    sh.session_status(sender,session_type='C',status=response)
+                    sh.session_status(sender,session_type='5',status='1B')
                     message =  "*Sewer related queries*\nPlease select one of the following options 👇\n*1*.Sewer connection.\n*2*.Sewer Blockage\n*3*.Other\n*0*.Return back"
                     api.reply_message(sender,message)
                     return '', 200
 
                 elif response == '3':
                     #bill queries
-                    sh.session_status(sender,session_type='C',status = response)
+                    sh.session_status(sender,session_type='5',status = '1C')
                     message =  "*Account/Bill related queries*\nPlease select one of the following options 👇\n*1*.Request current statements.\n*2*.Incorrect bill(high/low)\n*3*.Other\n*0*.Return back"
                     api.reply_message(sender,message)
                     return '', 200
 
                 elif response == '4':
                     #road queries
-                    sh.session_status(sender,session_type='C',status =response)
+                    sh.session_status(sender,session_type='5',status ='1D')
                     message =  "*Road related queries*\nPlease select one of the following options 👇\n*1*.Not working traffic light.\n*2*.Report pothole\n*3*.Report blocked road drainage\n*4*.Report not visible road sign\n*5*.Not visible road marking"
                     api.reply_message(sender,message)
                     return '', 200
                 elif response == '5':
                     #health queries
-                    sh.session_status(sender,session_type='C',status = response)
+                    sh.session_status(sender,session_type='5',status = '1E')
                     message =  "*Health related queries*\nPlease select one of the following options 👇\n*1*.Refuse Collection.\n*2*.Dumping\n*3*.Litteering\n*0*.Return back"
                     api.reply_message(sender,message)
                     return '', 200
                 elif response == '6':
                     #general querues
-                    sh.session_status(sender,session_type='C',status =response)
+                    sh.session_status(sender,session_type='5',status ='1F')
                     message =  "*General Queries*\nPlease provide the type of your query"
                     api.reply_message(sender,message)
                     return '', 200
 
                 elif response == '7':
                     #parking queries
-                    sh.session_status(sender,session_type='C',status =response)
+                    sh.session_status(sender,session_type='5',status ='1G')
                     message =  "*Parking related queries*\nPlease select one of the following options 👇\n*1*.Shortage of parking space.\n*2*.Unavailable attended\n*3*.Corrupt attended\n*4*.Dangerous parking\n*0*.Return back"
                     api.reply_message(sender,message)
                     return '', 200
@@ -412,466 +412,463 @@ def chatmenu():
                     api.reply_message(sender,message)
                     return '', 200
 
-            elif state['session_type'] == 'C':
-
-                if state['Status'] == "1":
-                    
-                    if response == '1':
-                        
-                        details = dbh.db['Queries'].find_one({"Sender": sender})
-                        dbh.db['Queries'].update({"Sender": sender},{
-                            "Sender": details['Sender'],
-                            "Complainant": details['Complainant'],
-                            "Address": details['Address'],
-                            "Query_catergory": "Water related",
-                            "Query_type": "Water Quality",
-                            "Query": " "
-                                })
-
-                        sh.session_status(sender,session_type=state['session_type'],status = 'log')
-                        
-                        message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
-                        api.reply_message(sender,message)
-                        return '', 200
-
-                    elif response == '2':
-
-                        details = dbh.db['Queries'].find_one({"Sender": sender})
-                        dbh.db['Queries'].update({"Sender": sender},{
-                            "Sender": details['Sender'],
-                            "Complainant": details['Complainant'],
-                            "Address": details['Address'],
-                             "Query_catergory": "Water related",
-                            "Query_type": "Water Burst",
-                            "Query": " "
-                                })
-
-                        sh.session_status(sender,session_type=state['session_type'],status = 'log')
-
-                        
-                        message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
-                        api.reply_message(sender,message)
-                        return '', 200
-
-                    elif response == '3':
-
-                        details = dbh.db['Queries'].find_one({"Sender": sender})
-                        dbh.db['Queries'].update({"Sender": sender},{
-                            "Sender": details['Sender'],
-                            "Complainant": details['Complainant'],
-                            "Address": details['Address'],
-                             "Query_catergory": "Water related",
-                            "Query_type": "Water Shortages",
-                            "Query": " "
-                                })
-                        sh.session_status(sender,session_type=state['session_type'],status = 'log')
-
-                        
-                        message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
-                        api.reply_message(sender,message)
-                        return '', 200
-
-                    elif response == '4':
-
-                        details = dbh.db['Queries'].find_one({"Sender": sender})
-                        dbh.db['Queries'].update({"Sender": sender},{
-                            "Sender": details['Sender'],
-                            "Complainant": details['Complainant'],
-                            "Address": details['Address'],
-                             "Query_catergory": "Water related",
-                            "Query_type": "Water Connection",
-                            "Query": " "
-                                })
-                        sh.session_status(sender,session_type=state['session_type'],status = 'log')
-
-                    elif response == '5':
-
-                        details = dbh.db['Queries'].find_one({"Sender": sender})
-                        dbh.db['Queries'].update({"Sender": sender},{
-                            "Sender": details['Sender'],
-                            "Complainant": details['Complainant'],
-                            "Address": details['Address'],
-                             "Query_catergory": "Water related",
-                            "Query_type": "Other",
-                            "Query": " "
-                                })
-                        sh.session_status(sender,session_type=state['session_type'],status = 'log')
-
-                        
-                        message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
-                        api.reply_message(sender,message)
-                        return '', 200
-
-                    else:
-                        message = '*Invalid response*'
-                        api.reply_message(sender,message)
-                        return '', 200
-                elif state['Status'] == "2":
-                    
-                    if response == '1':
-                        
-                        details = dbh.db['Queries'].find_one({"Sender": sender})
-                        dbh.db['Queries'].update({"Sender": sender},{
-                            "Sender": details['Sender'],
-                            "Complainant": details['Complainant'],
-                            "Address": details['Address'],
-                            "Query_catergory": "Sewer related",
-                            "Query_type": "Sewer connection",
-                            "Query": " "
-                                })
-                        sh.session_status(sender,session_type=state['session_type'],status = 'log')
-
-                        message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
-                        api.reply_message(sender,message)
-                        return '', 200
-
-                    elif response == '2':
-
-                        details = dbh.db['Queries'].find_one({"Sender": sender})
-                        dbh.db['Queries'].update({"Sender": sender},{
-                            "Sender": details['Sender'],
-                            "Complainant": details['Complainant'],
-                            "Address": details['Address'],
-                            "Query_catergory": "Sewer related",
-                            "Query_type": "Sewer Blockage",
-                            "Query": " "
-                                })
-                        sh.session_status(sender,session_type=state['session_type'],status = 'log')
-
-                        
-                        message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
-                        api.reply_message(sender,message)
-                        return '', 200
-
-                    elif response == '3':
-
-                        details = dbh.db['Queries'].find_one({"Sender": sender})
-                        dbh.db['Queries'].update({"Sender": sender},{
-                            "Sender": details['Sender'],
-                            "Complainant": details['Complainant'],
-                            "Address": details['Address'],
-                            "Query_catergory": "Sewer related",
-                            "Query_type": "Other",
-                            "Query": " "
-                                })
-                        sh.session_status(sender,session_type=state['session_type'],status = 'log')
-
-                        
-                        message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
-                        api.reply_message(sender,message)
-                        return '', 200
-
-                    else:
-                        message = '*Invalid response*'
-                        api.reply_message(sender,message)
-                        return '', 200
-
-                elif state['Status'] == "3":
-                    
-                    if response == '1':
-
-                        details = dbh.db['Queries'].find_one({"Sender": sender})
-                        dbh.db['Queries'].update({"Sender": sender},{
-                            "Sender": details['Sender'],
-                            "Complainant": details['Complainant'],
-                            "Address": details['Address'],
-                            "Query_catergory": "Account related",
-                            "Query_type": "Request current statement",
-                            "Query": " "
-                                })
-                        sh.session_status(sender,session_type=state['session_type'],status = 'log')
-                        
-                        message = '*Logging Query*\nPlease provide your account number,phone number,email address eg 1234567,07XXXXXXXXX,youremail@email.com.'
-                        api.reply_message(sender,message)
-                        return '', 200
-
-                    elif response == '2':
-
-                        details = dbh.db['Queries'].find_one({"Sender": sender})
-                        dbh.db['Queries'].update({"Sender": sender},{
-                            "Sender": details['Sender'],
-                            "Complainant": details['Complainant'],
-                            "Address": details['Address'],
-                            "Query_catergory": "Account related",
-                            "Query_type": "Incorrect bil amount",
-                            "Query": " "
-                                })
-                        sh.session_status(sender,session_type=state['session_type'],status = 'log')
-                        
-                        message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
-                        api.reply_message(sender,message)
-                        return '', 200
-
-                    elif response == '3':
-                        
-                        details = dbh.db['Queries'].find_one({"Sender": sender})
-                        dbh.db['Queries'].update({"Sender": sender},{
-                            "Sender": details['Sender'],
-                            "Complainant": details['Complainant'],
-                            "Address": details['Address'],
-                            "Query_catergory": "Account related",
-                            "Query_type": "Other",
-                            "Query": " "
-                                })
-
-                        sh.session_status(sender,session_type=state['session_type'],status = 'log')
-                        
-                        message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
-                        api.reply_message(sender,message)
-                        return '', 200
-
-                    else:
-                        message = '*Invalid response*'
-                        api.reply_message(sender,message)
-                        return '', 200
-
-                elif state['Status'] == '4':
-
-                    if response == '1':
-
-                        details = dbh.db['Queries'].find_one({"Sender": sender})
-                        dbh.db['Queries'].update({"Sender": sender},{
-                            "Sender": details['Sender'],
-                            "Complainant": details['Complainant'],
-                            "Address": details['Address'],
-                            "Query_catergory": "Road related",
-                            "Query_type": "Not working traffic light",
-                            "Query": " "
-                                })
-
-                        sh.session_status(sender,session_type=state['session_type'],status = 'log')
-                        
-                        message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
-                        api.reply_message(sender,message)
-                        return '', 200
-
-                    elif response == '2':
-
-                        details = dbh.db['Queries'].find_one({"Sender": sender})
-                        dbh.db['Queries'].update({"Sender": sender},{
-                            "Sender": details['Sender'],
-                            "Complainant": details['Complainant'],
-                            "Address": details['Address'],
-                            "Query_catergory": "Road related",
-                            "Query_type": "Road Potholes",
-                            "Query": " "
-                                })
-                        sh.session_status(sender,session_type=state['session_type'],status = 'log')
-                        
-                        message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
-                        api.reply_message(sender,message)
-                        return '', 200
-
-                    elif response == '3':
-
-                        details = dbh.db['Queries'].find_one({"Sender": sender})
-                        dbh.db['Queries'].update({"Sender": sender},{
-                            "Sender": details['Sender'],
-                            "Complainant": details['Complainant'],
-                            "Address": details['Address'],
-                            "Query_catergory": "Road related",
-                            "Query_type": "Blocked road drainage",
-                            "Query": " "
-                                })
-                        sh.session_status(sender,session_type=state['session_type'],status = 'log')
-                        
-                        message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
-                        api.reply_message(sender,message)
-                        return '', 200
-
-                    elif response == '4':
-
-                        details = dbh.db['Queries'].find_one({"Sender": sender})
-                        dbh.db['Queries'].update({"Sender": sender},{
-                            "Sender": details['Sender'],
-                            "Complainant": details['Complainant'],
-                            "Address": details['Address'],
-                            "Query_catergory": "Road related",
-                            "Query_type": "Road Sign",
-                            "Query": " "
-                                })
-
-                        sh.session_status(sender,session_type=state['session_type'],status = 'log')
-                        
-                        message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
-                        api.reply_message(sender,message)
-                        return '', 200
-
-                    elif response == '5':
-
-                        details = dbh.db['Queries'].find_one({"Sender": sender})
-                        dbh.db['Queries'].update({"Sender": sender},{
-                            "Sender": details['Sender'],
-                            "Complainant": details['Complainant'],
-                            "Address": details['Address'],
-                            "Query_catergory": "Road related",
-                            "Query_type": "Road Marking",
-                            "Query": " "
-                                })
-
-                        sh.session_status(sender,session_type=state['session_type'],status = 'log')
-                        
-                        message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
-                        api.reply_message(sender,message)
-                        return '', 200
-
-                    else:
-                        message = '*Invalid response*'
-                        api.reply_message(sender,message)
-                        return '', 200
-
-                elif state['Status'] == '5':
-
-                    if response == '1':
-
-                        details = dbh.db['Queries'].find_one({"Sender": sender})
-                        dbh.db['Queries'].update({"Sender": sender},{
-                            "Sender": details['Sender'],
-                            "Complainant": details['Complainant'],
-                            "Address": details['Address'],
-                            "Query_catergory": "Health related",
-                            "Query_type": "Uncollect Refuse",
-                            "Query": " "
-                                })
-                        sh.session_status(sender,session_type=state['session_type'],status = 'log')
-
-                        
-                        message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
-                        api.reply_message(sender,message)
-                        return '', 200
-
-                    elif response == '2':
-
-                        details = dbh.db['Queries'].find_one({"Sender": sender})
-                        dbh.db['Queries'].update({"Sender": sender},{
-                            "Sender": details['Sender'],
-                            "Complainant": details['Complainant'],
-                            "Address": details['Address'],
-                            "Query_catergory": "Health related",
-                            "Query_type": "Illegal Dumping",
-                            "Query": " "
-                                })
-                        sh.session_status(sender,session_type=state['session_type'],status = 'log')
-                        
-                        message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
-                        api.reply_message(sender,message)
-                        return '', 200
-
-                    elif response == '3':
-
-                        details = dbh.db['Queries'].find_one({"Sender": sender})
-                        dbh.db['Queries'].update({"Sender": sender},{
-                            "Sender": details['Sender'],
-                            "Complainant": details['Complainant'],
-                            "Address": details['Address'],
-                            "Query_catergory": "Health related",
-                            "Query_type": "Littering",
-                            "Query": " "
-                                })
-
-                        sh.session_status(sender,session_type=state['session_type'],status = 'log')
-
-                        
-                        message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
-                        api.reply_message(sender,message)
-                        return '', 200
-
-                    else:
-                        message = '*Invalid response*'
-                        api.reply_message(sender,message)
-                        return '', 200
-
-                elif state['Status'] == '6':
+            elif state['Status'] == "1A":
+                
+                if response == '1':
                     
                     details = dbh.db['Queries'].find_one({"Sender": sender})
                     dbh.db['Queries'].update({"Sender": sender},{
                         "Sender": details['Sender'],
                         "Complainant": details['Complainant'],
                         "Address": details['Address'],
-                        "Query_catergory": "General Queries",
-                        "Query_type": response,
+                        "Query_catergory": "Water related",
+                        "Query_type": "Water Quality",
+                        "Query": " "
+                            })
+
+                    sh.session_status(sender,session_type=state['session_type'],status = 'log')
+                    
+                    message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
+                    api.reply_message(sender,message)
+                    return '', 200
+
+                elif response == '2':
+
+                    details = dbh.db['Queries'].find_one({"Sender": sender})
+                    dbh.db['Queries'].update({"Sender": sender},{
+                        "Sender": details['Sender'],
+                        "Complainant": details['Complainant'],
+                        "Address": details['Address'],
+                            "Query_catergory": "Water related",
+                        "Query_type": "Water Burst",
                         "Query": " "
                             })
 
                     sh.session_status(sender,session_type=state['session_type'],status = 'log')
 
-                        
+                    
                     message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
                     api.reply_message(sender,message)
                     return '', 200
-      
-                elif state['Status'] == '7':
 
-                    if response == '1':
+                elif response == '3':
 
-                        details = dbh.db['Queries'].find_one({"Sender": sender})
-                        dbh.db['Queries'].update({"Sender": sender},{
-                            "Sender": details['Sender'],
-                            "Complainant": details['Complainant'],
-                            "Address": details['Address'],
-                            "Query_catergory": "Parking related",
-                            "Query_type": "Shortage of parking space",
-                            "Query": " "
-                                })
-                        sh.session_status(sender,session_type=state['session_type'],status = 'log')
+                    details = dbh.db['Queries'].find_one({"Sender": sender})
+                    dbh.db['Queries'].update({"Sender": sender},{
+                        "Sender": details['Sender'],
+                        "Complainant": details['Complainant'],
+                        "Address": details['Address'],
+                            "Query_catergory": "Water related",
+                        "Query_type": "Water Shortages",
+                        "Query": " "
+                            })
+                    sh.session_status(sender,session_type=state['session_type'],status = 'log')
 
-                        message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
-                        api.reply_message(sender,message)
-                        return '', 200
                     
-                    if response == '2':
+                    message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
+                    api.reply_message(sender,message)
+                    return '', 200
 
-                        details = dbh.db['Queries'].find_one({"Sender": sender})
-                        dbh.db['Queries'].update({"Sender": sender},{
-                            "Sender": details['Sender'],
-                            "Complainant": details['Complainant'],
-                            "Address": details['Address'],
-                            "Query_catergory": "Parking related",
-                            "Query_type": "Unavailable parking attended",
-                            "Query": " "
-                                })
-                        sh.session_status(sender,session_type=state['session_type'],status = 'log')
+                elif response == '4':
 
-                        message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
-                        api.reply_message(sender,message)
-                        return '', 200
+                    details = dbh.db['Queries'].find_one({"Sender": sender})
+                    dbh.db['Queries'].update({"Sender": sender},{
+                        "Sender": details['Sender'],
+                        "Complainant": details['Complainant'],
+                        "Address": details['Address'],
+                            "Query_catergory": "Water related",
+                        "Query_type": "Water Connection",
+                        "Query": " "
+                            })
+                    sh.session_status(sender,session_type=state['session_type'],status = 'log')
 
-                    if response == '3':
+                elif response == '5':
 
-                        details = dbh.db['Queries'].find_one({"Sender": sender})
-                        dbh.db['Queries'].update({"Sender": sender},{
-                            "Sender": details['Sender'],
-                            "Complainant": details['Complainant'],
-                            "Address": details['Address'],
-                            "Query_catergory": "Parking related",
-                            "Query_type": "Corrupt attended",
-                            "Query": " "
-                                })
-                        sh.session_status(sender,session_type=state['session_type'],status = 'log')
+                    details = dbh.db['Queries'].find_one({"Sender": sender})
+                    dbh.db['Queries'].update({"Sender": sender},{
+                        "Sender": details['Sender'],
+                        "Complainant": details['Complainant'],
+                        "Address": details['Address'],
+                            "Query_catergory": "Water related",
+                        "Query_type": "Other",
+                        "Query": " "
+                            })
+                    sh.session_status(sender,session_type=state['session_type'],status = 'log')
 
-                        message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
-                        api.reply_message(sender,message)
-                        return '', 200
-                        
-                    if response == '4':
-
-                        details = dbh.db['Queries'].find_one({"Sender": sender})
-                        dbh.db['Queries'].update({"Sender": sender},{
-                            "Sender": details['Sender'],
-                            "Complainant": details['Complainant'],
-                            "Address": details['Address'],
-                            "Query_catergory": "Parking related",
-                            "Query_type": "Dangerous Parking",
-                            "Query": " "
-                                })
-                        sh.session_status(sender,session_type=state['session_type'],status = 'log')
-
-                        message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
-                        api.reply_message(sender,message)
-                        return '', 200
-
+                    
+                    message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
+                    api.reply_message(sender,message)
+                    return '', 200
 
                 else:
+                    message = '*Invalid response*'
+                    api.reply_message(sender,message)
+                    return '', 200
+            elif state['Status'] == "1B":
+                
+                if response == '1':
+                    
+                    details = dbh.db['Queries'].find_one({"Sender": sender})
+                    dbh.db['Queries'].update({"Sender": sender},{
+                        "Sender": details['Sender'],
+                        "Complainant": details['Complainant'],
+                        "Address": details['Address'],
+                        "Query_catergory": "Sewer related",
+                        "Query_type": "Sewer connection",
+                        "Query": " "
+                            })
+                    sh.session_status(sender,session_type=state['session_type'],status = 'log')
+
+                    message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
+                    api.reply_message(sender,message)
+                    return '', 200
+
+                elif response == '2':
+
+                    details = dbh.db['Queries'].find_one({"Sender": sender})
+                    dbh.db['Queries'].update({"Sender": sender},{
+                        "Sender": details['Sender'],
+                        "Complainant": details['Complainant'],
+                        "Address": details['Address'],
+                        "Query_catergory": "Sewer related",
+                        "Query_type": "Sewer Blockage",
+                        "Query": " "
+                            })
+                    sh.session_status(sender,session_type=state['session_type'],status = 'log')
+
+                    
+                    message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
+                    api.reply_message(sender,message)
+                    return '', 200
+
+                elif response == '3':
+
+                    details = dbh.db['Queries'].find_one({"Sender": sender})
+                    dbh.db['Queries'].update({"Sender": sender},{
+                        "Sender": details['Sender'],
+                        "Complainant": details['Complainant'],
+                        "Address": details['Address'],
+                        "Query_catergory": "Sewer related",
+                        "Query_type": "Other",
+                        "Query": " "
+                            })
+                    sh.session_status(sender,session_type=state['session_type'],status = 'log')
+
+                    
+                    message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
+                    api.reply_message(sender,message)
+                    return '', 200
+
+                else:
+                    message = '*Invalid response*'
+                    api.reply_message(sender,message)
+                    return '', 200
+
+            elif state['Status'] == "1C":
+                
+                if response == '1':
+
+                    details = dbh.db['Queries'].find_one({"Sender": sender})
+                    dbh.db['Queries'].update({"Sender": sender},{
+                        "Sender": details['Sender'],
+                        "Complainant": details['Complainant'],
+                        "Address": details['Address'],
+                        "Query_catergory": "Account related",
+                        "Query_type": "Request current statement",
+                        "Query": " "
+                            })
+                    sh.session_status(sender,session_type=state['session_type'],status = 'log')
+                    
+                    message = '*Logging Query*\nPlease provide your account number,phone number,email address eg 1234567,07XXXXXXXXX,youremail@email.com.'
+                    api.reply_message(sender,message)
+                    return '', 200
+
+                elif response == '2':
+
+                    details = dbh.db['Queries'].find_one({"Sender": sender})
+                    dbh.db['Queries'].update({"Sender": sender},{
+                        "Sender": details['Sender'],
+                        "Complainant": details['Complainant'],
+                        "Address": details['Address'],
+                        "Query_catergory": "Account related",
+                        "Query_type": "Incorrect bil amount",
+                        "Query": " "
+                            })
+                    sh.session_status(sender,session_type=state['session_type'],status = 'log')
+                    
+                    message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
+                    api.reply_message(sender,message)
+                    return '', 200
+
+                elif response == '3':
+                    
+                    details = dbh.db['Queries'].find_one({"Sender": sender})
+                    dbh.db['Queries'].update({"Sender": sender},{
+                        "Sender": details['Sender'],
+                        "Complainant": details['Complainant'],
+                        "Address": details['Address'],
+                        "Query_catergory": "Account related",
+                        "Query_type": "Other",
+                        "Query": " "
+                            })
+
+                    sh.session_status(sender,session_type=state['session_type'],status = 'log')
+                    
+                    message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
+                    api.reply_message(sender,message)
+                    return '', 200
+
+                else:
+                    message = '*Invalid response*'
+                    api.reply_message(sender,message)
+                    return '', 200
+
+            elif state['Status'] == '1D':
+
+                if response == '1':
+
+                    details = dbh.db['Queries'].find_one({"Sender": sender})
+                    dbh.db['Queries'].update({"Sender": sender},{
+                        "Sender": details['Sender'],
+                        "Complainant": details['Complainant'],
+                        "Address": details['Address'],
+                        "Query_catergory": "Road related",
+                        "Query_type": "Not working traffic light",
+                        "Query": " "
+                            })
+
+                    sh.session_status(sender,session_type=state['session_type'],status = 'log')
+                    
+                    message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
+                    api.reply_message(sender,message)
+                    return '', 200
+
+                elif response == '2':
+
+                    details = dbh.db['Queries'].find_one({"Sender": sender})
+                    dbh.db['Queries'].update({"Sender": sender},{
+                        "Sender": details['Sender'],
+                        "Complainant": details['Complainant'],
+                        "Address": details['Address'],
+                        "Query_catergory": "Road related",
+                        "Query_type": "Road Potholes",
+                        "Query": " "
+                            })
+                    sh.session_status(sender,session_type=state['session_type'],status = 'log')
+                    
+                    message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
+                    api.reply_message(sender,message)
+                    return '', 200
+
+                elif response == '3':
+
+                    details = dbh.db['Queries'].find_one({"Sender": sender})
+                    dbh.db['Queries'].update({"Sender": sender},{
+                        "Sender": details['Sender'],
+                        "Complainant": details['Complainant'],
+                        "Address": details['Address'],
+                        "Query_catergory": "Road related",
+                        "Query_type": "Blocked road drainage",
+                        "Query": " "
+                            })
+                    sh.session_status(sender,session_type=state['session_type'],status = 'log')
+                    
+                    message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
+                    api.reply_message(sender,message)
+                    return '', 200
+
+                elif response == '4':
+
+                    details = dbh.db['Queries'].find_one({"Sender": sender})
+                    dbh.db['Queries'].update({"Sender": sender},{
+                        "Sender": details['Sender'],
+                        "Complainant": details['Complainant'],
+                        "Address": details['Address'],
+                        "Query_catergory": "Road related",
+                        "Query_type": "Road Sign",
+                        "Query": " "
+                            })
+
+                    sh.session_status(sender,session_type=state['session_type'],status = 'log')
+                    
+                    message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
+                    api.reply_message(sender,message)
+                    return '', 200
+
+                elif response == '5':
+
+                    details = dbh.db['Queries'].find_one({"Sender": sender})
+                    dbh.db['Queries'].update({"Sender": sender},{
+                        "Sender": details['Sender'],
+                        "Complainant": details['Complainant'],
+                        "Address": details['Address'],
+                        "Query_catergory": "Road related",
+                        "Query_type": "Road Marking",
+                        "Query": " "
+                            })
+
+                    sh.session_status(sender,session_type=state['session_type'],status = 'log')
+                    
+                    message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
+                    api.reply_message(sender,message)
+                    return '', 200
+
+                else:
+                    message = '*Invalid response*'
+                    api.reply_message(sender,message)
+                    return '', 200
+
+            elif state['Status'] == '1E':
+
+                if response == '1':
+
+                    details = dbh.db['Queries'].find_one({"Sender": sender})
+                    dbh.db['Queries'].update({"Sender": sender},{
+                        "Sender": details['Sender'],
+                        "Complainant": details['Complainant'],
+                        "Address": details['Address'],
+                        "Query_catergory": "Health related",
+                        "Query_type": "Uncollect Refuse",
+                        "Query": " "
+                            })
+                    sh.session_status(sender,session_type=state['session_type'],status = 'log')
+
+                    
+                    message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
+                    api.reply_message(sender,message)
+                    return '', 200
+
+                elif response == '2':
+
+                    details = dbh.db['Queries'].find_one({"Sender": sender})
+                    dbh.db['Queries'].update({"Sender": sender},{
+                        "Sender": details['Sender'],
+                        "Complainant": details['Complainant'],
+                        "Address": details['Address'],
+                        "Query_catergory": "Health related",
+                        "Query_type": "Illegal Dumping",
+                        "Query": " "
+                            })
+                    sh.session_status(sender,session_type=state['session_type'],status = 'log')
+                    
+                    message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
+                    api.reply_message(sender,message)
+                    return '', 200
+
+                elif response == '3':
+
+                    details = dbh.db['Queries'].find_one({"Sender": sender})
+                    dbh.db['Queries'].update({"Sender": sender},{
+                        "Sender": details['Sender'],
+                        "Complainant": details['Complainant'],
+                        "Address": details['Address'],
+                        "Query_catergory": "Health related",
+                        "Query_type": "Littering",
+                        "Query": " "
+                            })
+
+                    sh.session_status(sender,session_type=state['session_type'],status = 'log')
+
+                    
+                    message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
+                    api.reply_message(sender,message)
+                    return '', 200
+
+                else:
+                    message = '*Invalid response*'
+                    api.reply_message(sender,message)
+                    return '', 200
+
+            elif state['Status'] == '1F':
+                
+                details = dbh.db['Queries'].find_one({"Sender": sender})
+                dbh.db['Queries'].update({"Sender": sender},{
+                    "Sender": details['Sender'],
+                    "Complainant": details['Complainant'],
+                    "Address": details['Address'],
+                    "Query_catergory": "General Queries",
+                    "Query_type": response,
+                    "Query": " "
+                        })
+
+                sh.session_status(sender,session_type=state['session_type'],status = 'log')
+
+                    
+                message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
+                api.reply_message(sender,message)
+                return '', 200
+    
+            elif state['Status'] == '1G':
+
+                if response == '1':
+
+                    details = dbh.db['Queries'].find_one({"Sender": sender})
+                    dbh.db['Queries'].update({"Sender": sender},{
+                        "Sender": details['Sender'],
+                        "Complainant": details['Complainant'],
+                        "Address": details['Address'],
+                        "Query_catergory": "Parking related",
+                        "Query_type": "Shortage of parking space",
+                        "Query": " "
+                            })
+                    sh.session_status(sender,session_type=state['session_type'],status = 'log')
+
+                    message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
+                    api.reply_message(sender,message)
+                    return '', 200
+                
+                if response == '2':
+
+                    details = dbh.db['Queries'].find_one({"Sender": sender})
+                    dbh.db['Queries'].update({"Sender": sender},{
+                        "Sender": details['Sender'],
+                        "Complainant": details['Complainant'],
+                        "Address": details['Address'],
+                        "Query_catergory": "Parking related",
+                        "Query_type": "Unavailable parking attended",
+                        "Query": " "
+                            })
+                    sh.session_status(sender,session_type=state['session_type'],status = 'log')
+
+                    message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
+                    api.reply_message(sender,message)
+                    return '', 200
+
+                if response == '3':
+
+                    details = dbh.db['Queries'].find_one({"Sender": sender})
+                    dbh.db['Queries'].update({"Sender": sender},{
+                        "Sender": details['Sender'],
+                        "Complainant": details['Complainant'],
+                        "Address": details['Address'],
+                        "Query_catergory": "Parking related",
+                        "Query_type": "Corrupt attended",
+                        "Query": " "
+                            })
+                    sh.session_status(sender,session_type=state['session_type'],status = 'log')
+
+                    message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
+                    api.reply_message(sender,message)
+                    return '', 200
+                    
+                if response == '4':
+
+                    details = dbh.db['Queries'].find_one({"Sender": sender})
+                    dbh.db['Queries'].update({"Sender": sender},{
+                        "Sender": details['Sender'],
+                        "Complainant": details['Complainant'],
+                        "Address": details['Address'],
+                        "Query_catergory": "Parking related",
+                        "Query_type": "Dangerous Parking",
+                        "Query": " "
+                            })
+                    sh.session_status(sender,session_type=state['session_type'],status = 'log')
+
+                    message = '*Logging Query*\nOur sincere apologies for the bad experience with us,Please briefly explain your query.'
+                    api.reply_message(sender,message)
+                    return '', 200
+
+            else:
                     if state['Status'] == 'log':
                         query = dbh.db['Queries'].find_one({"Sender": sender})
                         query_id = random.randint(1000,9999)
@@ -912,9 +909,6 @@ def chatmenu():
                         message = '*Invalid response*'
                         api.reply_message(sender,message)
                         return '', 200
-            else:
-                message = 'i am sorry i didnt get that'
-                api.reply_message(sender,message)
         elif state['session_type'] == "7":
             if state['Status'] == "0":
 
