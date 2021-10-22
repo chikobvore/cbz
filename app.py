@@ -337,26 +337,30 @@ def chatmenu():
 
         elif state['session_type'] == '5':
 
-        
             if state['Status'] == "0":
                 return queries.addname(sender,response)
-
             elif state['Status'] == 'A':
+                message =  "*irikushanda*"
+                api.reply_message(sender,message)
                 return queries.addaddress(sender,response)
 
             elif state['Status'] == 'B':
 
                 if response == '1':
+
                     sh.session_status(sender,session_type='C',status=response)
                     message =  "*Water related queries*\nPlease select one of the following options 👇\n*1*.Water Quality.\n*2*.Water Burst\n*3*.Water Shortage\n*4*.Water Connection\n*5*.Other \n*0*.Return back"
                     api.reply_message(sender,message)
                     return '', 200
+
                 elif response == '2':
                     #sewer queries
+
                     sh.session_status(sender,session_type='C',status=response)
                     message =  "*Sewer related queries*\nPlease select one of the following options 👇\n*1*.Sewer connection.\n*2*.Sewer Blockage\n*3*.Other\n*0*.Return back"
                     api.reply_message(sender,message)
                     return '', 200
+
                 elif response == '3':
                     #bill queries
                     sh.session_status(sender,session_type='C',status = response)
@@ -896,7 +900,9 @@ def chatmenu():
                         message = '*Invalid response*'
                         api.reply_message(sender,message)
                         return '', 200
-
+            else:
+                message = 'i am sorry i didnt get that'
+                api.reply_message(sender,message)
         elif state['session_type'] == "7":
             if state['Status'] == "0":
 
