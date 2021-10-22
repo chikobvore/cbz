@@ -897,6 +897,7 @@ def chatmenu():
                             "Query": query['Query']
                             }
                         dbh.db['CustomerQueries'].insert_one(record)
+                        dbh.db['Queries'].find_one_and_delete({'Sender': sender})
 
                         message = "Thank you for registering the query, we have taken note of your concern and feedback shall be provided."
                         api.reply_message(sender,message)
