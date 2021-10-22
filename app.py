@@ -75,6 +75,7 @@ def chatmenu():
             sh.session_status(sender,'0','0')
             dbh.db['pending_payments'].find_one_and_delete({'Sender': sender})
             dbh.db['pending_budget_reviews'].find_one_and_delete({'Sender': sender})
+            dbh.db['Queries'].find_one_and_delete({'Sender': sender})
             message =  "*Previous session expired*\nHello *"+ senderName +"* 🙋🏽‍♂,\nPlease select one of the following options 👇\n*1*. Waiting List Services.\n*2*.Account Services\n*3*.Book an inspection\n*4*.Payment Plan services\n*5*.Log a Query\n*6*.Make a payment\n*7*.Request a call from our customer care representatives\n*8*.Budget Consultations\n*9*.Compliment our good works\n*0*.Cancel"
             api.reply_message(sender,message)
             return '', 200
@@ -918,7 +919,10 @@ def chatmenu():
             if state['Status'] == "0":
 
                 message = "*Attention public Relations*\nKindly assist complainant with a call on details below\n*Contact number*: "+ sender + "\n*Complainant*: " + senderName+"\n\n*Your assistance will be greatly appreciated*"
-                api.reply_message('263775531297',message)
+                api.reply_message('263772963833',message)
+
+                message = "*Attention public Relations*\nKindly assist complainant with a call on details below\n*Contact number*: "+ sender + "\n*Complainant*: " + senderName+"\n\n*Your assistance will be greatly appreciated*"
+                api.reply_message('263775792461',message)
                 
                 message = "*We have forwarded your message to our call center, our agent ll call you in nearest possible time*"
                 api.reply_message(sender,message)
