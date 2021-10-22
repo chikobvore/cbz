@@ -19,7 +19,7 @@ def feedback(sender):
 
 def endchat(sender):
     sh.session_status(sender,session_type='0',status='0')  
-    message = "Your feedback is important to us.thank you very much for the valuable feedback.We have forwarded your message to our engineers.\nHave a good day\nRegards Mutare City Council"
+    message = "Your feedback is important to us.thank you very much for the valuable feedback.We have forwarded your message to our engineers.\nHave a good day\nUnited together, we shall make Mutare a great city again\n\nRegards Mutare City Council"
     api.reply_message(sender,message)
     return '', 200
 
