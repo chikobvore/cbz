@@ -910,9 +910,12 @@ def chatmenu():
                         message = 'Your query have been successfully logged,Your query id is '+str(query_id)+'. You can use your id to check the status of your query\n\n*United Together, we shall make City of Mutare Great once again*'
                         api.reply_message(sender,message)
 
+                        message = "*Attention public Relations*\nKindly assist complainant with details below\n*Contact number*: "+ sender + "\n*Complainant*: " + query['Complainant'] + "\n*Complanaint address*: " + query['Address'] + "\n*Query Category*: " + query['Query_catergory'] +"\n*Query Type*: " + query['Query_type'] + "\n*Complain* : " + query['Query'] +"\n\n*Your assistance will be greatly appreciated*"
+                        api.reply_message('263772963833',message)
 
                         message = "*Attention public Relations*\nKindly assist complainant with details below\n*Contact number*: "+ sender + "\n*Complainant*: " + query['Complainant'] + "\n*Complanaint address*: " + query['Address'] + "\n*Query Category*: " + query['Query_catergory'] +"\n*Query Type*: " + query['Query_type'] + "\n*Complain* : " + query['Query'] +"\n\n*Your assistance will be greatly appreciated*"
-                        api.reply_message('263775531297',message)
+                        api.reply_message('263775792561',message)
+                        
 
                         return main.menu(sender)
                     else:
