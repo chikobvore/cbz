@@ -150,23 +150,23 @@ def chatmenu():
 
         elif state['session_type'] == "1":
 
-            if response == "1":
+            if state['Status'] == '0':
+                if response == "1":
+                    sh.session_status(sender,state['session_type'],'terms')
+                    message = "*Terms and Conditions* \nplease read our terms and conditions carefully before proceeding\n*1*.The applicant undertakes to comply with council's terms of offer of stand.Failure to do so will result in the applicant being disqualified.\n*2*.Applicant should renew his application during the month of january every year.Failure to do so will result in applicant being removed from the waiting list.\n\n*Yes*.I have read, understood and accepted the terms and conditions of joining the waiting list.\n*No*.I dont agree with the stated terms and conditions of joing waiting list."
+                    api.reply_message(sender,message)
+                    return '', 200
 
-                sh.session_status(sender,state['session_type'],'terms')
-                message = "*Terms and Conditions* \nplease read our terms and conditions carefully before proceeding\n*1*.The applicant undertakes to comply with council's terms of offer of stand.Failure to do so will result in the applicant being disqualified.\n*2*.Applicant should renew his application during the month of january every year.Failure to do so will result in applicant being removed from the waiting list.\n\n*Yes*.I have read, understood and accepted the terms and conditions of joining the waiting list.\n*No*.I dont agree with the stated terms and conditions of joing waiting list."
-                api.reply_message(sender,message)
-                return '', 200
+                elif response == "2":
 
-            elif response == "2":
+                    message = "*This feature is not yet working*"
+                    api.reply_message(sender,message)
+                    return '', 200
 
-                message = "*This feature is not yet working*"
-                api.reply_message(sender,message)
-                return '', 200
-
-            elif response == "3":
-                return waiting_list.preview(sender)
-            elif response == "0":
-                return main.menu(sender)
+                elif response == "3":
+                    return waiting_list.preview(sender)
+                elif response == "0":
+                    return main.menu(sender)
             else:
                 if state['Status'] == "terms":
                     return waiting_list.terms(sender,response)
