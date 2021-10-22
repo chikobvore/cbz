@@ -830,7 +830,7 @@ def chatmenu():
                         "Complainant": details['Complainant'],
                         "Address": details['Address'],
                         "Query_catergory": "Parking related",
-                        "Query_type": "Unavailable parking attended",
+                        "Query_type": "Unavailable parking attendant",
                         "Query": " "
                             })
                     sh.session_status(sender,session_type=state['session_type'],status = 'log')
