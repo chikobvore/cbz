@@ -197,7 +197,15 @@ def chatmenu():
                 elif state['Status'] == "Confirm":
                     return waiting_list.confirm(sender,response,state)
                 elif state['Status'] == "Complete":
-                    return waiting_list.complete(sender,response,state)             
+                    return waiting_list.complete(sender,response,state)    
+                elif state['Status'] == "PaymentMethod":
+                    return waiting_list.paylist(sender,response,state)
+                elif state['Status'] == "PaymentAccount":
+                    return waiting_list.paylist(sender,response,state)   
+                elif state['Status'] == "confirmdetails":
+                    return waiting_list.addnumber(sender,response)      
+                elif state['Status'] == "completepayment":
+                    return waiting_list.completetransaction(sender,response)    
                 else:
                     message = "*Invalid response*"
                     api.reply_message(sender,message)

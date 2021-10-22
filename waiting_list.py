@@ -1,6 +1,8 @@
 import pymongo
 import datetime
 import random
+
+from pymongo import response
 import main
 import requests
 import api
@@ -525,6 +527,7 @@ def confirm(sender,response,state):
     #RECORD SUCCESSFULLY ADDED
     Applicant = dbh.db['waiting_list'].find_one({"contact": sender})
     sh.session_status(sender,session_type=state['session_type'],status='Complete')
+    
 
     message =  "*Please Confirm details below*\n Applicant Name: "+ Applicant['full_name'] +"\nNational ID: " + Applicant['national_id'] + "\nDate of Birth: "+ Applicant['dob'] + "\nPhysical address: "+ Applicant['physical_address'] + "\nMarital Status: "+ Applicant['marital_status']+ "\nType of stand applied for: "+Applicant['stand_type']+"\nStatus: "+ Applicant['status']+"\n*Y*.Yes my details are  correct please proceed\n*N*.No they was an error in my details please cancel my application"
     api.reply_message(sender,message)
@@ -538,13 +541,102 @@ def complete(sender,response,state):
 
         message =  "Thank you for joining our waiting list\nYour application reference number is "+ str(Applicant['waiting_list_no'])+'\nPlease note for your application to be processed you need to make a payment of $1,913.54 RTGS/22.90 USD for the application fee.'
         api.reply_message(sender,message)
-        return payments.pay(sender,'6')
+        
+        sh.session_status(sender,session_type=state['session_type'],status='PaymentMethod')
+        
+        message =  "*Make Payment*\nPlease select your payment method👇 \n *1*.Ecocash. \n *2*.Telecash\n *3*.One Money\n\n*0*.Cancel"
+        api.reply_message(sender,message)
+        return '', 200
 
     else:
         #to cancel application here
         dbh.db['waiting_list'].find_one_and_delete({"contact": sender})
         dbh.db['waiting_list_specifics'].find_one_and_delete({"contact": sender})
         return main.menu(sender)
+
+def paylist(sender,state):
+    sh.session_status(sender,session_type=state['session_type'],status='PaymentAccount')
+
+    if response == '1':
+        paymentmethod = 'Ecocash'
+    elif response == '2':
+        paymentmethod = 'Telecash'
+    elif response == '3':
+        paymentmethod = 'One Money'
+    else:
+        message =  "*Please select a valid payment method*\nPlease select your payment method👇 \n *1*.Ecocash. \n *2*.Telecash\n *3*.One Money\n\n*0*.Cancel"
+        api.reply_message(sender,message)
+        return '', 200
+    
+
+    record = {
+        "Sender": sender,
+        "account": "",
+        "reference_no": random.randint(10000,99999),
+        "pay_number": '',
+        "email": '',
+        "amount": "",
+        "Purpose": "",
+        "Payment_method": paymentmethod,
+        "Date_paid": datetime.datetime.now()
+    }
+    dbh.db['pending_payments'].insert_one(record)
+
+    message = "*Please provide your mobile number*"
+    api.reply_message(sender,message)
+    return '', 200
+
+def addnumber(sender,state):
+    state = dbh.db['Senders'].find_one({"Sender": sender})
+    sh.session_status(sender,state['session_type'],status='confirmdetails')
+    details = dbh.db['pending_payments'].find_one({"Sender": sender})
+
+    dbh.db['pending_payments'].update({"Sender": sender},
+        {
+                "Sender": sender,
+                "account": "",
+                "reference_no": details['reference_no'],
+                "pay_number": response,
+                "email": '',
+                "amount": "",
+                "Purpose": "",
+                "Payment_method": details['Payment_method'],
+                "Date_paid": datetime.datetime.now()
+            })
+
+    message =  "*Make Payment*\nPlease provide your email address"
+    api.reply_message(sender,message)
+    return '', 200
+
+def confirmdetails(sender,state):
+
+    state = dbh.db['Senders'].find_one({"Sender": sender})
+    details = dbh.db['pending_payments'].find_one({"Sender": sender})
+    Applicant = dbh.db['waiting_list'].find_one({"contact": sender})
+
+    
+    dbh.db['pending_payments'].update({"Sender": sender},
+            {
+                    "Sender": sender,
+                    "account": Applicant['full_name'],
+                    "reference_no": random.randint(10000,99999),
+                    "pay_number": details['pay_number'],
+                    "email": Applicant['email'],
+                    "amount": "1938.47",
+                    "Purpose": 'Waiting List',
+                    "Service code": 'N/A',
+                    "Payment_method": details['Payment_method'],
+                    "Date_paid": datetime.datetime.now()
+                })
+    details = dbh.db['pending_payments'].find_one({"Sender": sender})
+    sh.session_status(sender,session_type=state['session_type'],status='6F')
+            
+    message = "*Confirm Payment*\n\nPlease confirm details below\n*Applicant*: "+ Applicant['full_name'] +"\n*Reference*: "+ str(Applicant['waiting_list_no'])+"\n*Phone No*: "+ str(details['pay_number']) + "\n*Email*: "+  details['email'] + "\n*Amount*: "+  details['amount']+  "\n\nPress 1 to continue or 0 to cancel"
+    api.reply_message(sender,message)
+    return '', 200
+
+def completetransaction(sender):
+    return payments.makepayment(sender,response)
 
 def preview(sender):
     

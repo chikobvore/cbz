@@ -13,8 +13,6 @@ def pay(sender,response):
 
     state = dbh.db['Senders'].find_one({"Sender": sender})
     sh.session_status(sender,session_type=response,status='0')
-
-
     message =  "*Make Payment*\nPlease select your payment method👇 \n *1*.Ecocash. \n *2*.Telecash\n *3*.One Money\n\n*0*.Cancel"
     api.reply_message(sender,message)
     return '', 200
@@ -399,7 +397,7 @@ def makepayment(sender,response):
         dbh.db['payments'].insert_one(record)
         dbh.db['pending_payments'].find_one_and_delete({'Sender': sender})
 
-        message = "*Payment Confirmation*: Success\n*Reference number*: "+diction['paynowreference']+ "\n\n*Please note that the money will reflect in your account after next end-of-day settlement.*\n\nTo view the transaction online please follow this link\n"+poll_url
+        message = "*Payment Confirmation*\n*Reference number*: "+diction['paynowreference']+ "\n\n*Please note that the money will reflect in your account after next end-of-day settlement.*\n\nTo view the transaction online please follow this link\n"+poll_url
         api.reply_message(sender,message)
         return main.feedback(sender)
 

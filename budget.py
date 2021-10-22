@@ -196,7 +196,7 @@ def addcomment(response,sender):
         dbh.db['pending_budget_reviews'].insert_one(record)
 
         sh.session_status(sender,session_type='8',status='1H')
-        message = "*PERFORMANCE REPORT*\nDo you have any objection regarding our performance report\n*Y*.Yes\n*N*.No\n\nPlease respond with one of the above options"
+        message = "*PERFORMANCE REPORT*\nWhat is your comment regarding our performance"
         api.reply_message(sender,message)
         return '', 200
 
@@ -276,7 +276,17 @@ def addobjection(response,sender):
         return '', 200
 
     else:
-        message = "*im sorry i didnt get that*Please respond with a *Y* for Yes or *N* for No"
+        details = dbh.db['pending_budget_reviews'].find_one({"Sender": sender})
+        dbh.db['pending_budget_reviews'].update({"Sender": sender},{
+            "Sender": sender,
+            "Budget_type": details['Budget_type'],
+            "Objection": 'NO',
+            "Comment": 'NULL',
+            "Rating": 'NULL',
+            "Recommendations": 'NULL',
+            "Status": "PENDING"
+        })
+        message = "*What is your overal take on the budget,please comment on the budget*"
         api.reply_message(sender,message)
         return '', 200
 
@@ -390,23 +400,26 @@ def welcomeback(response,sender):
         return '', 200
 
 def resend_performance_report(sender):
-    
+
     caption = "PERFORMANCE REPORT"
-    attachment_url = 'https://chikobvore.github.io/Unlock-Technologies/lib/BUDGET%20PERFORMANCE%20REVIEW%202021.pdf'
+    attachment_url = 'https://chikobvore.github.io/dura_online_shop/images/Sample%20Tarrif%20Schedule.pdf'
+    #attachment_url = 'https://chikobvore.github.io/Unlock-Technologies/lib/BUDGET%20PERFORMANCE%20REVIEW%202021.pdf'
     api.send_attachment(sender,attachment_url,caption)
     return addcomment('1',sender)
 
 def resend_tarrif_schedule(sender):
     
     caption = "SUPPLIMENTARY BUDGET AND PROPOSED 2022 BUDGET"
-    attachment_url = 'https://chikobvore.github.io/Unlock-Technologies/lib/SUPPLEMENTARY%20BUDGET%20AND%202022%20BUDGET%20PROPOSAL.pdf'
+    attachment_url = 'https://chikobvore.github.io/dura_online_shop/images/Sample%20performance%20report.pdf'
+    #attachment_url = 'https://chikobvore.github.io/Unlock-Technologies/lib/SUPPLEMENTARY%20BUDGET%20AND%202022%20BUDGET%20PROPOSAL.pdf'
     api.send_attachment(sender,attachment_url,caption)
     return addcomment('2',sender)
 
 def resend_proposed_projects_report(sender):
 
     caption = "SUPPLIMENTARY BUDGET AND PROPOSED 2022 BUDGET"
-    attachment_url = 'https://chikobvore.github.io/Unlock-Technologies/lib/SUPPLEMENTARY%20BUDGET%20AND%202022%20BUDGET%20PROPOSAL.pdf'
+    attachment_url = 'https://chikobvore.github.io/dura_online_shop/images/Sample%20performance%20report.pdf'
+    #attachment_url = 'https://chikobvore.github.io/Unlock-Technologies/lib/SUPPLEMENTARY%20BUDGET%20AND%202022%20BUDGET%20PROPOSAL.pdf'
     api.send_attachment(sender,attachment_url,caption)
     return addcomment('3',sender)
 
