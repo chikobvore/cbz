@@ -133,12 +133,10 @@ def chatmenu():
 
             elif response == '9':
                 
-                sh.session_status(sender,session_type=response,status='Feedback')
+                sh.session_status(sender,session_type='Feedback',status='Feedback')
                 message = "*Compliements*\nThank you for reaching us, we value your feedback and support.\nPlease briefly tell us your compliments"
                 api.reply_message(sender,message)
                 return '', 200
-
-    
             
             elif response == "0":
                 return main.menu(sender)
