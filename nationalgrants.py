@@ -157,7 +157,7 @@ def addaccount(response,sender):
 def sendnationaldocuments(sender):
 
     caption = "2022 DEVOLUTION FUNDS ALLOCATIONS AND PROPOSED PROJECTS"
-    attachment_url = 'https://chikobvore.github.io/dura_online_shop/images/Sample%20Tarrif%20Schedule.pdf'
+    attachment_url = 'https://chikobvore.github.io/Unlock-Technologies/lib/Proposed%20Devolution%20funded%20projects.docx'
     api.send_attachment(sender,attachment_url,caption)
     return nationalattachmentmessage(sender)
 
