@@ -17,6 +17,11 @@ app = Flask(__name__)
 import dbh
 
 
+@app.route('/chatbot/payments',methods=["post"])
+def paynowresponse():
+    print(request.get_json())
+    return '',200
+
 @app.route('/api',methods=["post"])
 def chatmenu():
 
@@ -49,7 +54,7 @@ def chatmenu():
             }
         dbh.db['Senders'].insert_one(record)
         # -*- coding: utf-8 -*-
-        caption = "Hello "+ senderName +" 🙋🏽‍♂ , \nThank you for contacting Mutare City Council,I'm Tau, i'm a virtual assistant,\nFor any emergency 👇 \n📞 Dial Number: +263202060823 \n\nPlease select one of the following options 👇\n\n"+ str('1️⃣') +" *Budget Consultations (Own Revenue)*\n\n"+ str('2️⃣') +" *Budget Consultations (Government Grants)*\n\n"+ str('3️⃣') +" Account Services\n\n" + str('4️⃣') +" Log a Query\n\n"+ str('5️⃣') +" Make Payment\n\n" + str('6️⃣')+ " Waiting List Services\n\n"+ str('7️⃣')+ " Request a call from our customer care representatives\n\n"+ str('8️⃣')+" Payment Plan Services\n\n"+str('9️⃣')+" Compliment our good works\n\n"+ str('0️⃣')+" Cancel \n*Please select the corresponding number for the type of service you wish to access or Done to return to this menu*"
+        caption = "Hello "+ senderName +" 🙋🏽‍♂ , \nThank you for contacting Mutare City Council,I'm Tau, i'm a virtual assistant,\nFor any emergency 👇 \n📞 Dial Number: +263202060823 \n\nPlease select one of the following options 👇\n\n"+ str('1️⃣') +" Waiting List Services\n\n"+ str('2️⃣') +" Account Services\n\n"+ str('3️⃣') +" Book an inspection\n\n" + str('4️⃣') +" Payment Plan services\n\n"+ str('5️⃣') +" Log a Query\n\n" + str('6️⃣')+ " Make a payment\n\n"+ str('7️⃣')+ " Request a call from our customer care representatives\n\n"+ str('8️⃣')+" Budget Consultations\n\n"+str('9️⃣')+" Compliment our good works\n\n"+ str('0️⃣')+" Cancel \n*please select the corresponding numer for the type of service you wish to access*"
         attachment_url = 'https://www.mutarecity.co.zw/images/mutarelogo.png'
         api.send_attachment(sender,attachment_url,caption)
         return '', 200
@@ -71,73 +76,38 @@ def chatmenu():
             dbh.db['pending_payments'].find_one_and_delete({'Sender': sender})
             dbh.db['pending_budget_reviews'].find_one_and_delete({'Sender': sender})
             dbh.db['Queries'].find_one_and_delete({'Sender': sender})
-            message =  "*Previous session expired*\nHello *"+ senderName +"* 🙋🏽‍♂,\nPlease select one of the following options 👇\n\n"+ str('1️⃣') +" *Budget Consultations (Own Revenue)*\n\n"+ str('2️⃣') +" *Budget Consultations (Government Grants)*\n\n"+ str('3️⃣') +" Account Services\n\n" + str('4️⃣') +" Log a Query\n\n"+ str('5️⃣') +" Make Payment\n\n" + str('6️⃣')+ " Waiting List Services\n\n"+ str('7️⃣')+ " Request a call from our customer care representatives\n\n"+ str('8️⃣')+" Payment Plan Services\n\n"+str('9️⃣')+" Compliment our good works\n\n"+ str('0️⃣')+" Cancel \n*Please select the corresponding number for the type of service you wish to access or Done to return to this menu*"
+            message =  "*Previous session expired*\nHello *"+ senderName +"* 🙋🏽‍♂,\nPlease select one of the following options 👇\n*1*. Waiting List Services.\n*2*.Account Services\n*3*.Book an inspection\n*4*.Payment Plan services\n*5*.Log a Query\n*6*.Make a payment\n*7*.Request a call from our customer care representatives\n*8*.Budget Consultations\n*9*.Compliment our good works\n*0*.Cancel"
             api.reply_message(sender,message)
             return '', 200
 
         if state['session_type'] == "0":
             
             if response == "1":
-
-                #budget consultations own revenue
-                existance = dbh.db['budget_reviewers'].count_documents({"Sender": sender}) 
-                #check if session exist
-                if existance < 1:
-                    sh.session_status(sender,session_type='8',status='0')
-                    message = "*Budget consultations*\nThank you for reaching us, we value your feedback and support.\nFor the purposes of quality evaluation please provide your full name"
-                    api.reply_message(sender,message)
-                    return '', 200
-                else:
-                    sh.session_status(sender,session_type='8',status='1L')
-                    message = "*Welcome Back* "+ sender +"\nPlease select one of the following options\n*1*.Resend Performance Report\n*2*.Resend Proposed budget\n*3*.Continue reviewing\n*0*.Resend all attachments"
-                    api.reply_message(sender,message)
-                    return '', 200
-
+                return waiting_list.waiting_list_menu(sender,response)
             elif response == "2":
-                #budget consultations government grants
-
-                existance = dbh.db['budget_reviewers'].count_documents({"Sender": sender}) 
-                if existance < 1:
-                    sh.session_status(sender,session_type='8',status='0')
-                    message = "*Budget consultations*\nThank you for reaching us, we value your feedback and support.\nFor the purposes of quality evaluation please provide your full name"
-                    api.reply_message(sender,message)
-                    return '', 200
-                else:
-                    sh.session_status(sender,session_type='8',status='1L')
-                    message = "*Welcome Back* "+ sender +"\nPlease select one of the following options\n*1*.Resend Performance Report\n*2*.Resend Proposed budget\n*3*.Continue reviewing\n*0*.Resend all attachments"
-                    api.reply_message(sender,message)
-                    return '', 200
-
-                
+                return account_services.menu(sender,response)
             elif response == "3":
-
-                # #Book an inspection
-                message = "_*Account Services*_\n\n_this service is under maintainance, kindly bear with us_"
+                #Book an inspection
+                message = "Please ensure that you have a approved plan and $0.00 accrued areas before booking an inspection"
                 api.reply_message(sender,message)
                 return '', 200
 
             elif response == "4":
-                #query logging
-                sh.session_status(sender,session_type='5',status='0')
-                message= "*Query logging*\nOur sincere apologies for the bad experiene with us, for the purposes of quality evaluation please provide us your full name"
+                #payment plan services
+                message = "No payment plan found for this account"
                 api.reply_message(sender,message)
                 return '', 200
 
             elif response == "5":
                 #query logging
-                #sh.session_status(sender,session_type=response,status='0')
-                message= "*Make Payment*\nThis service is under maintainance, kindly bear with us"
+                sh.session_status(sender,session_type=response,status='0')
+                message= "*Query logging*\nOur sincere apologies for the bad experiene with us, for the purposes of quality evaluation please provide us your full name"
                 api.reply_message(sender,message)
                 return '', 200
-                #return payments.pay(sender,response)
 
             elif response == "6":
-                
-                #sh.session_status(sender,session_type=response,status='0')
-                message= "*Waiting List Services*\nThis service is under maintainance, kindly bear with us"
-                api.reply_message(sender,message)
-                return main.menu(sender)
-                #return waiting_list.waiting_list_menu(sender,response)
+                return payments.pay(sender,response)
+        
             elif response == "7":
 
                 sh.session_status(sender,session_type=response,status='0')
@@ -147,10 +117,20 @@ def chatmenu():
                 return '', 200
 
             elif response == "8":
+                
+                existance = dbh.db['budget_reviewers'].count_documents({"Sender": sender}) 
+                #check if session exist
+                if existance < 1:
+                    sh.session_status(sender,session_type=response,status='0')
+                    message = "*Budget consultations*\nThank you for reaching us, we value your feedback and support.\nFor the purposes of quality evaluation please provide your full name"
+                    api.reply_message(sender,message)
+                    return '', 200
+                else:
+                    sh.session_status(sender,session_type='8',status='1L')
+                    message = "*Welcome Back* "+ sender +"\nPlease select one of the following options\n*1*.Resend Performance Report\n*2*.Resend Proposed budget\n*3*.Continue reviewing\n*0*.Resend all attachments"
+                    api.reply_message(sender,message)
+                    return '', 200
 
-                message= "*Payment Plan Services*\nThis service is under maintainance, kindly bear with us"
-                api.reply_message(sender,message)
-                return main.menu(sender)
             elif response == '9':
                 
                 sh.session_status(sender,session_type='Feedback',status='Feedback')
@@ -161,15 +141,10 @@ def chatmenu():
             elif response == "0":
                 return main.menu(sender)
             else:
-                sh.session_status(sender,'0','0')
-                dbh.db['pending_payments'].find_one_and_delete({'Sender': sender})
-                dbh.db['pending_budget_reviews'].find_one_and_delete({'Sender': sender})
-                dbh.db['Queries'].find_one_and_delete({'Sender': sender})
-                message =  "*Previous session expired*\nHello *"+ senderName +"* 🙋🏽‍♂,\nPlease select one of the following options 👇\n\n"+ str('1️⃣') +" *Budget Consultations (Own Revenue)*\n\n"+ str('2️⃣') +" *Budget Consultations (Government Grants)*\n\n"+ str('3️⃣') +" Account Services\n\n" + str('4️⃣') +" Log a Query\n\n"+ str('5️⃣') +" Make Payment\n\n" + str('6️⃣')+ " Waiting List Services\n\n"+ str('7️⃣')+ " Request a call from our customer care representatives\n\n"+ str('8️⃣')+" Payment Plan Services\n\n"+str('9️⃣')+" Compliment our good works\n\n"+ str('0️⃣')+" Cancel \n*Please select the corresponding number for the type of service you wish to access or Done to return to this menu*"
+                #invalid response from user
+                message =  "*Previous session expired*\nHello *"+ senderName +"* 🙋🏽‍♂,\nPlease select one of the following options 👇\n*1*. Waiting List Services 📝.\n*2*.Account Services\n*3*.Book an inspection\n*4*.Payment Plan services\n*5*.Log a Query\n*6*.Make a payment\n*7*.Request a call from our customer care representatives\n*8*Budget Consultations\n*0*.Cancel"
                 api.reply_message(sender,message)
                 return '', 200
-
-
 
         elif state['session_type'] == "1":
 
@@ -1011,7 +986,7 @@ def chatmenu():
             api.reply_message(sender,message)
             return '', 200
 
-            
+
 @app.route('/',methods=["get"])
 def dashboard():
     total_reviews = dbh.db['budget_reviewers'].count_documents({})
