@@ -211,7 +211,7 @@ def addnationlcomment(response,sender):
         dbh.db['pending_budget_reviews'].insert_one(record)
 
         sh.session_status(sender,session_type='10',status='1H')
-        message = "*PROPOSED PROJECTS*\nWhat is your comment regarding our proposed projects"
+        message = "*PROPOSED 2022 PROJECTS*\nDo you have any objection regarding our proposed projects\n*Y*.Yes\n*N*.No\n\nPlease respond with one of the above options"
         api.reply_message(sender,message)
         return '', 200
 
