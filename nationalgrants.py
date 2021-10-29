@@ -152,7 +152,7 @@ def addaccount(response,sender):
     sh.session_status(sender,session_type='10',status='1F')
     message = "*Details succesfully saved!!*,Please find attached documents"
     api.reply_message(sender,message)
-    return senddocuments(sender)
+    return sendnationaldocuments(sender)
 
 def sendnationaldocuments(sender):
 
