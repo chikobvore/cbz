@@ -13,7 +13,7 @@ def menu(sender,response):
 
     if existance < 1:
 
-        sh.session_status(sender,session_type=response,status='Register_fone')
+        sh.session_status(sender,session_type='2',status='Register_fone')
 
         message = "*Unregistered user*\nYour phone number is currently not verified,to continue please enter your account number or Exit to return to main menu"
         api.reply_message(sender,message)

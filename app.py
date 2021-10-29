@@ -98,18 +98,20 @@ def chatmenu():
 
                 existance = dbh.db['budget_reviewers'].count_documents({"Sender": sender}) 
                 if existance < 1:
-                    sh.session_status(sender,session_type='8',status='0')
+                    sh.session_status(sender,session_type='10',status='0')
                     message = "*Budget consultations*\nThank you for reaching us, we value your feedback and support.\nFor the purposes of quality evaluation please provide your full name"
                     api.reply_message(sender,message)
                     return '', 200
                 else:
-                    sh.session_status(sender,session_type='8',status='1L')
+                    sh.session_status(sender,session_type='10',status='1L')
                     message = "*Welcome Back* "+ sender +"\nPlease select one of the following options\n*1*.Resend Performance Report\n*2*.Resend Proposed budget\n*3*.Continue reviewing\n*0*.Resend all attachments"
                     api.reply_message(sender,message)
                     return '', 200
 
                 
             elif response == "3":
+
+                return account_services.menu(sender,response)
 
                 # #Book an inspection
                 message = "_*Account Services*_\n\n_this service is under maintainance, kindly bear with us_"
@@ -124,20 +126,13 @@ def chatmenu():
                 return '', 200
 
             elif response == "5":
-                #query logging
-                #sh.session_status(sender,session_type=response,status='0')
-                message= "*Make Payment*\nThis service is under maintainance, kindly bear with us"
-                api.reply_message(sender,message)
-                return '', 200
-                #return payments.pay(sender,response)
+                #make payments
+                return payments.pay(sender,response)
 
             elif response == "6":
+                #waiting list services
+                return waiting_list.waiting_list_menu(sender,response)
                 
-                #sh.session_status(sender,session_type=response,status='0')
-                message= "*Waiting List Services*\nThis service is under maintainance, kindly bear with us"
-                api.reply_message(sender,message)
-                return main.menu(sender)
-                #return waiting_list.waiting_list_menu(sender,response)
             elif response == "7":
 
                 sh.session_status(sender,session_type=response,status='0')
@@ -982,6 +977,39 @@ def chatmenu():
                 return budget.senddocuments(response,sender)
             elif state['Status'] == "1G":
                 return budget.addcomment(response,sender)
+            elif state['Status'] == "1H":
+                return budget.addobjection(response,sender)
+            elif state['Status'] == "1I":
+                return budget.objectBudget(response,sender)
+            elif state['Status'] == "1J":
+                return budget.addratings(response,sender)
+            elif state['Status'] == "1K":
+                return budget.addrecommendations(response,sender)
+            elif state['Status'] == "1L":
+                return budget.welcomeback(response,sender)
+            else:
+                message = "*im sorry i didnt get that*"
+                api.reply_message(sender,message)
+                return '', 200
+
+        elif state['session_type'] == "10":
+            
+            if state['Status'] == "0":
+                return budget.addfullname(response,sender)
+            elif state['Status'] == "1A":
+                return budget.addgender(response,sender)
+            elif state['Status'] == "1B":
+                return budget.addage(response,sender)
+            elif state['Status'] == "1C":
+                return budget.addnation(response,sender)
+            elif state['Status'] == "1D":
+                return budget.addcategory(response,sender)
+            elif state['Status'] == "1E":
+                return budget.addaccount(response,sender)
+            elif state['Status'] == "1F":
+                return budget.sendnationaldocuments(response,sender)
+            elif state['Status'] == "1G":
+                return budget.addnationlcomment(response,sender)
             elif state['Status'] == "1H":
                 return budget.addobjection(response,sender)
             elif state['Status'] == "1I":

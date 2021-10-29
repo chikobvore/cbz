@@ -14,7 +14,7 @@ import payments
 def waiting_list_menu(sender,response):
 
     state = dbh.db['Senders'].find_one({"Sender": sender})
-    sh.session_status(sender,session_type=response,status='0')
+    sh.session_status(sender,session_type='1',status='0')
 
     message = "Waiting List services,\nPlease select one of the following option 👇 \n *1*. Join Waiting List*📝. \n *2*.Renew waiting list 📝\n *3*. View Status \n *0*.Return to main menu\n *"
     api.reply_message(sender,message)

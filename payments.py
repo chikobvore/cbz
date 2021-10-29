@@ -12,7 +12,7 @@ import pandas as pd
 def pay(sender,response):
 
     state = dbh.db['Senders'].find_one({"Sender": sender})
-    sh.session_status(sender,session_type=response,status='0')
+    sh.session_status(sender,session_type='6',status='0')
     message =  "*Make Payment*\nPlease select your payment method👇 \n *1*.Ecocash. \n *2*.Telecash\n *3*.One Money\n\n*0*.Cancel"
     api.reply_message(sender,message)
     return '', 200
