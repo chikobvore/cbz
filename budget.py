@@ -163,28 +163,34 @@ def sendnationaldocuments(sender):
 
 def senddocuments(sender):
 
-    caption = "Performance Report"
-    attachment_url = 'https://chikobvore.github.io/dura_online_shop/images/Sample%20Tarrif%20Schedule.pdf'
+    caption = "2021 HALF YEAR BUDGET PERFORMANCE REPORT"
+    attachment_url = 'https://chikobvore.github.io/Unlock-Technologies/lib/2021%20HALF%20YEAR%20BUDGET%20PERFORMANCE%20REPORT-.docx'
     api.send_attachment(sender,attachment_url,caption)
 
-    caption = "Tarrif Schedule"
-    attachment_url = 'https://chikobvore.github.io/dura_online_shop/images/Sample%20performance%20report.pdf'
+    caption = "2022 PROPOSED TARRIF SCHEDULE"
+    attachment_url = 'https://chikobvore.github.io/Unlock-Technologies/lib/2022%20Budget%20Tariff%20working%20papers%20edited.xlsx'
     api.send_attachment(sender,attachment_url,caption)
 
-    caption = "Proposed projects and funding sources"
-    attachment_url = 'https://chikobvore.github.io/dura_online_shop/images/project%20proposals.pdf'
+    caption = "2022 PROPOSED PROJECTS AND CAPEX"
+    attachment_url = 'https://chikobvore.github.io/Unlock-Technologies/lib/2022%20CAPEX%20%26%20PROJECTS.xlsx'
     api.send_attachment(sender,attachment_url,caption)
-    # caption = "PERFORMANCE REPORT"
-    # attachment_url = 'https://chikobvore.github.io/Unlock-Technologies/lib/BUDGET%20PERFORMANCE%20REVIEW%202021.pdf'
+
+    caption = "WATER TARRIF MODEL"
+    attachment_url = 'https://chikobvore.github.io/Unlock-Technologies/lib/water%20tariff%20study%20Mutare%20Model.xlsx'
+    api.send_attachment(sender,attachment_url,caption)
+    
+    caption = "RENTALS VALUATION REPORT"
+    attachment_url = 'https://github.com/chikobvore/Unlock-Technologies/raw/master/lib/RENTALS%20%20VALUATION%20REPORT.xls'
+    api.send_attachment(sender,attachment_url,caption)
+
+    caption = "MUTARE HEAVY INDUSTRY VALUATION REPORT"
+    attachment_url = 'https://chikobvore.github.io/Unlock-Technologies/lib/RENTALS%20VALUATION%20REPORT.xls'
+    api.send_attachment(sender,attachment_url,caption)
+
+    # caption = "MUTARE HEAVY INDUSTRY VALUATION REPORT"
+    # attachment_url = 'https://chikobvore.github.io/Unlock-Technologies/lib/RENTALS%20VALUATION%20REPORT.xls'
     # api.send_attachment(sender,attachment_url,caption)
 
-    # caption = "Tarrif Schedule"
-    # attachment_url = 'https://chikobvore.github.io/dura_online_shop/images/Sample%20performance%20report.pdf'
-    # api.send_attachment(sender,attachment_url,caption)
-
-    # caption = "SUPPLIMENTARY BUDGET AND PROPOSED 2022 BUDGET"
-    # attachment_url = 'https://chikobvore.github.io/Unlock-Technologies/lib/SUPPLEMENTARY%20BUDGET%20AND%202022%20BUDGET%20PROPOSAL.pdf'
-    # api.send_attachment(sender,attachment_url,caption)
     return attachmentmessage(sender)
 
 def nationalattachmentmessage(sender):
@@ -293,28 +299,86 @@ def addcomment(response,sender):
         dbh.db['pending_budget_reviews'].insert_one(record)
 
         sh.session_status(sender,session_type='8',status='1H')
-        message = "*PROPOSED 2022 BUDGET*\nDo you have any objection regarding our proposed budget\n*Y*.Yes\n*N*.No\n\nPlease respond with one of the above options"
+        message = "*TARRIF SCHEDULE*\nDo you have any objection regarding our proposed budget\n*Y*.Yes\n*N*.No\n\nPlease respond with one of the above options"
         api.reply_message(sender,message)
         return '', 200
 
-    # elif response == '3':
+    elif response == '3':
 
-    #     budget_type = "Proposed Projects"
-    #     record = {
-    #         "Sender": sender,
-    #         "Budget_type": budget_type,
-    #         "Objection": 'NULL',
-    #         "Comment": 'NULL',
-    #         "Rating": 'NULL',
-    #         "Recommendations": 'NULL',
-    #         "Status": "PENDING"
-    #         }
-    #     dbh.db['pending_budget_reviews'].insert_one(record)
+        budget_type = "Proposed Projects"
+        record = {
+            "Sender": sender,
+            "Budget_type": budget_type,
+            "Objection": 'NULL',
+            "Comment": 'NULL',
+            "Rating": 'NULL',
+            "Recommendations": 'NULL',
+            "Status": "PENDING"
+            }
+        dbh.db['pending_budget_reviews'].insert_one(record)
 
-    #     sh.session_status(sender,session_type='8',status='1H')
-    #     message = "*Proposed projects and funding*\nDo you have any objection regarding our proposed projects and fundings\n*Y*.Yes\n*N*.No\n\nPlease respond with one of the above options"
-    #     api.reply_message(sender,message)
-    #     return '', 200
+        sh.session_status(sender,session_type='8',status='1H')
+        message = "*PROPOSED PROJECTS AND CAPEX*\nDo you have any objection regarding our proposed projects and fundings\n*Y*.Yes\n*N*.No\n\nPlease respond with one of the above options"
+        api.reply_message(sender,message)
+        return '', 200
+
+    elif response == '4':
+
+        budget_type = "water tarrif"
+        record = {
+            "Sender": sender,
+            "Budget_type": budget_type,
+            "Objection": 'NULL',
+            "Comment": 'NULL',
+            "Rating": 'NULL',
+            "Recommendations": 'NULL',
+            "Status": "PENDING"
+            }
+        dbh.db['pending_budget_reviews'].insert_one(record)
+
+        sh.session_status(sender,session_type='8',status='1H')
+        message = "*WATER TARRIF MODEL*\nDo you have any objection regarding our water tarrif model\n*Y*.Yes\n*N*.No\n\nPlease respond with one of the above options"
+        api.reply_message(sender,message)
+        return '', 200
+
+    elif response == '5':
+
+        budget_type = "rental valuation"
+        record = {
+            "Sender": sender,
+            "Budget_type": budget_type,
+            "Objection": 'NULL',
+            "Comment": 'NULL',
+            "Rating": 'NULL',
+            "Recommendations": 'NULL',
+            "Status": "PENDING"
+            }
+        dbh.db['pending_budget_reviews'].insert_one(record)
+
+        sh.session_status(sender,session_type='8',status='1H')
+        message = "*RENTAL VALUATION REPORT*\nDo you have any objection regarding our rental valuation report\n*Y*.Yes\n*N*.No\n\nPlease respond with one of the above options"
+        api.reply_message(sender,message)
+        return '', 200
+
+    elif response == '6':
+
+        budget_type = "heavy vehicle valuation"
+        record = {
+            "Sender": sender,
+            "Budget_type": budget_type,
+            "Objection": 'NULL',
+            "Comment": 'NULL',
+            "Rating": 'NULL',
+            "Recommendations": 'NULL',
+            "Status": "PENDING"
+            }
+        dbh.db['pending_budget_reviews'].insert_one(record)
+
+        sh.session_status(sender,session_type='8',status='1H')
+        message = "*Heavy INDUSTRY VALUATION REPORT*\nDo you have any objection regarding our proposed projects and fundings\n*Y*.Yes\n*N*.No\n\nPlease respond with one of the above options"
+        api.reply_message(sender,message)
+        return '', 200
+
     else:
         message = "*I am sorry i didnt get that*\nWhich one of the attached documents do you want to review/comment\n*1*.Performance Report\n*2*.Proposed 2022 budget"
         api.reply_message(sender,message)
@@ -458,7 +522,7 @@ def addrecommendations(response,sender):
 def attachmentmessage(sender):
 
     sh.session_status(sender,session_type='8',status='1G')
-    message = "*Which one of the attached documents do you want to review/comment*\n\n*1*.PERFORMANCE REPORT\n*2*.PROPOSED 2022 BUDGET"
+    message = "*Which one of the attached documents do you want to review/comment*\n\n*1*.2021 HALF YEAR PERFORMANCE REPORT\n*2*.PROPOSED 2022 TARRIF SCHEDULE\n*3*.2022 PROPOSED PROJECTS AND CAPEX\n*4*.2022 WATER TARRIF MODEL\n*5*.RENTALS VALUATION REPORT\n*6*.HEAVY INDUSTRY VALUATION REPORT"
     api.reply_message(sender,message)
     return '', 200
 
@@ -479,25 +543,22 @@ def welcomeback(response,sender):
 
 def resend_performance_report(sender):
 
-    caption = "PERFORMANCE REPORT"
-    attachment_url = 'https://chikobvore.github.io/dura_online_shop/images/Sample%20Tarrif%20Schedule.pdf'
-    #attachment_url = 'https://chikobvore.github.io/Unlock-Technologies/lib/BUDGET%20PERFORMANCE%20REVIEW%202021.pdf'
+    caption = "2022 PROPOSED PROJECTS AND CAPEX"
+    attachment_url = 'https://chikobvore.github.io/Unlock-Technologies/lib/2022%20CAPEX%20%26%20PROJECTS.xlsx'
     api.send_attachment(sender,attachment_url,caption)
     return addcomment('1',sender)
 
 def resend_tarrif_schedule(sender):
-    
-    caption = "SUPPLIMENTARY BUDGET AND PROPOSED 2022 BUDGET"
-    attachment_url = 'https://chikobvore.github.io/dura_online_shop/images/Sample%20performance%20report.pdf'
-    #attachment_url = 'https://chikobvore.github.io/Unlock-Technologies/lib/SUPPLEMENTARY%20BUDGET%20AND%202022%20BUDGET%20PROPOSAL.pdf'
+
+    caption = "2022 PROPOSED TARRIF SCHEDULE"
+    attachment_url = 'https://chikobvore.github.io/Unlock-Technologies/lib/2022%20Budget%20Tariff%20working%20papers%20edited.xlsx'
     api.send_attachment(sender,attachment_url,caption)
     return addcomment('2',sender)
 
 def resend_proposed_projects_report(sender):
 
-    caption = "SUPPLIMENTARY BUDGET AND PROPOSED 2022 BUDGET"
-    attachment_url = 'https://chikobvore.github.io/dura_online_shop/images/Sample%20performance%20report.pdf'
-    #attachment_url = 'https://chikobvore.github.io/Unlock-Technologies/lib/SUPPLEMENTARY%20BUDGET%20AND%202022%20BUDGET%20PROPOSAL.pdf'
+    caption = "2022 PROPOSED PROJECTS AND CAPEX"
+    attachment_url = 'https://chikobvore.github.io/Unlock-Technologies/lib/2022%20CAPEX%20%26%20PROJECTS.xlsx'
     api.send_attachment(sender,attachment_url,caption)
     return addcomment('3',sender)
 

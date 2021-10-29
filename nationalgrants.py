@@ -190,7 +190,7 @@ def senddocuments(sender):
 def nationalattachmentmessage(sender):
     
     sh.session_status(sender,session_type='10',status='1G')
-    message = "*Which one of the attached documents do you want to review/comment*\n\n*1*.2022 DEVOLUTION FUNDS ALLOCATIONS AND PROPOSED PROJECTS"
+    message = "Review our proposals herein. Press 1 to continue and review or press 0 to return to main menu"
     api.reply_message(sender,message)
     return '', 200
 
@@ -214,6 +214,9 @@ def addnationlcomment(response,sender):
         message = "*2022 DEVOLUTION FUNDS ALLOCATIONS AND PROPOSED PROJECTS*\nWhat is your preferred devolution project"
         api.reply_message(sender,message)
         return '', 200
+
+    elif response == '0':
+        return main.menu(sender)
 
     # elif response == '2':
 
