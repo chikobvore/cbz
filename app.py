@@ -1015,7 +1015,7 @@ def chatmenu():
             elif state['Status'] == "1I":
                 return nationalgrants.objectBudget(response,sender)
             elif state['Status'] == "1J":
-                return nationalgrants.addratings(response,sender)
+                return nationalgrants.addrecommendations(response,sender)
             elif state['Status'] == "1K":
                 return nationalgrants.addrecommendations(response,sender)
             elif state['Status'] == "1L":

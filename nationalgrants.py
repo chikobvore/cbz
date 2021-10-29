@@ -156,7 +156,7 @@ def addaccount(response,sender):
 
 def sendnationaldocuments(sender):
 
-    caption = "SAMPLE 2022 GOVERNMENT ALLOCATION GRANT ALLOCATION REPORT AND PROPOSED PROJECTS"
+    caption = "2022 DEVOLUTION FUNDS ALLOCATIONS AND PROPOSED PROJECTS"
     attachment_url = 'https://chikobvore.github.io/dura_online_shop/images/Sample%20Tarrif%20Schedule.pdf'
     api.send_attachment(sender,attachment_url,caption)
     return nationalattachmentmessage(sender)
@@ -190,7 +190,7 @@ def senddocuments(sender):
 def nationalattachmentmessage(sender):
     
     sh.session_status(sender,session_type='10',status='1G')
-    message = "*Which one of the attached documents do you want to review/comment*\n\n*1*.PROPOSED PROJECTS"
+    message = "*Which one of the attached documents do you want to review/comment*\n\n*1*.2022 DEVOLUTION FUNDS ALLOCATIONS AND PROPOSED PROJECTS"
     api.reply_message(sender,message)
     return '', 200
 
@@ -211,7 +211,7 @@ def addnationlcomment(response,sender):
         dbh.db['pending_budget_reviews'].insert_one(record)
 
         sh.session_status(sender,session_type='10',status='1H')
-        message = "*PROPOSED 2022 PROJECTS*\nDo you have any objection regarding our proposed projects\n*Y*.Yes\n*N*.No\n\nPlease respond with one of the above options"
+        message = "*2022 DEVOLUTION FUNDS ALLOCATIONS AND PROPOSED PROJECTS*\nWhat is your preferred devolution project"
         api.reply_message(sender,message)
         return '', 200
 
@@ -322,53 +322,23 @@ def addcomment(response,sender):
 
 def addobjection(response,sender):
     sh.session_status(sender,session_type='10',status='1I')
-    if response == 'Y' or response == 'y':
-        details = dbh.db['pending_budget_reviews'].find_one({"Sender": sender})
-        dbh.db['pending_budget_reviews'].update({"Sender": sender},{
-            "Sender": sender,
-            "Budget_type": details['Budget_type'],
-            "Objection": 'YES',
-            "Comment": 'NULL',
-            "Rating": 'NULL',
-            "Recommendations": 'NULL',
-            "Status": "PENDING"
-        })
 
-        message = "*Please specify your objections*"
-        api.reply_message(sender,message)
-        return '', 200
-    elif response == 'N' or response == 'n':
-        
-        details = dbh.db['pending_budget_reviews'].find_one({"Sender": sender})
-        dbh.db['pending_budget_reviews'].update({"Sender": sender},{
-            "Sender": sender,
-            "Budget_type": details['Budget_type'],
-            "Objection": 'NO',
-            "Comment": 'NULL',
-            "Rating": 'NULL',
-            "Recommendations": 'NULL',
-            "Status": "PENDING"
-        })
-        message = "*What is your overal take on the budget,please comment on the budget*"
-        api.reply_message(sender,message)
-        return '', 200
+    details = dbh.db['pending_budget_reviews'].find_one({"Sender": sender})
+    dbh.db['pending_budget_reviews'].update({"Sender": sender},{
+        "Sender": sender,
+        "Budget_type": details['Budget_type'],
+        "Prefered": response,
+        "Objection": 'NO',
+        "Comment": 'NULL',
+        "Rating": 'NULL',
+        "Recommendations": 'NULL',
+        "Status": "PENDING"
+    })
 
-    else:
-        details = dbh.db['pending_budget_reviews'].find_one({"Sender": sender})
-        dbh.db['pending_budget_reviews'].update({"Sender": sender},{
-            "Sender": sender,
-            "Budget_type": details['Budget_type'],
-            "Objection": 'NO',
-            "Comment": 'NULL',
-            "Rating": 'NULL',
-            "Recommendations": 'NULL',
-            "Status": "PENDING"
-        })
-        message = "*What is your overal take on the budget,please comment on the budget*"
-        api.reply_message(sender,message)
-        return '', 200
+    message = "*2022 DEVOLUTION FUNDS ALLOCATIONS AND PROPOSED PROJECTS*\n\n_Where do you want devolution project to be located_"
+    api.reply_message(sender,message)
+    return '', 200
 
-        
 def objectBudget(response,sender):
     sh.session_status(sender,session_type='10',status='1J')
 
@@ -377,12 +347,14 @@ def objectBudget(response,sender):
         "Sender": sender,
         "Budget_type": details['Budget_type'],
         "Objection": details['Objection'],
-        "Comment": response,
+        "Prefered": details['Prefered'],
+        "Location": response,
+        "Comment": '',
         "Rating": 'NULL',
         "Recommendations": 'NULL',
         "Status": "PENDING"
     })
-    message = "*Details successfully have been successfully saved!!*\nHow do you rate this budget out of 10\n*0* -Very Bad\n*5* -Better\n*10* -Excellent Work"
+    message = "*Details successfully have been successfully saved!!*\nDo you have any other suggestion on devolution  funded projects"
     api.reply_message(sender,message)
     return '', 200
 
@@ -423,13 +395,14 @@ def addratings(response,sender):
 
 def addrecommendations(response,sender):
 
+    
     details = dbh.db['pending_budget_reviews'].find_one({"Sender": sender})
     dbh.db['pending_budget_reviews'].update({"Sender": sender},{
         "Sender": sender,
         "Budget_type": details['Budget_type'],
         "Objection": details['Objection'],
-        "Comment": details['Comment'],
-        "Rating": details['Rating'],
+        "Prefered": details['Prefered'],
+        "Location": details['Location'],
         "Recommendations": response,
         "Status": "PENDING"
     })
@@ -443,8 +416,8 @@ def addrecommendations(response,sender):
             "Sender_gender": sender_details['Gender'],
             "Budget_type": details['Budget_type'],
             "Objection": details['Objection'],
-            "Comment": details['Comment'],
-            "Rating": details['Rating'],
+            "Prefered": details['Prefered'],
+            "Location": details['Location'],
             "Recommendations": details['Recommendations'],
             "Timestamp": datetime.datetime.now(),
             }
