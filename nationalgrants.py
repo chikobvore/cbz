@@ -210,7 +210,7 @@ def addnationlcomment(response,sender):
             }
         dbh.db['pending_budget_reviews'].insert_one(record)
 
-        sh.session_status(sender,session_type='8',status='1H')
+        sh.session_status(sender,session_type='10',status='1H')
         message = "*PROPOSED PROJECTS*\nWhat is your comment regarding our proposed projects"
         api.reply_message(sender,message)
         return '', 200
