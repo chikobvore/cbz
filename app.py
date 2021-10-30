@@ -104,7 +104,7 @@ def chatmenu():
                     return '', 200
                 else:
                     sh.session_status(sender,session_type='10',status='1L')
-                    message = "*Welcome Back* "+ sender +"\nPlease select one of the following options\n*1*.RESEND 2022 DEVOLUTION FUNDS ALLOCATIONS AND PROPOSED PROJECTS\n*2*.Continue reviewing\n*NBRESPONSE SHOULD EITHER BE 1 OR 2*"
+                    message = "*Welcome Back* "+ sender +"\nPlease select one of the following options\n*1*.RESEND 2022 DEVOLUTION FUNDS ALLOCATIONS AND PROPOSED PROJECTS\n*2*.Continue reviewing\n*_NB RESPONSE SHOULD EITHER BE 1 OR 2_*"
                     api.reply_message(sender,message)
                     return '', 200
 

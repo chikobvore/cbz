@@ -413,7 +413,7 @@ def addrecommendations(response,sender):
 def attachmentmessage(sender):
 
     sh.session_status(sender,session_type='8',status='1G')
-    message = "*Which one of the attached documents do you want to review/comment*\n\n*1*.2021 HALF YEAR PERFORMANCE REPORT\n*2*.PROPOSED 2022 TARRIF SCHEDULE\n*3*.2022 PROPOSED PROJECTS AND CAPEX\n*4*.2022 WATER TARRIF MODEL\n*5*.RENTALS VALUATION REPORT\n*6*.HEAVY INDUSTRY VALUATION REPORT"
+    message = "*Which one of the attached documents do you want to review/comment*\n\n*1*.2021 HALF YEAR PERFORMANCE REPORT\n*2*.PROPOSED 2022 TARRIF SCHEDULE\n*3*.2022 PROPOSED PROJECTS AND CAPEX\n*4*.2022 WATER TARRIF MODEL\n\n _Please select one of the above options(response should either be 1,2,3 or 4)_"
     api.reply_message(sender,message)
     return '', 200
 
