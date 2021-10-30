@@ -185,7 +185,7 @@ def addnationlcomment(response,sender):
         dbh.db['pending_budget_reviews'].insert_one(record)
 
         sh.session_status(sender,session_type='10',status='1H')
-        message = "*2022 DEVOLUTION FUNDS ALLOCATIONS AND PROPOSED PROJECTS*\nWhat is your preferred devolution project"
+        message = "*2022 DEVOLUTION FUNDS ALLOCATIONS AND PROPOSED PROJECTS*\nWhat is your prefered devolution project if you have any? if NOT please type N/A"
         api.reply_message(sender,message)
         return '', 200
 
@@ -230,7 +230,7 @@ def addnationlcomment(response,sender):
     #     api.reply_message(sender,message)
     #     return '', 200
     else:
-        message = "*I am sorry i didnt get that*\nWhich one of the attached documents do you want to review/comment\n*1*.Proposed projects"
+        message = "*_I am sorry i didnt get that_*\nWhich one of the attached documents do you want to review/comment\n*1*.2022 DEVOLUTION FUNDS ALLOCATIONS AND PROPOSED PROJECTS\n*0*. Return to main menu"
         api.reply_message(sender,message)
         return '', 200
 
@@ -312,7 +312,7 @@ def addobjection(response,sender):
         "Status": "PENDING"
     })
 
-    message = "*2022 DEVOLUTION FUNDS ALLOCATIONS AND PROPOSED PROJECTS*\n\n_Where do you want devolution project to be located_"
+    message = "*2022 DEVOLUTION FUNDS ALLOCATIONS AND PROPOSED PROJECTS*\n\n_Where do you want devolution project to be located if any, if *NOT* please type in *N/A*_"
     api.reply_message(sender,message)
     return '', 200
 
@@ -331,7 +331,7 @@ def objectBudget(response,sender):
         "Recommendations": 'NULL',
         "Status": "PENDING"
     })
-    message = "*Details successfully have been successfully saved!!*\nDo you have any other suggestion on devolution  funded projects"
+    message = "*Details successfully have been successfully saved!!*\nDo you have any other suggestion on devolution funded projects in your area if *NO* please type in *N/A*"
     api.reply_message(sender,message)
     return '', 200
 
@@ -412,6 +412,8 @@ def welcomeback(response,sender):
         return sendnationaldocuments(sender)
     elif response == '2':
         return nationalattachmentmessage(sender)
+    elif response == '0':
+        return main.menu(sender)
     else:
         message = "I am sorry, i didnt get that"
         api.reply_message(sender,message)

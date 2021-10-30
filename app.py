@@ -89,7 +89,7 @@ def chatmenu():
                     return '', 200
                 else:
                     sh.session_status(sender,session_type='8',status='1L')
-                    message = "*Welcome Back* "+ sender +"\nPlease select one of the following options\n*1*.Resend Performance Report\n*2*.Resend Proposed budget\n*3*.Continue reviewing\n*0*.Resend all attachments"
+                    message = "*Welcome Back* "+ sender +"\nPlease select one of the following options\n*1*.Resend Performance Report\n*2*.Resend Proposed budget\n*3*.Continue reviewing\n*4*.Resend all attachments\n*0.Return to main menu*"
                     api.reply_message(sender,message)
                     return '', 200
 
@@ -104,7 +104,7 @@ def chatmenu():
                     return '', 200
                 else:
                     sh.session_status(sender,session_type='10',status='1L')
-                    message = "*Welcome Back* "+ sender +"\nPlease select one of the following options\n*1*.RESEND 2022 DEVOLUTION FUNDS ALLOCATIONS AND PROPOSED PROJECTS\n*2*.Continue reviewing\n*_NB RESPONSE SHOULD EITHER BE 1 OR 2_*"
+                    message = "*Welcome Back* "+ sender +"\nPlease select one of the following options\n*1*.RESEND 2022 DEVOLUTION FUNDS ALLOCATIONS AND PROPOSED PROJECTS\n*2*.Continue reviewing\n*0*. Return to main menu\n*_NB RESPONSE SHOULD EITHER BE 1 , 2 OR 0_*"
                     api.reply_message(sender,message)
                     return '', 200
 

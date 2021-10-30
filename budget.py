@@ -425,8 +425,10 @@ def welcomeback(response,sender):
         resend_proposed_projects_report(sender)
     elif response == '3':
         return attachmentmessage(sender)  
-    elif response == '0':
+    elif response == '4':
         return senddocuments(sender)
+    elif response == '0':
+        return main.menu(sender)
     else:
         message = "I am sorry, i didnt get that"
         api.reply_message(sender,message)
