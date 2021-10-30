@@ -179,13 +179,13 @@ def senddocuments(sender):
     attachment_url = 'https://chikobvore.github.io/Unlock-Technologies/lib/water%20tariff%20study%20Mutare%20Model.xlsx'
     api.send_attachment(sender,attachment_url,caption)
     
-    caption = "RENTALS VALUATION REPORT"
-    attachment_url = 'https://github.com/chikobvore/Unlock-Technologies/raw/master/lib/RENTALS%20%20VALUATION%20REPORT.xls'
-    api.send_attachment(sender,attachment_url,caption)
+    # caption = "RENTALS VALUATION REPORT"
+    # attachment_url = 'https://github.com/chikobvore/Unlock-Technologies/raw/master/lib/RENTALS%20%20VALUATION%20REPORT.xls'
+    # api.send_attachment(sender,attachment_url,caption)
 
-    caption = "MUTARE HEAVY INDUSTRY VALUATION REPORT"
-    attachment_url = 'https://chikobvore.github.io/Unlock-Technologies/lib/RENTALS%20VALUATION%20REPORT.xls'
-    api.send_attachment(sender,attachment_url,caption)
+    # caption = "MUTARE HEAVY INDUSTRY VALUATION REPORT"
+    # attachment_url = 'https://chikobvore.github.io/Unlock-Technologies/lib/RENTALS%20VALUATION%20REPORT.xls'
+    # api.send_attachment(sender,attachment_url,caption)
 
     # caption = "MUTARE HEAVY INDUSTRY VALUATION REPORT"
     # attachment_url = 'https://chikobvore.github.io/Unlock-Technologies/lib/RENTALS%20VALUATION%20REPORT.xls'
@@ -229,7 +229,7 @@ def addcomment(response,sender):
         dbh.db['pending_budget_reviews'].insert_one(record)
 
         sh.session_status(sender,session_type='8',status='1H')
-        message = "*TARRIF SCHEDULE*\nDo you have any objection regarding our tarrif schedule\n*Y*.Yes\n*N*.No\n\nPlease respond with one of the above options"
+        message = "*TARRIF SCHEDULE*\nDo you have any objection regarding our tarrif schedule\n*Y*.Yes\n*N*.No\n\nPlease respond with one of the above options *_NB ANSWERS SHOULD ONLY BE Y for Yes or N for No_*"
         api.reply_message(sender,message)
         return '', 200
 
@@ -248,7 +248,7 @@ def addcomment(response,sender):
         dbh.db['pending_budget_reviews'].insert_one(record)
 
         sh.session_status(sender,session_type='8',status='1H')
-        message = "*PROPOSED PROJECTS AND CAPEX*\nDo you have any objection regarding our proposed projects and capex\n*Y*.Yes\n*N*.No\n\nPlease respond with one of the above options"
+        message = "*PROPOSED PROJECTS AND CAPEX*\nDo you have any objection regarding our proposed projects and capex\n*Y*.Yes\n*N*.No\n\nPlease respond with one of the above options  *_NB ANSWERS SHOULD ONLY BE Y for Yes or N for No_*"
         api.reply_message(sender,message)
         return '', 200
 
@@ -267,48 +267,9 @@ def addcomment(response,sender):
         dbh.db['pending_budget_reviews'].insert_one(record)
 
         sh.session_status(sender,session_type='8',status='1H')
-        message = "*WATER TARRIF MODEL*\nDo you have any objection regarding our water tarrif model\n*Y*.Yes\n*N*.No\n\nPlease respond with one of the above options"
+        message = "*WATER TARRIF MODEL*\nDo you have any objection regarding our water tarrif model\n*Y*.Yes\n*N*.No\n\nPlease respond with one of the above options  *_NB ANSWERS SHOULD ONLY BE Y for Yes or N for No_*"
         api.reply_message(sender,message)
         return '', 200
-
-    elif response == '5':
-
-        budget_type = "rental valuation"
-        record = {
-            "Sender": sender,
-            "Budget_type": budget_type,
-            "Objection": 'NULL',
-            "Comment": 'NULL',
-            "Rating": 'NULL',
-            "Recommendations": 'NULL',
-            "Status": "PENDING"
-            }
-        dbh.db['pending_budget_reviews'].insert_one(record)
-
-        sh.session_status(sender,session_type='8',status='1H')
-        message = "*RENTAL VALUATION REPORT*\nDo you have any objection regarding our rental valuation report\n*Y*.Yes\n*N*.No\n\nPlease respond with one of the above options"
-        api.reply_message(sender,message)
-        return '', 200
-
-    elif response == '6':
-
-        budget_type = "heavy industry valuation"
-        record = {
-            "Sender": sender,
-            "Budget_type": budget_type,
-            "Objection": 'NULL',
-            "Comment": 'NULL',
-            "Rating": 'NULL',
-            "Recommendations": 'NULL',
-            "Status": "PENDING"
-            }
-        dbh.db['pending_budget_reviews'].insert_one(record)
-
-        sh.session_status(sender,session_type='8',status='1H')
-        message = "*HEAVY INDUSTRY VALUATION REPORT*\nDo you have any objection regarding our heavy industry valuation\n*Y*.Yes\n*N*.No\n\nPlease respond with one of the above options"
-        api.reply_message(sender,message)
-        return '', 200
-
     else:
         message = "*I am sorry i didnt get that*\nWhich one of the attached documents do you want to review/comment\n*1*.Performance Report\n*2*.Proposed 2022 budget"
         api.reply_message(sender,message)

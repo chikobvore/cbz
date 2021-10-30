@@ -161,36 +161,10 @@ def sendnationaldocuments(sender):
     api.send_attachment(sender,attachment_url,caption)
     return nationalattachmentmessage(sender)
 
-def senddocuments(sender):
-
-    caption = "Performance Report"
-    attachment_url = 'https://chikobvore.github.io/dura_online_shop/images/Sample%20Tarrif%20Schedule.pdf'
-    api.send_attachment(sender,attachment_url,caption)
-
-    caption = "Tarrif Schedule"
-    attachment_url = 'https://chikobvore.github.io/dura_online_shop/images/Sample%20performance%20report.pdf'
-    api.send_attachment(sender,attachment_url,caption)
-
-    caption = "Proposed projects and funding sources"
-    attachment_url = 'https://chikobvore.github.io/dura_online_shop/images/project%20proposals.pdf'
-    api.send_attachment(sender,attachment_url,caption)
-    # caption = "PERFORMANCE REPORT"
-    # attachment_url = 'https://chikobvore.github.io/Unlock-Technologies/lib/BUDGET%20PERFORMANCE%20REVIEW%202021.pdf'
-    # api.send_attachment(sender,attachment_url,caption)
-
-    # caption = "Tarrif Schedule"
-    # attachment_url = 'https://chikobvore.github.io/dura_online_shop/images/Sample%20performance%20report.pdf'
-    # api.send_attachment(sender,attachment_url,caption)
-
-    # caption = "SUPPLIMENTARY BUDGET AND PROPOSED 2022 BUDGET"
-    # attachment_url = 'https://chikobvore.github.io/Unlock-Technologies/lib/SUPPLEMENTARY%20BUDGET%20AND%202022%20BUDGET%20PROPOSAL.pdf'
-    # api.send_attachment(sender,attachment_url,caption)
-    return attachmentmessage(sender)
-
 def nationalattachmentmessage(sender):
     
     sh.session_status(sender,session_type='10',status='1G')
-    message = "Review our proposals herein. Press 1 to continue and review or press 0 to return to main menu"
+    message = "Review 2022 DEVOLUTION FUNDS ALLOCATIONS AND PROPOSED PROJECTS herein. Press 1 to continue and review or press 0 to return to main menu"
     api.reply_message(sender,message)
     return '', 200
 
@@ -441,13 +415,9 @@ def attachmentmessage(sender):
 def welcomeback(response,sender):
 
     if response == '1':
-        return resend_performance_report(sender)
+        return sendnationaldocuments(sender)
     elif response == '2':
-        resend_proposed_projects_report(sender)
-    elif response == '3':
-        return attachmentmessage(sender)  
-    elif response == '0':
-        return senddocuments(sender)
+        return nationalattachmentmessage(sender)
     else:
         message = "I am sorry, i didnt get that"
         api.reply_message(sender,message)

@@ -104,7 +104,7 @@ def chatmenu():
                     return '', 200
                 else:
                     sh.session_status(sender,session_type='10',status='1L')
-                    message = "*Welcome Back* "+ sender +"\nPlease select one of the following options\n*1*.Resend Performance Report\n*2*.Resend Proposed budget\n*3*.Continue reviewing\n*0*.Resend all attachments"
+                    message = "*Welcome Back* "+ sender +"\nPlease select one of the following options\n*1*.RESEND 2022 DEVOLUTION FUNDS ALLOCATIONS AND PROPOSED PROJECTS\n*2*.Continue reviewing\n*NBRESPONSE SHOULD EITHER BE 1 OR 2*"
                     api.reply_message(sender,message)
                     return '', 200
 
@@ -112,11 +112,6 @@ def chatmenu():
             elif response == "3":
 
                 return account_services.menu(sender,response)
-
-                # #Book an inspection
-                message = "_*Account Services*_\n\n_this service is under maintainance, kindly bear with us_"
-                api.reply_message(sender,message)
-                return '', 200
 
             elif response == "4":
                 #query logging
