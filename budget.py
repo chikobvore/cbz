@@ -172,7 +172,7 @@ def senddocuments(sender):
     api.send_attachment(sender,attachment_url,caption)
 
     caption = "2022 PROPOSED PROJECTS AND CAPEX"
-    attachment_url = 'https://chikobvore.github.io/Unlock-Technologies/lib/2022%20CAPEX%20%26%20PROJECTS.xlsx'
+    attachment_url = 'https://chikobvore.github.io/Unlock-Technologies/lib/2022%20PROPOSED%20PROJECTS%20AND%20CAPEX%20(1).xlsx'
     api.send_attachment(sender,attachment_url,caption)
 
     caption = "WATER TARRIF MODEL"
