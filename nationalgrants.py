@@ -164,7 +164,7 @@ def sendnationaldocuments(sender):
 def nationalattachmentmessage(sender):
     
     sh.session_status(sender,session_type='10',status='1G')
-    message = "Review 2022 DEVOLUTION FUNDS ALLOCATIONS AND PROPOSED PROJECTS herein. Press 1 to continue and review or press 0 to return to main menu"
+    message = "REVIEW *_2022 DEVOLUTION FUNDS ALLOCATIONS AND PROPOSED PROJECTS_* herein.\nPress 1 to continue and review or press 0 to return to main menu"
     api.reply_message(sender,message)
     return '', 200
 
@@ -405,12 +405,6 @@ def addrecommendations(response,sender):
     api.reply_message(sender,message)
     return main.feedback(sender)
 
-def attachmentmessage(sender):
-
-    sh.session_status(sender,session_type='10',status='1G')
-    message = "*Which one of the attached documents do you want to review/comment*\n\n*1*.PERFORMANCE REPORT\n*2*.PROPOSED 2022 BUDGET"
-    api.reply_message(sender,message)
-    return '', 200
 
 def welcomeback(response,sender):
 
