@@ -154,13 +154,6 @@ def addaccount(response,sender):
     api.reply_message(sender,message)
     return senddocuments(sender)
 
-def sendnationaldocuments(sender):
-
-    caption = "SAMPLE 2022 GOVERNMENT ALLOCATION GRANT ALLOCATION REPORT AND PROPOSED PROJECTS"
-    attachment_url = 'https://chikobvore.github.io/dura_online_shop/images/Sample%20Tarrif%20Schedule.pdf'
-    api.send_attachment(sender,attachment_url,caption)
-    return nationalattachmentmessage(sender)
-
 def senddocuments(sender):
 
     caption = "2021 HALF YEAR BUDGET PERFORMANCE REPORT"
@@ -168,7 +161,7 @@ def senddocuments(sender):
     api.send_attachment(sender,attachment_url,caption)
 
     caption = "2022 PROPOSED TARRIF SCHEDULE"
-    attachment_url = 'https://chikobvore.github.io/Unlock-Technologies/lib/2022%20Budget%20Tariff%20working%20papers%20edited.xlsx'
+    attachment_url = 'https://chikobvore.github.io/Unlock-Technologies/lib/MUTARE%202022%20Budget%20Tariff%20working%20papers%20edited.xlsx'
     api.send_attachment(sender,attachment_url,caption)
 
     caption = "2022 PROPOSED PROJECTS AND CAPEX"
@@ -444,7 +437,7 @@ def resend_performance_report(sender):
 def resend_tarrif_schedule(sender):
 
     caption = "2022 PROPOSED TARRIF SCHEDULE"
-    attachment_url = 'https://chikobvore.github.io/Unlock-Technologies/lib/2022%20Budget%20Tariff%20working%20papers%20edited.xlsx'
+    attachment_url = 'https://chikobvore.github.io/Unlock-Technologies/lib/MUTARE%202022%20Budget%20Tariff%20working%20papers%20edited.xlsx'
     api.send_attachment(sender,attachment_url,caption)
     return addcomment('2',sender)
 
