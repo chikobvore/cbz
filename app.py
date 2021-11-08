@@ -144,7 +144,7 @@ def chatmenu():
             elif response == '9':
                 
                 sh.session_status(sender,session_type='Feedback',status='Feedback')
-                message = "*Compliements*\nThank you for reaching us, we value your feedback and support.\nPlease briefly tell us your compliments"
+                message = "*Compliments*\nThank you for reaching us, we value your feedback and support.\nPlease briefly tell us your compliments"
                 api.reply_message(sender,message)
                 return '', 200
             
@@ -940,15 +940,18 @@ def chatmenu():
         elif state['session_type'] == "7":
             if state['Status'] == "0":
 
-                message = "*Attention public Relations*\nKindly assist complainant with a call on details below\n*Contact number*: "+ sender + "\n*Complainant*: " + senderName+"\n\n*Your assistance will be greatly appreciated*"
-                api.reply_message('263772963833',message)
-
-                message = "*Attention public Relations*\nKindly assist complainant with a call on details below\n*Contact number*: "+ sender + "\n*Complainant*: " + senderName+"\n\n*Your assistance will be greatly appreciated*"
-                api.reply_message('263775792461',message)
+                message = "*Attention public Relations*\nYou have received a direct message from "+ sender + "\n*Username*: " + senderName+"\n\n*Your assistance will be greatly appreciated,kindly login into the systen to assist*"
+                api.reply_message('263775531297',message)
                 
-                message = "*We have forwarded your message to our call center, our agent ll call you in nearest possible time*"
-                api.reply_message(sender,message)
-                return main.menu(sender)
+                record = {
+                    "Sender":sender,
+                    "reference": state['Reference'],
+                    "message": message,
+                    "status": "RECEIVED",
+                    "Timestamp": datetime.datetime.now()
+                }
+                dbh.db['chats'].insert_one(record)
+
             else:
                 message = "*We have forwarded your message to our call center, our agent ll call you in nearest possible time*"
                 api.reply_message(sender,message)
