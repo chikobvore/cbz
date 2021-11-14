@@ -951,6 +951,7 @@ def chatmenu():
                     "Timestamp": datetime.datetime.now()
                 }
                 dbh.db['chats'].insert_one(record)
+                return '',200
 
             else:
                 message = "*We have forwarded your message to our call center, our agent ll call you in nearest possible time*"
