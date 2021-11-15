@@ -131,7 +131,7 @@ def chatmenu():
                 
             elif response == "7":
 
-                sh.session_status(sender,session_type=response,status='0')
+                sh.session_status(sender,session_type=response,status='1')
 
                 message = "Our customer services representatives are currently occupied, please leave your message an agent ll assist you in the nearest possible time"
                 api.reply_message(sender,message)
@@ -939,10 +939,12 @@ def chatmenu():
                         api.reply_message(sender,message)
                         return '', 200
         elif state['session_type'] == "7":
+
             if state['Status'] == "0":
 
                 message = "*Attention public Relations*\nYou have received a direct message from "+ sender + "\n*Username*: " + senderName+"\n\n*Your assistance will be greatly appreciated,kindly login into the systen to assist*"
-                api.reply_message('263775531297',message)
+                api.reply_message('263775792461',message)
+                api.reply_message('263772963833',message)
                 
                 record = {
                     "Sender":sender,
@@ -955,6 +957,10 @@ def chatmenu():
                 return '',200
 
             else:
+                message = "*Attention public Relations*\nKindly call " + senderName+" on contact number "+ sender +" He/She is requesting for assistance on below matter\n\n*"+ response +"*\n\n*Your assistance will be greatly appreciated*"
+                api.reply_message('263775792461',message)
+                api.reply_message('263772963833',message)
+
                 message = "*We have forwarded your message to our call center, our agent ll call you in nearest possible time*"
                 api.reply_message(sender,message)
                 return main.menu(sender)
