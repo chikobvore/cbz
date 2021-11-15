@@ -2,6 +2,7 @@ from datetime import date,datetime
 import pymongo
 from flask import Flask, redirect, render_template, request, session, url_for
 import datetime,requests
+from pymongo import message
 import waiting_list,account_services,payments,main,budget,nationalgrants
 import sh,api,queries
 import sys,os,random
@@ -1041,45 +1042,50 @@ def chatmenu():
             
 @app.route('/',methods=["get"])
 def dashboard():
-    total_reviews = dbh.db['budget_reviewers'].count_documents({})
-    performance_review = dbh.db['budget_reviews'].count_documents({"Budget_type" :"Performance Report"})
-    tarrif_review = dbh.db['budget_reviews'].count_documents({"Budget_type" :"Tarrif Schedule"})
-    projects_review = dbh.db['budget_reviews'].count_documents({"Budget_type" :"Proposed Projects"})
-    
-    objections = dbh.db['budget_reviews'].count_documents({"Budget_type" :"Performance Report","Objection" :"YES"})
 
-    avg = dbh.db['budget_reviews'].aggregate(
-        [
-            {
-                "$group":
+    if 'username' in session:
+        total_reviews = dbh.db['budget_reviewers'].count_documents({})
+        performance_review = dbh.db['budget_reviews'].count_documents({"Budget_type" :"Performance Report"})
+        tarrif_review = dbh.db['budget_reviews'].count_documents({"Budget_type" :"Tarrif Schedule"})
+        projects_review = dbh.db['budget_reviews'].count_documents({"Budget_type" :"Proposed Projects"})
+    
+        objections = dbh.db['budget_reviews'].count_documents({"Budget_type" :"Performance Report","Objection" :"YES"})
+
+        avg = dbh.db['budget_reviews'].aggregate(
+            [
                 {
-                    "_id": "$Budget_type",
-                    "avgRating": { "$avg": "$Rating" }
+                    "$group":
+                    {
+                        "_id": "$Budget_type",
+                        "avgRating": { "$avg": "$Rating" }
+                    }
                 }
-            }
-        ]
-    )
+            ]
+        )
 
-    performance_avgrating = 0
-    tarrif_avgrating = 0
-    projects_avgrating =0
-    for a in avg:
+        performance_avgrating = 0
+        tarrif_avgrating = 0
+        projects_avgrating =0
+        for a in avg:
 
-        if a['_id'] == 'Performance Report':
-            performance_avgrating = round(a['avgRating'])
-        elif a['_id'] == 'Tarrif Schedule':
-            tarrif_avgrating =  round(a['avgRating'])
-        elif a['_id'] == 'Proposed Projects':
-            projects_avgrating =  round(a['avgRating'])
-        else:
-            print('unidentified')
-    comments = dbh.db['budget_reviews'].find().limit(100)
-    #return "Total"+ str(total_reviews) +"<br>" + "Performance"+ str(performance_review) + "<br>" + "Tarrif" + str(tarrif_review) + "<br>"+ "Projects" + str(projects_review)
-    return render_template('index.htm',total_reviews = total_reviews,
-    performance_review = performance_review,tarrif_review = tarrif_review,
-    projects_review = projects_review,comments = comments,performance_avgrating = performance_avgrating,
-    tarrif_avgrating = tarrif_avgrating,projects_avgrating = projects_avgrating)
-    
+            if a['_id'] == 'Performance Report':
+                performance_avgrating = round(a['avgRating'])
+            elif a['_id'] == 'Tarrif Schedule':
+                tarrif_avgrating =  round(a['avgRating'])
+            elif a['_id'] == 'Proposed Projects':
+                projects_avgrating =  round(a['avgRating'])
+            else:
+                print('unidentified')
+        comments = dbh.db['budget_reviews'].find().limit(100)
+        #return "Total"+ str(total_reviews) +"<br>" + "Performance"+ str(performance_review) + "<br>" + "Tarrif" + str(tarrif_review) + "<br>"+ "Projects" + str(projects_review)
+        return render_template('index.htm',total_reviews = total_reviews,
+        performance_review = performance_review,tarrif_review = tarrif_review,
+        projects_review = projects_review,comments = comments,performance_avgrating = performance_avgrating,
+        tarrif_avgrating = tarrif_avgrating,projects_avgrating = projects_avgrating)
+   
+    else:
+        return redirect('/login')
+     
 
 @app.route('/performance-report/statistics',methods=["get"]) 
 def performance_stats():
@@ -1190,6 +1196,68 @@ def projects_comments():
 def projects_recommendations():
     comments = dbh.db['budget_reviews'].find({"Budget_type" :"Proposed Projects"}).limit(100)
     return render_template('projects_recommendations.htm',comments = comments) 
+
+@app.route('/login',methods=["GET","POST"])
+def login():
+    
+    if request.method == 'POST':
+        name = request.form['email']
+        password = request.form['password']
+        
+        for user in dbh.db['System_users'].find():
+            if user['Email'] == name:
+                if user['Password'] == password:
+                    session['username'] = user['username']
+
+                    return redirect('/')
+                else:
+                    message = "Invalid Password"
+                    return render_template('login.html',message = message)
+
+            else:
+                message = "Unidentified User, Please ensure your station is registered"
+                return render_template('login.html',message = message)
+    else:
+        return render_template('login.htm')
+
+    return render_template('login.htm') 
+
+@app.route('/signup',methods = ['GET','POST'])
+def signup():
+
+    if request.method == 'POST':
+
+        if request.form['pass1'] == request.form['pass2']:
+
+            email = request.form['email']
+            if main.validateemail(email):
+
+                user = {
+                    "username": request.form['username'],
+                    "Email": request.form['email'],
+                    "Password": request.form['pass1']
+                }
+                dbh.db['System_users'].insert_one(user)
+
+                message = "User successfully saved"
+                return render_template('signup.htm',message = message)
+            else:
+                message = "Invalid email address"
+                return render_template('signup.htm',message = message)
+        
+        else:
+
+            message = "Invalid email address"
+            return render_template('signup.htm',message = message)
+            
+    else:
+        print(request.method)
+        return render_template('signup.htm')
+
+@app.route('/logout')
+def loggout():
+    session.pop('username', None)
+    return redirect('/login')
 
         
 if __name__ == '__main__':
