@@ -15,7 +15,13 @@ from paynow import Paynow
 # -*- coding: utf-8 -*-
 
 app = Flask(__name__)
-import dbh
+app.secret_key = 'LADS-AFRICA'
+
+try:
+    import dbh
+except:
+    message = "PREVIOUS SESSION EXPIRED DUE TO POOR NETWORK CONNECTION"
+    render_template('login.htm',message = message)
 
 
 @app.route('/api',methods=["post"])
