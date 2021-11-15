@@ -1218,11 +1218,11 @@ def login():
                     return redirect('/')
                 else:
                     message = "Invalid Password"
-                    return render_template('login.html',message = message)
+                    return render_template('login.htm',message = message)
 
             else:
                 message = "Unidentified User, Please ensure your station is registered"
-                return render_template('login.html',message = message)
+                return render_template('login.htm',message = message)
     else:
         return render_template('login.htm')
 
