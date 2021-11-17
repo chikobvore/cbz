@@ -116,17 +116,12 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="user-profile.htm">
+                                            <a href="/">
                                                 <i class="feather icon-user"></i> Profile
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="email-inbox.htm">
-                                                <i class="feather icon-mail"></i> My Messages
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="auth-lock-screen.htm">
+                                            <a href="/logout">
                                                 <i class="feather icon-lock"></i> Lock Screen
                                             </a>
                                         </li>
@@ -266,7 +261,7 @@
 
                                 <li class="pcoded-hasmenu">
                                     <a href="javascript:void(0)">
-                                        <span class="pcoded-micon"><i class="feather icon-sidebar"></i></span>
+                                        <span class="pcoded-micon"><i class="feather icon-trending-up"></i></span>
                                         <span class="pcoded-mtext">Performance Report</span>
                                     </a>
                                     <ul class="pcoded-submenu">
@@ -288,10 +283,11 @@
                                         </li>
                                     </ul>
                                 </li>
+
                                 <li class="pcoded-hasmenu ">
                                     <a href="javascript:void(0) ">
-                                        <span class="pcoded-micon "><i class="feather icon-layers "></i></span>
-                                        <span class="pcoded-mtext ">Proposed Budget</span>
+                                        <span class="pcoded-micon "><i class="feather icon-edit "></i></span>
+                                        <span class="pcoded-mtext ">Tarrif Schedule</span>
                                     </a>
                                     <ul class="pcoded-submenu ">
                                         <li class=" ">
@@ -314,8 +310,32 @@
 
                                 <li class="pcoded-hasmenu ">
                                     <a href="javascript:void(0) ">
-                                        <span class="pcoded-micon "><i class="feather icon-layers "></i></span>
-                                        <span class="pcoded-mtext ">Proposed Projects</span>
+                                        <span class="pcoded-micon "><i class="feather icon-droplet "></i></span>
+                                        <span class="pcoded-mtext ">Water Tarrifs</span>
+                                    </a>
+                                    <ul class="pcoded-submenu ">
+                                        <li class=" ">
+                                            <a href="/water-tarrif/statistics">
+                                                <span class="pcoded-mtext ">Statistics</span>
+                                            </a>
+                                        </li>
+                                        <li class=" ">
+                                            <a href="/water-tarrif/comments">
+                                                <span class="pcoded-mtext">Comments</span>
+                                            </a>
+                                        </li>
+                                        <li class=" ">
+                                            <a href="/water-tarrif/recommendations">
+                                                <span class="pcoded-mtext ">Recommendations</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="pcoded-hasmenu ">
+                                    <a href="javascript:void(0) ">
+                                        <span class="pcoded-micon "><i class="feather icon-pie-chart "></i></span>
+                                        <span class="pcoded-mtext ">Proposed Projects & Funding</span>
                                     </a>
                                     <ul class="pcoded-submenu ">
                                         <li class=" ">
@@ -335,44 +355,69 @@
                                         </li>
                                     </ul>
                                 </li>
+
                             </ul>
                             <div class="pcoded-navigatio-lavel ">Management Reports</div>
                             <ul class="pcoded-item pcoded-left-item ">
+                                <li class="">
+                                    <a href="/management-reports/generate/analyze">
+                                        <span class="pcoded-micon"><i class="feather icon-chevron-left"></i></span>
+                                        <span class="pcoded-mtext">Analyze Comments</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a href="/management-reports/generate/analysis_summary">
+                                        <span class="pcoded-micon"><i class="feather icon-chevron-left"></i></span>
+                                        <span class="pcoded-mtext">Summary Report(Analysed Comments)</span>
+                                    </a>
+                                </li>
                                 <li class="pcoded-hasmenu ">
                                     <a href="javascript:void(0) ">
-                                        <span class="pcoded-micon "><i class="feather icon-box "></i></span>
-                                        <span class="pcoded-mtext ">Waiting List Reports</span>
+                                        <span class="pcoded-micon "><i class="feather icon-chevron-left "></i></span>
+                                        <span class="pcoded-mtext ">Comments by Mood</span>
                                     </a>
                                     <ul class="pcoded-submenu ">
                                         <li class=" ">
-                                            <a href="alert.htm ">
-                                                <span class="pcoded-mtext ">Joined Within a Period</span>
+                                            <a href="/management-reports/generate/Happy">
+                                                <span class="pcoded-mtext ">Happy</span>
                                             </a>
                                         </li>
                                         <li class=" ">
-                                            <a href="breadcrumb.htm ">
-                                                <span class="pcoded-mtext ">Active Applications</span>
+                                            <a href="/management-reports/generate/Sad">
+                                                <span class="pcoded-mtext">Sad</span>
+                                            </a>
+                                        </li>
+                                        <li class=" ">
+                                            <a href="/management-reports/generate/Angry">
+                                                <span class="pcoded-mtext ">Angry</span>
+                                            </a>
+                                        </li>
+                                        <li class=" ">
+                                            <a href="/management-reports/generate/Fear">
+                                                <span class="pcoded-mtext ">Fear</span>
+                                            </a>
+                                        </li>
+                                        <li class=" ">
+                                            <a href="/management-reports/generate/Suprise">
+                                                <span class="pcoded-mtext ">Suprised</span>
                                             </a>
                                         </li>
                                     </ul>
                                 </li>
-                                <li class="pcoded-hasmenu ">
-                                    <a href="javascript:void(0) ">
-                                        <span class="pcoded-micon "><i class="feather icon-gitlab "></i></span>
-                                        <span class="pcoded-mtext ">Leases Report</span>
+                            </ul>
+                            <div class="pcoded-navigatio-lavel ">Other Links</div>
+                            <ul class="pcoded-item pcoded-left-item ">
+                                <li class="">
+                                    <a href="/">
+                                        <span class="pcoded-micon"><i class="feather icon-chevron-left"></i></span>
+                                        <span class="pcoded-mtext">Public Relations</span>
                                     </a>
-                                    <ul class="pcoded-submenu ">
-                                        <li class=" ">
-                                            <a href="draggable.htm ">
-                                                <span class="pcoded-mtext ">Active Leases</span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="bs-grid.htm ">
-                                                <span class="pcoded-mtext ">Expired Leases</span>
-                                            </a>
-                                        </li>
-                                    </ul>
+                                </li>
+                                <li class="">
+                                    <a href="/">
+                                        <span class="pcoded-micon"><i class="feather icon-chevron-left"></i></span>
+                                        <span class="pcoded-mtext">Housing Waiting List</span>
+                                    </a>
                                 </li>
                             </ul>
                         </div>
@@ -589,13 +634,95 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <div id="styleSelector ">
-
-                                </div>
                             </div>
                         </div>
                     </div>
+
+                    <div class="modal fade" id="generateallreports" tabindex="-1" role="dialog">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                            <form method="post" action="/performance-report/generatereport">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Performance Report Comment</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    
+                                    <ul>
+                    
+                                        <li>
+                                            <label>Analyze Comments</label>
+                                            <input type="radio" name="report" value="analyze" onclick="removeperiods()" required>
+                                        </li>
+                                        <li>
+                                            <label>Summary Report(Analysed Comments)</label>
+                                            <input type="radio" name="report" value="analysis_summary" onclick="removeperiods()" required>
+                                        </li>
+                                        <li>
+                                            <label>Comments with a period</label>
+                                            <input type="radio" name="report" value="withinaperiod" onclick="summaryperiod()" required>
+                                            <div id="period" style="display: none;">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Start Date</label>
+                                                        <input type="date" name="sd" class="form-control">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label>End Date</label>
+                                                        <input type="date" name="ed" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <label>Comments by Mood</label>
+                                            <input type="radio" name="report" value="bymood" onclick="showmoods()" required>
+                                            <div id="mood" style="display: none;">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <label>Please select mood</label>
+                                                        <select class="form-control" name="mood">
+                                                            <option>Happy</option>
+                                                            <option>Sad</option>
+                                                            <option>Fear</option>
+                                                            <option>Angry</option>
+                                                            <option>Suprise</option>
+                                                        </select>
+                                                    </div>
+                            
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary waves-effect waves-light ">Generate Report</button>
+                                </div>
+                            </form>
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        function summaryperiod()
+                        {
+                            document.getElementById('period').style.display = "block";
+                            document.getElementById('mood').style.display = "none";
+                        }
+                        function removeperiods()
+                        {
+                            document.getElementById('period').style.display = "none";
+                            document.getElementById('mood').style.display = "none";
+                        }
+                        function showmoods()
+                        {
+                            document.getElementById('period').style.display = "none";
+                            document.getElementById('mood').style.display = "block";
+                        }
+                    </script>
+
                     {% endblock %}
                 </div>
             </div>

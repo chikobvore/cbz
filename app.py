@@ -8,6 +8,10 @@ import sh,api,queries
 import sys,os,random
 from paynow import Paynow
 
+
+#Import the machine learning modules
+import text2emotion as te
+
 # client = messagebird.Client('QQRgKx3QvpSV6SpEVewDvWJGK', features=[messagebird.Feature.ENABLE_CONVERSATIONS_API_WHATSAPP_SANdbh.dbOX])
 # # Enable conversations API whatsapp sandbox# client = messagebird.Client('1ekjMs368KTRlP0z6zfG9P70z', #features = [messagebird.Feature.ENABLE_CONVERSATIONS_API_WHATSAPP_SANDBOX])
 
@@ -21,6 +25,7 @@ try:
     import dbh
 except:
     message = "PREVIOUS SESSION EXPIRED DUE TO POOR NETWORK CONNECTION"
+    print(message)
     render_template('login.htm',message = message)
 
 
@@ -1087,7 +1092,7 @@ def dashboard():
             elif a['_id'] == 'Proposed Projects':
                 projects_avgrating =  round(a['avgRating'])
             else:
-                print('unidentified')
+                print('unidentified budget type')
         comments = dbh.db['budget_reviews'].find().limit(100)
         #return "Total"+ str(total_reviews) +"<br>" + "Performance"+ str(performance_review) + "<br>" + "Tarrif" + str(tarrif_review) + "<br>"+ "Projects" + str(projects_review)
         return render_template('index.htm',total_reviews = total_reviews,
@@ -1130,6 +1135,366 @@ def performance_comments():
     comments = dbh.db['budget_reviews'].find({"Budget_type" :"Performance Report"}).limit(100)
     return render_template('performance_comments.htm',comments = comments)
 
+
+@app.route('/performance-report/generatereport',methods=["post"])
+def generate_performance_report():
+
+    if request.method == 'POST':
+        report_type = request.form['report']
+
+        if report_type == "analyze":
+            comments = dbh.db['budget_reviews'].find({"Budget_type" :"Performance Report"})
+            analysis_results = []
+            
+            for comment in comments:
+                
+                text = comment['Comment']
+                #Call to the function
+                results = te.get_emotion(text)
+                result = max(results, key=results.get)
+                if result == 'Happy':
+
+                    current_mood = "😀 Happy face"
+
+                elif result == 'Angry':
+                    
+                    current_mood = "☹️ Angry Face"
+
+                elif result == 'Sad':
+
+                    current_mood = "😞 Sad Face"
+                
+                elif result == 'Fear':
+
+                    current_mood = "😨 Surprised/Fearing face"
+
+                elif result == 'Suprise':
+                    
+                    current_mood = "😨 Surprised/Fearing face"
+
+                else:
+                     current_mood = "☺️ Informative"
+
+
+                record = {
+                    "Sender": comment['Sender'],
+                    "Objection": comment['Objection'],
+                    "Comment": comment['Comment'],
+                    "Rating": comment['Rating'],
+                    "Mood": current_mood
+                }
+                analysis_results.append(record)
+            print(analysis_results)
+            return render_template('performance_analyisis.htm', results = analysis_results)
+        elif report_type == "analysis_summary":
+
+            comments = dbh.db['budget_reviews'].find({"Budget_type" :"Performance Report"})
+            analysis_results = []
+
+            happy = 0
+            Angry = 0
+            Sad = 0
+            Fear = 0
+            Suprise = 0
+            unknown = 0
+
+            
+            for comment in comments:
+                text = comment['Comment']
+                #Call to the function
+                results = te.get_emotion(text)
+                result = max(results, key=results.get)
+
+                if results[result] == 0:
+                    unknown = unknown + 1
+                else:
+
+                    if result == 'Happy':
+                        happy = happy + 1
+
+                    elif result == 'Angry':
+                        
+                        Angry = Angry + 1
+
+                    elif result == 'Sad':
+
+                        Sad = Sad + 1
+                    
+                    elif result == 'Fear':
+
+                        Fear = Fear + 1
+
+                    elif result == 'Suprise':
+                        
+                        Suprise = Suprise + 1
+
+                    else:
+                        unknown = unknown + 1
+
+
+            record = {
+                "Happy": happy,
+                "Angry": Angry,
+                "Sad": Sad,
+                "Fear": Fear,
+                "Suprise": Suprise,
+                "Unknown": unknown
+            }
+
+            return render_template('performance_analysis_stats.htm', results = record)
+        elif report_type== "withinaperiod":
+
+            start_date = request.form['sd']
+            end_date = request.form['ed']
+
+            comments = dbh.db['budget_reviews'].find({"Budget_type" :"Performance Report"})
+            return render_template('performance_comments.htm',comments = comments)
+
+        elif report_type == 'bymood':
+            comments = dbh.db['budget_reviews'].find({"Budget_type" :"Performance Report"})
+            analysis_results = []
+            
+            for comment in comments:
+                text = comment['Comment']
+                #Call to the function
+                results = te.get_emotion(text)
+                result = max(results, key=results.get)
+                print(request.form['mood'])
+                if result == request.form['mood']:
+
+                    if result == 'Happy':
+
+                        current_mood = "😀 Happy face"
+
+                    elif result == 'Angry':
+                        
+                        current_mood = "☹️ Angry Face"
+
+                    elif result == 'Sad':
+
+                        current_mood = "😞 Sad Face"
+                    
+                    elif result == 'Fear':
+
+                        current_mood = "😨 Surprised/Fearing face"
+
+                    elif result == 'Suprise':
+                        
+                        current_mood = "😨 Surprised/Fearing face"
+
+                    else:
+                        current_mood = "☺️ Informative"
+
+
+                    record = {
+                        "Sender": comment['Sender'],
+                        "Objection": comment['Objection'],
+                        "Comment": comment['Comment'],
+                        "Rating": comment['Rating'],
+                        "Mood": current_mood
+                    }
+                    analysis_results.append(record)
+            return render_template('performance_analyisis.htm', results = analysis_results)
+
+        else:
+            pass
+    else:
+        return redirect('/performance-report/comments')
+
+#MANAGEMENT REPORTS
+@app.route('/management-reports/generate/<report_type>',methods=["get","post"])
+def managementreports(report_type):
+
+        report_type = report_type
+        analysis_results = []
+
+        if report_type == "analyze":
+            comments = dbh.db['budget_reviews'].find()
+              
+            for comment in comments:
+                try:
+                    text = comment['Comment']
+                    rating = comment['Rating'] 
+                    myobjection = comment['Objection']
+                    budget_type = comment['Budget_type']
+                except KeyError:
+                    text = "No comment at the moment"
+                    rating = 0
+                    myobjection = "NO"
+                    budget_type = "--"
+
+                #Call to the function
+                results = te.get_emotion(text)
+                result = max(results, key=results.get)
+
+                if results[result] == 0:
+                    current_mood = "😞 Could not get the mood"
+
+                else:
+                    if result == 'Happy':
+
+                        current_mood = "😀 Happy face"
+
+                    elif result == 'Angry':
+                        
+                        current_mood = "☹️ Angry Face"
+
+                    elif result == 'Sad':
+
+                        current_mood = "😞 Sad Face"
+                    
+                    elif result == 'Fear':
+
+                        current_mood = "😨 Surprised/Fearing face"
+
+                    elif result == 'Suprise':
+                        
+                        current_mood = "😨 Surprised/Fearing face"
+
+                    else:
+                        current_mood = "☺️ Informative"
+
+
+                record = {
+                    "Sender": comment['Sender'],
+                    "Budget_type": budget_type,
+                    "Objection": myobjection,
+                    "Comment": text,
+                    "Rating": rating,
+                    "Mood": current_mood
+                }
+                analysis_results.append(record)
+            print(analysis_results)
+            
+
+        elif report_type == "analysis_summary":
+
+            comments = dbh.db['budget_reviews'].find()
+            analysis_results = []
+
+            happy = 0
+            Angry = 0
+            Sad = 0
+            Fear = 0
+            Suprise = 0
+            unknown = 0
+
+            
+            comments = dbh.db['budget_reviews'].find()
+              
+            for comment in comments:
+                try:
+                    text = comment['Comment']
+                    rating = comment['Rating'] 
+                    myobjection = comment['Objection']
+                    budget_type = comment['Budget_type']
+                except KeyError:
+                    text = "No comment at the moment"
+                    rating = 0
+                    myobjection = "NO"
+                    budget_type = "--"
+
+                results = te.get_emotion(text)
+                result = max(results, key=results.get)
+
+                if results[result] == 0:
+                    unknown = unknown + 1
+                else:
+
+                    if result == 'Happy':
+                        happy = happy + 1
+
+                    elif result == 'Angry':
+                        
+                        Angry = Angry + 1
+
+                    elif result == 'Sad':
+
+                        Sad = Sad + 1
+                    
+                    elif result == 'Fear':
+
+                        Fear = Fear + 1
+
+                    elif result == 'Suprise':
+                        
+                        Suprise = Suprise + 1
+
+                    else:
+                        unknown = unknown + 1
+
+
+            record = {
+                "Happy": happy,
+                "Angry": Angry,
+                "Sad": Sad,
+                "Fear": Fear,
+                "Suprise": Suprise,
+                "Unknown": unknown
+            }
+            return render_template('performance_analysis_stats.htm', results = record)
+        else:
+            comments = dbh.db['budget_reviews'].find()
+            analysis_results = []
+            
+            for comment in comments:
+
+                try:
+                    text = comment['Comment']
+                    rating = comment['Rating'] 
+                    myobjection = comment['Objection']
+                    budget_type = comment['Budget_type']
+                except KeyError:
+                    text = "No comment at the moment"
+                    rating = 0
+                    myobjection = "NO"
+                    budget_type = "--"
+                #Call to the function
+                results = te.get_emotion(text)
+                result = max(results, key=results.get)
+
+                if result == report_type:
+
+                    if result == 'Happy':
+
+                        current_mood = "😀 Happy face"
+
+                    elif result == 'Angry':
+                        
+                        current_mood = "☹️ Angry Face"
+
+                    elif result == 'Sad':
+
+                        current_mood = "😞 Sad Face"
+                    
+                    elif result == 'Fear':
+
+                        current_mood = "😨 Surprised/Fearing face"
+
+                    elif result == 'Suprise':
+                        
+                        current_mood = "😨 Surprised/Fearing face"
+
+                    else:
+                        current_mood = "☺️ Informative"
+
+                    record = {
+                        "Sender": comment['Sender'],
+                        "Budget_type": budget_type,
+                        "Objection": myobjection,
+                        "Comment": text,
+                        "Rating": rating,
+                        "Mood": current_mood
+                    }
+                    analysis_results.append(record)
+            return render_template('Analysis_report.htm', results = analysis_results)
+            
+        return render_template('Analysis_report.htm', results = analysis_results)
+
+
+#REPORTS END HERE
+
+
 @app.route('/performance-report/recommendations')
 def performance_recommendations():
     comments = dbh.db['budget_reviews'].find({"Budget_type" :"Performance Report"}).limit(100)
@@ -1161,6 +1526,43 @@ def tarrif_stats():
             pass
     return render_template('tarrif_stats.htm',performance_avgrating = performance_avgrating,performance_review = performance_review,
     objections = objections)
+
+@app.route('/water-tarrif/statistics',methods=["get"]) 
+def water_stats():
+    performance_review = dbh.db['budget_reviews'].count_documents({"Budget_type" :"water tarrif"})
+    objections = dbh.db['budget_reviews'].count_documents({"Budget_type" :"water tarrif","Objection" :"YES"})
+    
+    avg = dbh.db['budget_reviews'].aggregate(
+        [
+            {
+                "$group":
+                {
+                    "_id": "$Budget_type",
+                    "avgRating": { "$avg": "$Rating" }
+                }
+            }
+        ]
+    )
+    performance_avgrating = 0
+    for a in avg:
+
+        if a['_id'] == 'water tarrif':
+            performance_avgrating = a['avgRating']
+        else:
+            pass
+    return render_template('water_stats.htm',performance_avgrating = performance_avgrating,performance_review = performance_review,
+    objections = objections)
+
+@app.route('/water-tarrif/comments',methods=["get"])
+def water_comments():
+    comments = dbh.db['budget_reviews'].find({"Budget_type" :"water tarrif"}).limit(100)
+    return render_template('water_comments.htm',comments = comments)
+
+@app.route('/water-tarrif/recommendations')
+def water_recommendations():
+    comments = dbh.db['budget_reviews'].find({"Budget_type" :"water tarrif"}).limit(100)
+    return render_template('water_recommendations.htm',comments = comments) 
+
 
 @app.route('/tarrif-schedule/comments',methods=["get"])
 def tarrif_comments():

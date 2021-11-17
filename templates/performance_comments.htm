@@ -18,7 +18,7 @@
                             <div class="page-header-breadcrumb">
                                 <ul class="breadcrumb-title">
                                     <li class="breadcrumb-item">
-                                        <a href="index-1.htm"> <i class="feather icon-home"></i> </a>
+                                        <a href="/"> <i class="feather icon-home"></i> </a>
                                     </li>
                                     <li class="breadcrumb-item"><a href="#!">Performance Report</a>
                                     </li>
@@ -38,7 +38,15 @@
                             <!-- HTML5 Export Buttons table start -->
                             <div class="card">
                                 <div class="card-header table-card-header">
-                                    <h5>What is your overal take on the budget,please comment on the budget ?</h5>
+                                    <div class="row">
+                                        <div class="col-md-9">
+                                            <h5>What is your overal take on the budget,please comment on the budget ?</h5>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <button type="button" style="float: right;" class="btn btn-success waves-effect" data-toggle="modal" data-target="#generatereport">Generate Report</button>
+                                        </div>
+                                    </div>
+                                    
                                 </div>
                                 <div class="card-block">
                                     <div class="dt-responsive table-responsive">
@@ -46,7 +54,6 @@
                                             <thead>
                                                 <tr>
                                                     <th>Sender</th>
-                                                    <th>Budget Type</th>
                                                     <th>Objection</th>
                                                     <th>Comment</th>
                                                     <th>Rating</th>
@@ -56,7 +63,6 @@
                                                 {% for comment in comments %}
                                                 <tr>
                                                     <td>{{comment.Sender}}</td>
-                                                    <td>{{comment.Budget_type }}</td>
                                                     <td>{{comment.Objection}}</td>
                                                     <td>{{comment.Comment}}</td>
                                                     <td>{{comment.Rating}}</td>
@@ -77,10 +83,93 @@
         </div>
     </div>
     <!-- Main-body end -->
-    <div id="styleSelector">
+</div>
+</div>
 
+
+<div class="modal fade" id="generatereport" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+        <form method="post" action="/performance-report/generatereport">
+            <div class="modal-header">
+                <h4 class="modal-title">Performance Report Comment</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                
+                <ul>
+
+                    <li>
+                        <label>Analyze Comments</label>
+                        <input type="radio" name="report" value="analyze" onclick="removeperiods()" required>
+                    </li>
+                    <li>
+                        <label>Summary Report(Analysed Comments)</label>
+                        <input type="radio" name="report" value="analysis_summary" onclick="removeperiods()" required>
+                    </li>
+                    <li>
+                        <label>Comments with a period</label>
+                        <input type="radio" name="report" value="withinaperiod" onclick="summaryperiod()" required>
+                        <div id="period" style="display: none;">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Start Date</label>
+                                    <input type="date" name="sd" class="form-control">
+                                </div>
+                                <div class="col-md-6">
+                                    <label>End Date</label>
+                                    <input type="date" name="ed" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <label>Comments by Mood</label>
+                        <input type="radio" name="report" value="bymood" onclick="showmoods()" required>
+                        <div id="mood" style="display: none;">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label>Please select mood</label>
+                                    <select class="form-control" name="mood">
+                                        <option>Happy</option>
+                                        <option>Sad</option>
+                                        <option>Fear</option>
+                                        <option>Angry</option>
+                                        <option>Suprise</option>
+                                    </select>
+                                </div>
+        
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary waves-effect waves-light ">Generate Report</button>
+            </div>
+        </form>
+        </div>
     </div>
 </div>
-</div>
+<script>
+    function summaryperiod()
+    {
+        document.getElementById('period').style.display = "block";
+        document.getElementById('mood').style.display = "none";
+    }
+    function removeperiods()
+    {
+        document.getElementById('period').style.display = "none";
+        document.getElementById('mood').style.display = "none";
+    }
+    function showmoods()
+    {
+        document.getElementById('period').style.display = "none";
+        document.getElementById('mood').style.display = "block";
+    }
+</script>
 
 {% endblock %}
