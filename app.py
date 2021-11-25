@@ -133,7 +133,11 @@ def chatmenu():
 
             elif response == "5":
                 #make payments
-                return payments.pay(sender,response)
+                ##return payments.pay(sender,response)
+
+                message = "*Service under maintainance*\nOur sincere apologies for any inconvinience caused, this service is under maintainance kindly use alternative platforms"
+                api.reply_message(sender,message)
+                return '', 200
 
             elif response == "6":
                 #waiting list services
