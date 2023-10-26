@@ -2,7 +2,7 @@ from datetime import date,datetime
 from flask import Flask, redirect, render_template, request, session, url_for
 import datetime,requests
 from pymongo import message
-import waiting_list,account_services,payments,main,budget,nationalgrants
+import waiting_list,account_services,main,budget,nationalgrants
 import sh,api,queries,queme
 import sys,os,random
 from paynow import Paynow
