@@ -1,5 +1,4 @@
 asgiref==3.7.2
-Camelot==12.6.29
 certifi==2022.9.24
 cffi==1.15.1
 chardet==5.1.0
