@@ -46,41 +46,8 @@ def get_part_of_day(h):
             return "*day*" + str('🌠') 
 
 
-
-def makepayment(sender,order_no,email,package,amount,pay_number):
-
-      paynow = Paynow(15469,'0199efc4-1967-4808-97c2-499b16a34c2d','https://tauraikatsekera.herokuapp.com/chatbot/payments', 'https://tauraikatsekera.herokuapp.com/chatbot/payments')
-      payment = paynow.create_payment(order_no,email)
-      payment.add(package,amount)
-
-      response = paynow.send_mobile(payment,pay_number,'Ecocash')
-
-      if(response.success):
-
-            poll_url = response.poll_url
-            print("Poll Url: ", poll_url)
-            # Get the poll url (used to check the status of a transaction). You might want to save this in your DB
-            r=requests.get(poll_url)
-            actualResponse = r.text
-            
-            tr = actualResponse.split("&")
-      
-            diction = {}
-            
-            for string in tr:
-                  values = string.split("=")
-                  print(values)
-                  diction[values[0]] = values[1]
-
-            #get date
-            # mytime = str(pd.to_datetime('now'))
-            # mydate = mytime.split(' ')
-            # mydate[0]
-
-            message = "*Transaction Confirmation*\n*Reference number*: "+diction['paynowreference']+ "\n\n*Please note this is not a proof of payment,if your money has been deducted please note that the money will be credited at end-of-day settlement.*\n\nTo view the transaction online please follow this link\n\n"+poll_url
-            reply_message(sender,message)
-            return True
-      else:
-            message = "*Transaction Failed*"
-            reply_message(sender,message)
-            return False
+def send_sms(sender,message):
+      SenderID ='CBZ PULSE'
+      url_string = 'senderid='+SenderID+'&&user=Unlock&password=Ulc109@&mobiles='+sender+'&sms='+message
+      response = requests.request("GET",'https://smsportal.vas.co.zw/teleoss/sendsms.jsp?'+url_string)
+      return True

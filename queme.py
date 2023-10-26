@@ -13,7 +13,7 @@ def addque(sender,response,service):
     if validate_time(response):
 
         details = dbh.db['customers'].find_one({"Sender": sender})
-
+        sh.session_status(sender,'0','0')
         if check_availability(response):
             record = {
                 "Sender": sender,
@@ -24,17 +24,20 @@ def addque(sender,response,service):
             dbh.db['customer_queue'].insert_one(record)
             query_id = random.randint(1000,9999)
             message = 'Your request have been successfully logged,Your request id is '+str(query_id)+'. Your approved timeslot is '+response
+            api.send_sms(sender,message)
             api.reply_message(sender,message)
             return '', 200
         else:
+            
             slots = recommend_time_slots()
             message = 'Your prefered time is not available\nAvailable times are\n\n'
 
             for slot in slots:
-                message = message + str(slot)
+                message = message + str(slot) + '\n'
 
             message = message + '\n\nPlease enter your prefered time from the list of availble times.'
             api.reply_message(sender,message)
+            
             return '', 200
     else:
         message = 'Invalid input time provided/nPlease enter your prefered time HH:MM'
@@ -52,15 +55,15 @@ def check_availability(preferred_time):
     slots = dbh.db['customer_queue'].find()
     for slot in slots:
         if preferred_time == slot['Time']:
-            return True
-    return False
+            return False
+    return True
 
 def recommend_time_slots():
     available_slots = []
     for hour in range(8, 15):
         for minute in range(0, 60, 15):
             time_slot = f"{hour:02d}:{minute:02d}"
-            if not check_availability(time_slot):
+            if check_availability(time_slot):
                 available_slots.append(time_slot)
     return available_slots
     

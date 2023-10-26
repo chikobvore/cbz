@@ -145,7 +145,7 @@ def chatmenu():
                 return main.menu(sender)
             else:
                 sh.session_status(sender,'0','0')
-                message =  "*Previous session expired*\nHello *"+ senderName + "Please select one of the following options 👇\n\n"+ str('1️⃣') +" *Deposits*\n\n"+ str('2️⃣') +" *Withdrawals*\n\n"+ str('3️⃣') +" MTA\n\n" + str('4️⃣') +" Enquiries\n\n"+ str('0️⃣')+" Cancel \n*Please select the corresponding number for the type of service you wish to access or Done to return to this menu*"
+                message =  "*Previous session expired*\nHello *"+ senderName + "* Please select one of the following options 👇\n\n"+ str('1️⃣') +" *Deposits*\n\n"+ str('2️⃣') +" *Withdrawals*\n\n"+ str('3️⃣') +" MTA\n\n" + str('4️⃣') +" Enquiries\n\n"+ str('0️⃣')+" Cancel \n*Please select the corresponding number for the type of service you wish to access or Done to return to this menu*"
                 api.reply_message(sender,message)
                 return '', 200
 
