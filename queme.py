@@ -11,7 +11,7 @@ import re
 def addque(sender,response,service):
 
     if validate_time(response):
-
+        response = round_to_nearest_15(response)
         details = dbh.db['customers'].find_one({"Sender": sender})
         sh.session_status(sender,'0','0')
         if check_availability(response):
@@ -23,7 +23,7 @@ def addque(sender,response,service):
                 }
             dbh.db['customer_queue'].insert_one(record)
             query_id = random.randint(1000,9999)
-            message = 'Your request have been successfully logged,Your request id is '+str(query_id)+'. Your approved timeslot is '+response
+            message = 'Your request have been successfully logged,Your request id is *'+service+':'+str(query_id)+'* . Your approved timeslot is '+response
             api.send_sms(sender,message)
             api.reply_message(sender,message)
             return '', 200
@@ -66,4 +66,9 @@ def recommend_time_slots():
             if check_availability(time_slot):
                 available_slots.append(time_slot)
     return available_slots
-    
+
+def round_to_nearest_15(time_str):
+    time = datetime.strptime(time_str, "%H:%M")
+    minutes = (time.minute // 15) * 15
+    rounded_time = time.replace(minute=minutes, second=0, microsecond=0)
+    return rounded_time.strftime("%H:%M")
