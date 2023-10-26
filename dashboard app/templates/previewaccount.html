@@ -1,0 +1,112 @@
+{% extends 'financedashboard.html' %} {% block content %}
+<section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3">
+          <!-- About Me Box -->
+
+          <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">{{ account['account_name'] }}</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <strong><i class="fas fa-edit mr-1"></i>Account Name</strong>
+
+                <p class="text-muted">
+                    {{ account['account_name'] }}
+                </p>
+
+                <hr>
+
+                <strong><i class="fas fa-map-marker-alt mr-1"></i>Account Number</strong>
+
+                <p class="text-muted">
+                    {{ account['account_no'] }}
+                </p>
+
+                <hr>
+
+                <strong><i class="fas fa-envelope mr-1"></i>Email</strong>
+
+                <p class="text-muted">
+                    {{ account['email'] }}
+                </p>
+
+                <hr>
+
+                <strong><i class="fas fa-phone"></i> Status</strong>
+
+                <p class="text-muted">{{ account['status'] }}</p>
+
+                <hr>
+
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+        </div>
+        <!-- /.col -->
+        <div class="col-md-9">
+            <div class="card card-default">
+                <div class="card-header">
+                    <h3 class="card-title">Contact details</h3>
+                    <div class="card-tools">
+                        <button type="button"
+                            class="btn btn-tool"
+                            data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                        <button type="button"
+                            class="btn btn-tool"
+                            data-card-widget="remove"><i class="fas fa-remove"></i></button>
+                    </div>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <section id="details">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <form method="post" action="/addcontacts">
+                                    <input type="hidden" name="account_no" value="{{ account['account_no'] }}">
+
+                                <div class="form-group">
+                                    <label class="control-label">Email Address(Account Owner)</label>
+                                    <input type="email" class="form-control" name="email">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">Contact 1</label>
+                                    <input type="text" class="form-control" name="contact1">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">Contact 2</label>
+                                    <input type="text" class="form-control" name="contact2">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">Contact 3</label>
+                                    <input type="text" class="form-control" name="contact3">
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                    <center>
+                        <button type="submit" class="btn btn-primary">Save Details</button>
+                    </center>
+                </div>
+            </form>
+            </div>
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </section>
+{% endblock %}

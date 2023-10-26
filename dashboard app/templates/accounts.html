@@ -16,6 +16,7 @@
                             <th> Email </th>
                             <th> Account balance </th>
                             <th> Status </th>
+                            <th> Action </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -27,7 +28,10 @@
                             <td>{{account.email}}</td>
                             <td>{{account.balance}}</td>
                             <td>{{account.status}}</td>
+                            <td><a class="btn btn-primary" href = "/accounts/preview/{{account.account_no}}">
+                                <i class="fa fa-arrow-circle-right"></i></a></td>
                         </tr>
+                        
                         {% endfor %}
                     </tbody>
                 </table>

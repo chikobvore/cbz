@@ -9,8 +9,8 @@ import ssl
 import requests
 
 app = Flask(__name__)
-client = pymongo.MongoClient("mongodb+srv://ladsroot:ladsroot@lads.f97uh.mongodb.net/tau?retryWrites=true&w=majority", ssl_cert_reqs=ssl.CERT_NONE)
-db = client.tau
+client = pymongo.MongoClient("mongodb+srv://tau:d9Rdim31X13tL25A@chiredzitwn.0qojz.mongodb.net/chiredzitwn?retryWrites=true&w=majority")
+db = client.test
 
 # client = pymongo.MongoClient("mongodb+srv://ladsroot:ladsroot@lads.f97uh.mongodb.net/tau?retryWrites=true&w=majority")
 # db = client.tau
@@ -192,9 +192,39 @@ def addwaitinglist(reference):
 
         
     return "boo"
+@app.route('/accounts/preview/<reference>')
+def previewaccounts(reference):
+
+    Account = db['accounts'].find_one({"account_no": reference})
+
+    return render_template('previewaccount.html',account = Account)
+
+@app.route('/addcontacts',methods = ['post'])
+def addcontacts():
+    
+    existance = db['account_contact_details'].count_documents({"account_no": request.form['account_no']})
+    
+    if existance > 0:
+        db['account_contact_details'].update({"account_no": request.form['account_no']},
+        {
+            "email": request.form['email'],
+            "contact1": request.form['contact1'],
+            "contact2": request.form['contact2'],
+            "contact3": request.form['contact3']
+        })
+    else:
+        record = {
+            "account_no": request.form['account_no'],
+            "email": request.form['email'],
+            "contact1": request.form['contact1'],
+            "contact2": request.form['contact2'],
+            "contact3": request.form['contact3']
+        }
+        db['account_contact_details'].insert_one(record)
+
+    return redirect('/accounts')
 
 
-        
 if __name__ == '__main__':
    app.secret_key = 'super secret key'
    app.config['SESSION_TYPE'] = 'filesystem'

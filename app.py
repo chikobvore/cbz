@@ -3,7 +3,7 @@ from flask import Flask, redirect, render_template, request, session, url_for
 import datetime,requests
 from pymongo import message
 import waiting_list,account_services,payments,main,budget,nationalgrants
-import sh,api,queries
+import sh,api,queries,queme
 import sys,os,random
 from paynow import Paynow
 
@@ -11,11 +11,7 @@ from paynow import Paynow
 #Import the machine learning modules
 import text2emotion as te
 
-# client = messagebird.Client('QQRgKx3QvpSV6SpEVewDvWJGK', features=[messagebird.Feature.ENABLE_CONVERSATIONS_API_WHATSAPP_SANdbh.dbOX])
-# # Enable conversations API whatsapp sandbox# client = messagebird.Client('1ekjMs368KTRlP0z6zfG9P70z', #features = [messagebird.Feature.ENABLE_CONVERSATIONS_API_WHATSAPP_SANDBOX])
 
-#-*- mode: python -*-
-# -*- coding: utf-8 -*-
 
 app = Flask(__name__)
 app.secret_key = 'LADS-AFRICA'
@@ -32,11 +28,19 @@ except:
 def chatmenu():
 
     payload = request.get_json()
-    sender = payload['messages'][0]['author'].split('@')[0]
+    # print(payload)
+    # sender = payload['messages'][0]['author'].split('@')[0]
+    # senderName = payload['messages'][0]['senderName']
+    # message_id = payload['messages'][0]['id']
+    # response = payload['messages'][0]['body']
 
-    senderName = payload['messages'][0]['senderName']
-    message_id = payload['messages'][0]['id']
-    response = payload['messages'][0]['body']
+    print(payload['message']['content']['text'])
+
+    response = payload['message']['content']['text']
+    sender = payload['contact']['msisdn']
+    conversationId = payload['conversation']['id']
+    senderName = payload['contact']['displayName']
+
     
     if sender == '263771067779':
         return '', 200
@@ -54,14 +58,15 @@ def chatmenu():
         #create new session
         record = {
             "Sender": sender,
+            "Conversation_ID": conversationId,
             "Timestamp": datetime.datetime.now(),
             "session_type": "0",
             "Status": "0"
             }
         dbh.db['Senders'].insert_one(record)
         # -*- coding: utf-8 -*-
-        caption = "Hello "+ senderName +" 🙋🏽‍♂ , \nThank you for contacting Mutare City Council,I'm Tau, i'm a virtual assistant,\nFor any emergency 👇 \n📞 Dial Number: +263202060823 \n\nPlease select one of the following options 👇\n\n"+ str('1️⃣') +" *Budget Consultations (Own Revenue)*\n\n"+ str('2️⃣') +" *Budget Consultations (Government Grants)*\n\n"+ str('3️⃣') +" Account Services\n\n" + str('4️⃣') +" Log a Query\n\n"+ str('5️⃣') +" Make Payment\n\n" + str('6️⃣')+ " Waiting List Services\n\n"+ str('7️⃣')+ " Request a call from our customer care representatives\n\n"+ str('8️⃣')+" Payment Plan Services\n\n"+str('9️⃣')+" Compliment our good works\n\n"+ str('0️⃣')+" Cancel \n*Please select the corresponding number for the type of service you wish to access or Done to return to this menu*"
-        attachment_url = 'https://www.mutarecity.co.zw/images/mutarelogo.png'
+        caption = "Hello "+ senderName +" 🙋🏽‍♂ , \nThank you for contacting CBZ holdings,I'm Tau, i'm a virtual assistant,\nFor any emergency 👇 \n📞 Dial Number: +263776654918 \n\nPlease select one of the following options 👇\n\n"+ str('1️⃣') +" *Deposits*\n\n"+ str('2️⃣') +" *Withdrawals*\n\n"+ str('3️⃣') +" MTA\n\n" + str('4️⃣') +" Enquiries\n\n"+ str('0️⃣')+" Cancel \n*Please select the corresponding number for the type of service you wish to access or Done to return to this menu*"
+        attachment_url = 'https://cdn.thestandard.co.zw/newsday/uploads/2020/03/CBZ_HOLDINGS_LOGO-HIGH-RES.png'
         api.send_attachment(sender,attachment_url,caption)
         return '', 200
 
@@ -79,10 +84,7 @@ def chatmenu():
         minutes = total_seconds/60
         if minutes > 10:
             sh.session_status(sender,'0','0')
-            dbh.db['pending_payments'].find_one_and_delete({'Sender': sender})
-            dbh.db['pending_budget_reviews'].find_one_and_delete({'Sender': sender})
-            dbh.db['Queries'].find_one_and_delete({'Sender': sender})
-            message =  "*Previous session expired*\nHello *"+ senderName +"* 🙋🏽‍♂,\nPlease select one of the following options 👇\n\n"+ str('1️⃣') +" *Budget Consultations (Own Revenue)*\n\n"+ str('2️⃣') +" *Budget Consultations (Government Grants)*\n\n"+ str('3️⃣') +" Account Services\n\n" + str('4️⃣') +" Log a Query\n\n"+ str('5️⃣') +" Make Payment\n\n" + str('6️⃣')+ " Waiting List Services\n\n"+ str('7️⃣')+ " Request a call from our customer care representatives\n\n"+ str('8️⃣')+" Payment Plan Services\n\n"+str('9️⃣')+" Compliment our good works\n\n"+ str('0️⃣')+" Cancel \n*Please select the corresponding number for the type of service you wish to access or Done to return to this menu*"
+            message =  "*Previous session expired*\nHello *"+ senderName + "Please select one of the following options 👇\n\n"+ str('1️⃣') +" *Deposits*\n\n"+ str('2️⃣') +" *Withdrawals*\n\n"+ str('3️⃣') +" MTA\n\n" + str('4️⃣') +" Enquiries\n\n"+ str('0️⃣')+" Cancel \n*Please select the corresponding number for the type of service you wish to access or Done to return to this menu*"
             api.reply_message(sender,message)
             return '', 200
 
@@ -91,89 +93,71 @@ def chatmenu():
             if response == "1":
 
                 #budget consultations own revenue
-                existance = dbh.db['budget_reviewers'].count_documents({"Sender": sender}) 
+                existance = dbh.db['customers'].count_documents({"Sender": sender}) 
                 #check if session exist
                 if existance < 1:
                     sh.session_status(sender,session_type='8',status='0')
-                    message = "*Budget consultations*\nThank you for reaching us, we value your feedback and support.\nFor the purposes of quality evaluation please provide your full name"
+                    message = "*Deposits*\nThank you for reaching us, we value your feedback and support.\nFor the purposes of quality evaluation please provide your full name"
                     api.reply_message(sender,message)
                     return '', 200
                 else:
-                    sh.session_status(sender,session_type='8',status='1L')
-                    message = "*Welcome Back* "+ sender +"\nPlease select one of the following options\n*1*.Resend Performance Report\n*2*.Resend Proposed budget\n*3*.Continue reviewing\n*4*.Resend all attachments\n*0.Return to main menu*"
+                    sh.session_status(sender,session_type='8',status='1A')
+                    message = "Please enter your preferred time (HH:MM): "
                     api.reply_message(sender,message)
                     return '', 200
 
             elif response == "2":
                 #budget consultations government grants
 
-                existance = dbh.db['budget_reviewers'].count_documents({"Sender": sender}) 
+                existance = dbh.db['customers'].count_documents({"Sender": sender}) 
                 if existance < 1:
-                    sh.session_status(sender,session_type='10',status='0')
-                    message = "*Budget consultations*\nThank you for reaching us, we value your feedback and support.\nFor the purposes of quality evaluation please provide your full name"
+                    sh.session_status(sender,session_type='8',status='0')
+                    message = "*Withdrawals*\nThank you for reaching us, we value your feedback and support.\nFor the purposes of quality evaluation please provide your full name"
                     api.reply_message(sender,message)
                     return '', 200
                 else:
-                    sh.session_status(sender,session_type='10',status='1L')
-                    message = "*Welcome Back* "+ sender +"\nPlease select one of the following options\n*1*.RESEND 2022 DEVOLUTION FUNDS ALLOCATIONS AND PROPOSED PROJECTS\n*2*.Continue reviewing\n*0*. Return to main menu\n*_NB RESPONSE SHOULD EITHER BE 1 , 2 OR 0_*"
+                    sh.session_status(sender,session_type='8',status='1B')
+                    message = "Please provide your prefered time between 08:00hrs and 15:00hrs"
                     api.reply_message(sender,message)
                     return '', 200
 
                 
             elif response == "3":
-
-                return account_services.menu(sender,response)
+                
+                existance = dbh.db['customers'].count_documents({"Sender": sender}) 
+                if existance < 1:
+                    sh.session_status(sender,session_type='8',status='0')
+                    message = "*MTAs*\nThank you for reaching us, we value your feedback and support.\nFor the purposes of quality evaluation please provide your full name"
+                    api.reply_message(sender,message)
+                    return '', 200
+                else:
+                    sh.session_status(sender,session_type='8',status='1C')
+                    message = "Please provide your prefered time between 08:00hrs and 15:00hrs"
+                    api.reply_message(sender,message)
+                    return '', 200
 
             elif response == "4":
                 #query logging
-                sh.session_status(sender,session_type='5',status='0')
-                message= "*Query logging*\nOur sincere apologies for the bad experiene with us, for the purposes of quality evaluation please provide us your full name"
-                api.reply_message(sender,message)
-                return '', 200
-
-            elif response == "5":
-                #make payments
-                ##return payments.pay(sender,response)
-
-                message = "*Service under maintainance*\nOur sincere apologies for any inconvinience caused, this service is under maintainance kindly use alternative platforms"
-                api.reply_message(sender,message)
-                return '', 200
-
-            elif response == "6":
-                #waiting list services
-                return waiting_list.waiting_list_menu(sender,response)
+                existance = dbh.db['customers'].count_documents({"Sender": sender}) 
+                if existance < 1:
+                    sh.session_status(sender,session_type='8',status='0')
+                    message = "*MTAs*\nThank you for reaching us, we value your feedback and support.\nFor the purposes of quality evaluation please provide your full name"
+                    api.reply_message(sender,message)
+                    return '', 200
+                else:
+                    sh.session_status(sender,session_type='8',status='1D')
+                    message = "Please provide your prefered time between 08:00hrs and 15:00hrs"
+                    api.reply_message(sender,message)
+                    return '', 200
                 
-            elif response == "7":
-
-                sh.session_status(sender,session_type=response,status='1')
-
-                message = "Our customer services representatives are currently occupied, please leave your message an agent ll assist you in the nearest possible time"
-                api.reply_message(sender,message)
-                return '', 200
-
-            elif response == "8":
-
-                message= "*Payment Plan Services*\nThis service is under maintainance, kindly bear with us"
-                api.reply_message(sender,message)
-                return main.menu(sender)
-            elif response == '9':
-                
-                sh.session_status(sender,session_type='Feedback',status='Feedback')
-                message = "*Compliments*\nThank you for reaching us, we value your feedback and support.\nPlease briefly tell us your compliments"
-                api.reply_message(sender,message)
-                return '', 200
             
             elif response == "0":
                 return main.menu(sender)
             else:
                 sh.session_status(sender,'0','0')
-                dbh.db['pending_payments'].find_one_and_delete({'Sender': sender})
-                dbh.db['pending_budget_reviews'].find_one_and_delete({'Sender': sender})
-                dbh.db['Queries'].find_one_and_delete({'Sender': sender})
-                message =  "*Previous session expired*\nHello *"+ senderName +"* 🙋🏽‍♂,\nPlease select one of the following options 👇\n\n"+ str('1️⃣') +" *Budget Consultations (Own Revenue)*\n\n"+ str('2️⃣') +" *Budget Consultations (Government Grants)*\n\n"+ str('3️⃣') +" Account Services\n\n" + str('4️⃣') +" Log a Query\n\n"+ str('5️⃣') +" Make Payment\n\n" + str('6️⃣')+ " Waiting List Services\n\n"+ str('7️⃣')+ " Request a call from our customer care representatives\n\n"+ str('8️⃣')+" Payment Plan Services\n\n"+str('9️⃣')+" Compliment our good works\n\n"+ str('0️⃣')+" Cancel \n*Please select the corresponding number for the type of service you wish to access or Done to return to this menu*"
+                message =  "*Previous session expired*\nHello *"+ senderName + "Please select one of the following options 👇\n\n"+ str('1️⃣') +" *Deposits*\n\n"+ str('2️⃣') +" *Withdrawals*\n\n"+ str('3️⃣') +" MTA\n\n" + str('4️⃣') +" Enquiries\n\n"+ str('0️⃣')+" Cancel \n*Please select the corresponding number for the type of service you wish to access or Done to return to this menu*"
                 api.reply_message(sender,message)
                 return '', 200
-
 
 
         elif state['session_type'] == "1":
@@ -984,27 +968,14 @@ def chatmenu():
             if state['Status'] == "0":
                 return budget.addfullname(response,sender)
             elif state['Status'] == "1A":
-                return budget.addgender(response,sender)
+                return queme.addque(sender,response,'Deposits')
             elif state['Status'] == "1B":
-                return budget.addage(response,sender)
+                return queme.addque(sender,response,'Withdrawals')
             elif state['Status'] == "1C":
-                return budget.addnation(response,sender)
+                return queme.addque(sender,response,'MTAs')
             elif state['Status'] == "1D":
-                return budget.addcategory(response,sender)
-            elif state['Status'] == "1E":
-                return budget.addaccount(response,sender)
-            elif state['Status'] == "1F":
-                return budget.senddocuments(response,sender)
-            elif state['Status'] == "1G":
-                return budget.addcomment(response,sender)
-            elif state['Status'] == "1H":
-                return budget.addobjection(response,sender)
-            elif state['Status'] == "1I":
-                return budget.objectBudget(response,sender)
-            elif state['Status'] == "1J":
-                return budget.addratings(response,sender)
-            elif state['Status'] == "1K":
-                return budget.addrecommendations(response,sender)
+                return queme.addque(sender,response,'Enquiries')
+    
             elif state['Status'] == "1L":
                 return budget.welcomeback(response,sender)
             else:

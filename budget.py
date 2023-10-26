@@ -14,17 +14,14 @@ def addfullname(response,sender):
         record = {
                 "Sender": sender,
                 "Full_name": response,
-                "Gender": 'NULL',
-                "Age": 'NULL',
-                "Nationality": 'NULL'
                 }
-        dbh.db['budget_reviewers'].insert_one(record)
+        dbh.db['customers'].insert_one(record)
 
         sh.session_status(sender,session_type='8',status='1A')
 
-        message = "*Details successfully saved*\nPlease provide us your gender as follows\n*M*.Male\n*F*.Female"
+        message = "*Details successfully saved*"
         api.reply_message(sender,message)
-        return '', 200
+        return main.menu(sender)
     except:
             message = "*im sorry i didnt get that*Please provide your Full name"
             api.reply_message(sender,message)

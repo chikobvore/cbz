@@ -8,10 +8,7 @@ import datetime
 def menu(sender):
     
     sh.session_status(sender,session_type='0',status='0')  
-    dbh.db['pending_payments'].find_one_and_delete({'Sender': sender})
-    dbh.db['pending_budget_reviews'].find_one_and_delete({'Sender': sender})
-    dbh.db['Queries'].find_one_and_delete({'Sender': sender})
-    message = "Please select one of the following options 👇\n\n"+ str('1️⃣') +" *Budget Consultations (Own Revenue)*\n\n"+ str('2️⃣') +" *Budget Consultations (Government Grants)*\n\n"+ str('3️⃣') +" Account Services\n\n" + str('4️⃣') +" Log a Query\n\n"+ str('5️⃣') +" Make Payment\n\n" + str('6️⃣')+ " Waiting List Services\n\n"+ str('7️⃣')+ " Request a call from our customer care representatives\n\n"+ str('8️⃣')+" Payment Plan Services\n\n"+str('9️⃣')+" Compliment our good works\n\n"+ str('0️⃣')+" Cancel \n*Please select the corresponding number for the type of service you wish to access or Done to return to this menu*"
+    message = "Please select one of the following options 👇\n\n"+ str('1️⃣') +" *Deposits*\n\n"+ str('2️⃣') +" *Withdrawals*\n\n"+ str('3️⃣') +" MTA\n\n" + str('4️⃣') +" Enquiries\n\n"+ str('0️⃣')+" Cancel \n*Please select the corresponding number for the type of service you wish to access or Done to return to this menu*"
     api.reply_message(sender,message)
     return '', 200
 
