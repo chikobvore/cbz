@@ -2,9 +2,9 @@ import requests
 from paynow import Paynow
 
 #production
-api_token = 'gvrrohawtwyfm6he'
+api_token = 'euetd8rpfnfzcz1m'
 headers = {'content-type': 'application/x-www-form-urlencoded'}
-api_instance_url = 'https://api.ultramsg.com/instance66456/messages/'
+api_instance_url = 'https://api.ultramsg.com/instance66488/messages/'
 #https://lochichabot.herokuapp.com/
 
 def reply_message(sender,message):
