@@ -21,5 +21,5 @@ def invalid(sender,response):
 def exception_hander(sender):
     message = "Im sorry 😔, an error occured whilst i was trying to log our conversation.lets start afresh our conversation."
     api.reply_message(sender,message)
-    return main.menu(sender)
+    return '', 200
  

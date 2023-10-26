@@ -7,12 +7,6 @@ import sh,api,queries,queme
 import sys,os,random
 from paynow import Paynow
 
-
-#Import the machine learning modules
-import text2emotion as te
-
-
-
 app = Flask(__name__)
 app.secret_key = 'LADS-AFRICA'
 
@@ -28,46 +22,42 @@ except:
 def chatmenu():
 
     payload = request.get_json()
-    # print(payload)
-    # sender = payload['messages'][0]['author'].split('@')[0]
-    # senderName = payload['messages'][0]['senderName']
+    sender = payload['data']['from'].split('@')[0]
+
+    senderName = payload['data']['pushname']
     # message_id = payload['messages'][0]['id']
-    # response = payload['messages'][0]['body']
+    response = payload['data']['body']
+    part = api.get_part_of_day(datetime.datetime.now().hour)
 
-    print(payload['message']['content']['text'])
-
-    response = payload['message']['content']['text']
-    sender = payload['contact']['msisdn']
-    conversationId = payload['conversation']['id']
-    senderName = payload['contact']['displayName']
-
-    
-    if sender == '263771067779':
+    if sender == '263731309304':
         return '', 200
 
-    # if sender == '263716897966':
+    # if sender != '263775531297':
+    #     message = "*IMPORTANT MESSAGE*\n\nDue to a scheduled maintainance, all Lochi services will be unavailble from 11:15 am to 11:45am\nOur sincere apologies for any inconvinience caused\nRegards\nTechnical Team"
+    #     api.reply_message(sender,message)
     #     return '', 200
 
-    if response == 'Done' or response == 'done':
+    if response == 'Done' or response == 'done' or response == '0':
         return main.menu(sender)
 
-    existance = dbh.db['Senders'].count_documents({"Sender": sender}) 
+    existance = dbh.db['Senders'].count_documents({"Sender": sender})
 
-    #check if session exist
     if existance < 1:
         #create new session
         record = {
             "Sender": sender,
-            "Conversation_ID": conversationId,
             "Timestamp": datetime.datetime.now(),
             "session_type": "0",
             "Status": "0"
             }
+
         dbh.db['Senders'].insert_one(record)
-        # -*- coding: utf-8 -*-
-        caption = "Hello "+ senderName +" 🙋🏽‍♂ , \nThank you for contacting CBZ holdings,I'm Tau, i'm a virtual assistant,\nFor any emergency 👇 \n📞 Dial Number: +263776654918 \n\nPlease select one of the following options 👇\n\n"+ str('1️⃣') +" *Deposits*\n\n"+ str('2️⃣') +" *Withdrawals*\n\n"+ str('3️⃣') +" MTA\n\n" + str('4️⃣') +" Enquiries\n\n"+ str('0️⃣')+" Cancel \n*Please select the corresponding number for the type of service you wish to access or Done to return to this menu*"
+        state = dbh.db['Senders'].find_one({"Sender": sender})
+
+
+        caption = "*Good* "+ part + ' *'+ senderName +" 🙋🏽‍♂ , \nThank you for contacting CBZ holdings,I'm Tau, i'm a virtual assistant,\nFor any emergency 👇 \n📞 Dial Number: +263776654918 \n\nPlease select one of the following options 👇\n\n"+ str('1️⃣') +" *Deposits*\n\n"+ str('2️⃣') +" *Withdrawals*\n\n"+ str('3️⃣') +" MTA\n\n" + str('4️⃣') +" Enquiries\n\n"+ str('0️⃣')+" Cancel \n*Please select the corresponding number for the type of service you wish to access or Done to return to this menu*"
         attachment_url = 'https://cdn.thestandard.co.zw/newsday/uploads/2020/03/CBZ_HOLDINGS_LOGO-HIGH-RES.png'
-        api.send_attachment(sender,attachment_url,caption)
+        api.send_image(sender,attachment_url,caption)
         return '', 200
 
     else:
@@ -84,7 +74,7 @@ def chatmenu():
         minutes = total_seconds/60
         if minutes > 10:
             sh.session_status(sender,'0','0')
-            message =  "*Previous session expired*\nHello *"+ senderName + "Please select one of the following options 👇\n\n"+ str('1️⃣') +" *Deposits*\n\n"+ str('2️⃣') +" *Withdrawals*\n\n"+ str('3️⃣') +" MTA\n\n" + str('4️⃣') +" Enquiries\n\n"+ str('0️⃣')+" Cancel \n*Please select the corresponding number for the type of service you wish to access or Done to return to this menu*"
+            message =  "*Previous session expired*\nHello *"+ senderName + "* Please select one of the following options 👇\n\n"+ str('1️⃣') +" *Deposits*\n\n"+ str('2️⃣') +" *Withdrawals*\n\n"+ str('3️⃣') +" MTA\n\n" + str('4️⃣') +" Enquiries\n\n"+ str('0️⃣')+" Cancel \n*Please select the corresponding number for the type of service you wish to access or Done to return to this menu*"
             api.reply_message(sender,message)
             return '', 200
 
