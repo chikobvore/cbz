@@ -7,7 +7,6 @@ from paynow import Paynow
 import api
 import dbh
 import sh
-import pandas as pd
 
 def pay(sender,response):
 
